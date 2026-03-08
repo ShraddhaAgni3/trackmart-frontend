@@ -74,7 +74,7 @@ className="bg-white border rounded-xl shadow-sm hover:shadow-lg transition flex 
 
 <img
 src={p.image_url
-? `http://localhost:5000/uploads/${p.image_url}`
+? `https://backend-shraddha.onrender.com/uploads/${p.image_url}`
 : "/placeholder.png"}
 alt={p.title}
 className="max-h-full object-contain"
