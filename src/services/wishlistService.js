@@ -12,7 +12,14 @@ export const addWishlist = (productId) => {
   });
 };
 
+/* TOGGLE WISHLIST */
+
+export const toggleWishlist = (productId) => {
+  return api.post(`/wishlist/toggle/${productId}`);
+};
+
 /* REMOVE */
 export const removeWishlist = (id) => {
   return api.delete(`/wishlist/${id}`);
+
 };
