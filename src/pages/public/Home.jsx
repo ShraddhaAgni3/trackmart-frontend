@@ -236,34 +236,35 @@ export default function Home() {
 
                 {product.image_url && (
 
-<div className="relative h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+                  <div className="relative h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
 
-<img
-src={product.image_url}
-alt={product.title}
-className="max-h-full max-w-full object-contain"
-/>
+                    <img
+                      src={product.image_url}
+                      alt={product.title}
+                      className="max-h-full max-w-full object-contain"
+                    />
 
-<button
-onClick={()=>handleWishlist(product.id)}
-className="absolute top-3 right-3 bg-white p-2 rounded-full shadow transform transition duration-200 hover:scale-110 active:scale-125"
->
+                    {/* HEART ICON */}
 
-<span
-className={`text-xl transition ${
-wishlist.includes(product.id)
-? "text-red-500 scale-125"
-: "text-gray-400"
-}`}
->
-{wishlist.includes(product.id) ? "❤️" : "🤍"}
-</span>
+                    <button
+                      onClick={()=>handleWishlist(product.id)}
+                      className="absolute top-3 right-3 bg-white p-2 rounded-full shadow"
+                    >
 
-</button>
+                      <Heart
+                        size={20}
+                        className={
+                          wishlist.includes(product.id)
+                          ? "text-red-500 fill-red-500"
+                          : "text-gray-400"
+                        }
+                      />
 
-</div>
+                    </button>
 
-)}
+                  </div>
+
+                )}
 
 
 
