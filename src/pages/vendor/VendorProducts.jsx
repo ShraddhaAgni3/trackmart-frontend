@@ -1,5 +1,4 @@
-import { useEffect,useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import api from "../../services/api";
 
 import Navbar from "../../components/Navbar";
@@ -8,7 +7,9 @@ import Footer from "../../components/Footer";
 export default function VendorProducts(){
 
 const [products,setProducts] = useState([]);
-const navigate = useNavigate();
+
+
+/* ================= FETCH PRODUCTS ================= */
 
 const fetchProducts = async()=>{
 
@@ -18,7 +19,9 @@ const fetchProducts = async()=>{
   setProducts(res.data);
 
  }catch(err){
-  console.log(err);
+
+  console.log("Fetch error:",err);
+
  }
 
 };
@@ -28,19 +31,27 @@ useEffect(()=>{
 },[]);
 
 
+/* ================= DELETE PRODUCT ================= */
+
 const deleteProduct = async(id)=>{
 
  if(!window.confirm("Delete this product?")) return;
 
- await api.delete(`/products/${id}`);
+ try{
 
- fetchProducts();
+  await api.delete(`/products/${id}`);
 
-};
+  /* refresh list */
 
+  setProducts(prev => prev.filter(p => p.id !== id));
 
-const editProduct = (product)=>{
- navigate("/vendor/add-product",{state:product});
+ }catch(err){
+
+  console.log(err);
+  alert("Unable to delete product");
+
+ }
+
 };
 
 
@@ -81,6 +92,7 @@ src={
 alt={p.title}
 className="max-h-full object-contain"
 />
+
 </div>
 
 
@@ -101,10 +113,9 @@ className="max-h-full object-contain"
 </p>
 
 
-{/* BUTTONS */}
+{/* DELETE BUTTON */}
 
-<div className="mt-auto flex justify-between pt-4">
-
+<div className="mt-auto pt-4">
 
 <button
 onClick={()=>deleteProduct(p.id)}
