@@ -8,25 +8,25 @@ import { getWishlist, toggleWishlist } from "../../services/wishlistService";
 
 export default function Home() {
 
-  const [products,setProducts] = useState([]);
-  const [cartItems,setCartItems] = useState([]);
-  const [wishlist,setWishlist] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
 
   const navigate = useNavigate();
 
 
-  /* FETCH PRODUCTS */
+  /* ================= FETCH PRODUCTS ================= */
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const fetchProducts = async()=>{
+    const fetchProducts = async () => {
 
-      try{
+      try {
 
         const res = await getProducts();
         setProducts(res.data);
 
-      }catch(err){
+      } catch (err) {
 
         console.log(err);
 
@@ -36,21 +36,22 @@ export default function Home() {
 
     fetchProducts();
 
-  },[]);
+  }, []);
 
 
-  /* FETCH CART */
 
-  useEffect(()=>{
+  /* ================= FETCH CART ================= */
 
-    const fetchCart = async()=>{
+  useEffect(() => {
 
-      try{
+    const fetchCart = async () => {
+
+      try {
 
         const res = await getCart();
         setCartItems(res.data);
 
-      }catch(err){
+      } catch (err) {
 
         console.log(err);
 
@@ -60,22 +61,22 @@ export default function Home() {
 
     fetchCart();
 
-  },[]);
+  }, []);
 
 
-  /* FETCH WISHLIST */
 
-  useEffect(()=>{
+  /* ================= FETCH WISHLIST ================= */
 
-    const fetchWishlist = async()=>{
+  useEffect(() => {
 
-      try{
+    const fetchWishlist = async () => {
+
+      try {
 
         const res = await getWishlist();
+        setWishlist(res.data.map(w => w.product_id));
 
-        setWishlist(res.data.map(w=>w.product_id));
-
-      }catch(err){
+      } catch (err) {
 
         console.log(err);
 
@@ -85,48 +86,60 @@ export default function Home() {
 
     fetchWishlist();
 
-  },[]);
+  }, []);
 
 
 
-  /* GET QUANTITY */
+  /* ================= GET QUANTITY ================= */
 
-  const getQuantity = (productId)=>{
+  const getQuantity = (productId) => {
 
-    const item = cartItems.find(i=>i.id===productId);
+    const item = cartItems.find(i => i.id === productId);
     return item ? item.quantity : 0;
 
   };
 
 
+  /* ================= HEART STATUS ================= */
 
-  /* INCREASE */
+  const isHeartActive = (productId) => {
 
-  const increaseQty = async(product)=>{
+    const inWishlist = wishlist.includes(productId);
+    const inCart = cartItems.some(item => item.id === productId);
 
-    try{
+    return inWishlist || inCart;
 
-      await updateCartItem(product.id,1);
+  };
 
-      setCartItems(prev=>{
 
-        const existing = prev.find(p=>p.id===product.id);
 
-        if(existing){
+  /* ================= INCREASE ================= */
 
-          return prev.map(p=>
-            p.id===product.id
-            ? {...p,quantity:p.quantity+1}
-            : p
+  const increaseQty = async (product) => {
+
+    try {
+
+      await updateCartItem(product.id, 1);
+
+      setCartItems(prev => {
+
+        const existing = prev.find(p => p.id === product.id);
+
+        if (existing) {
+
+          return prev.map(p =>
+            p.id === product.id
+              ? { ...p, quantity: p.quantity + 1 }
+              : p
           );
 
         }
 
-        return [...prev,{...product,quantity:1}];
+        return [...prev, { ...product, quantity: 1 }];
 
       });
 
-    }catch(err){
+    } catch (err) {
 
       navigate("/login");
 
@@ -135,25 +148,26 @@ export default function Home() {
   };
 
 
-  /* DECREASE */
 
-  const decreaseQty = async(product)=>{
+  /* ================= DECREASE ================= */
 
-    try{
+  const decreaseQty = async (product) => {
 
-      await updateCartItem(product.id,-1);
+    try {
 
-      setCartItems(prev=>
+      await updateCartItem(product.id, -1);
+
+      setCartItems(prev =>
         prev
-        .map(p=>
-          p.id===product.id
-          ? {...p,quantity:p.quantity-1}
-          : p
-        )
-        .filter(p=>p.quantity>0)
+          .map(p =>
+            p.id === product.id
+              ? { ...p, quantity: p.quantity - 1 }
+              : p
+          )
+          .filter(p => p.quantity > 0)
       );
 
-    }catch(err){
+    } catch (err) {
 
       console.log(err);
 
@@ -162,21 +176,22 @@ export default function Home() {
   };
 
 
-  /* TOGGLE WISHLIST */
 
-  const handleWishlist = async(productId)=>{
+  /* ================= TOGGLE WISHLIST ================= */
 
-    try{
+  const handleWishlist = async (productId) => {
+
+    try {
 
       await toggleWishlist(productId);
 
-      setWishlist(prev=>
+      setWishlist(prev =>
         prev.includes(productId)
-        ? prev.filter(id=>id!==productId)
-        : [...prev,productId]
+          ? prev.filter(id => id !== productId)
+          : [...prev, productId]
       );
 
-    }catch(err){
+    } catch (err) {
 
       navigate("/login");
 
@@ -189,7 +204,6 @@ export default function Home() {
   return (
 
     <div className="space-y-16">
-
 
       {/* HERO */}
 
@@ -219,18 +233,16 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-
-          {products.map(product=>{
+          {products.map(product => {
 
             const quantity = getQuantity(product.id);
 
-            return(
+            return (
 
               <div
                 key={product.id}
                 className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
               >
-
 
                 {/* IMAGE */}
 
@@ -247,16 +259,16 @@ export default function Home() {
                     {/* HEART ICON */}
 
                     <button
-                      onClick={()=>handleWishlist(product.id)}
+                      onClick={() => handleWishlist(product.id)}
                       className="absolute top-3 right-3 bg-white p-2 rounded-full shadow"
                     >
 
                       <Heart
                         size={20}
                         className={
-                          wishlist.includes(product.id)
-                          ? "text-red-500 fill-red-500"
-                          : "text-gray-400"
+                          isHeartActive(product.id)
+                            ? "text-red-500 fill-red-500"
+                            : "text-gray-400"
                         }
                       />
 
@@ -293,10 +305,10 @@ export default function Home() {
 
                 <div className="mt-6">
 
-                  {quantity===0 ? (
+                  {quantity === 0 ? (
 
                     <button
-                      onClick={()=>increaseQty(product)}
+                      onClick={() => increaseQty(product)}
                       className="bg-primary text-white w-full py-2 rounded-xl font-semibold hover:bg-primaryHover transition"
                     >
                       Add to Cart
@@ -307,7 +319,7 @@ export default function Home() {
                     <div className="flex items-center justify-center gap-6 border border-gray-300 rounded-xl py-2">
 
                       <button
-                        onClick={()=>decreaseQty(product)}
+                        onClick={() => decreaseQty(product)}
                         className="text-xl font-bold px-4"
                       >
                         -
@@ -318,7 +330,7 @@ export default function Home() {
                       </span>
 
                       <button
-                        onClick={()=>increaseQty(product)}
+                        onClick={() => increaseQty(product)}
                         className="text-xl font-bold px-4"
                       >
                         +
@@ -332,7 +344,7 @@ export default function Home() {
 
 
                 <button
-                  onClick={()=>navigate(`/product/${product.id}`)}
+                  onClick={() => navigate(`/product/${product.id}`)}
                   className="mt-3 border border-primary text-primary w-full py-2 rounded-xl font-semibold hover:bg-primary hover:text-white transition"
                 >
                   View Details
@@ -343,7 +355,6 @@ export default function Home() {
             );
 
           })}
-
 
         </div>
 
