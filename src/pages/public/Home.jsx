@@ -11,80 +11,42 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
 
-  /* ================= FETCH PRODUCTS ================= */
+  /* ================= FETCH ALL DATA (PARALLEL) ================= */
 
   useEffect(() => {
 
-    const fetchProducts = async () => {
+    const fetchData = async () => {
 
       try {
 
-        const res = await getProducts();
-        setProducts(res.data);
+        const [productsRes, cartRes, wishlistRes] = await Promise.all([
+          getProducts(),
+          getCart(),
+          getWishlist()
+        ]);
+
+        setProducts(productsRes.data);
+        setCartItems(cartRes.data);
+        setWishlist(wishlistRes.data.map(w => w.product_id));
 
       } catch (err) {
 
         console.log(err);
 
-      }
+      } finally {
 
-    };
-
-    fetchProducts();
-
-  }, []);
-
-
-
-  /* ================= FETCH CART ================= */
-
-  useEffect(() => {
-
-    const fetchCart = async () => {
-
-      try {
-
-        const res = await getCart();
-        setCartItems(res.data);
-
-      } catch (err) {
-
-        console.log(err);
+        setLoading(false);
 
       }
 
     };
 
-    fetchCart();
-
-  }, []);
-
-
-
-  /* ================= FETCH WISHLIST ================= */
-
-  useEffect(() => {
-
-    const fetchWishlist = async () => {
-
-      try {
-
-        const res = await getWishlist();
-        setWishlist(res.data.map(w => w.product_id));
-
-      } catch (err) {
-
-        console.log(err);
-
-      }
-
-    };
-
-    fetchWishlist();
+    fetchData();
 
   }, []);
 
@@ -200,6 +162,19 @@ export default function Home() {
   };
 
 
+  /* ================= LOADING ================= */
+
+  if (loading) {
+
+    return (
+      <div className="text-center py-20 text-lg font-medium">
+        Loading products...
+      </div>
+    );
+
+  }
+
+
 
   return (
 
@@ -252,6 +227,7 @@ export default function Home() {
 
                     <img
                       src={product.image_url}
+                      loading="lazy"
                       alt={product.title}
                       className="max-h-full max-w-full object-contain"
                     />
