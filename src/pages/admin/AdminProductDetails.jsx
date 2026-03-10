@@ -45,8 +45,12 @@ Product Details
 <div className="bg-bgSurface border border-borderDefault rounded-2xl p-8 space-y-6">
 
 <img
-src={`https://trackmart-backend.onrender.com/uploads/${product.image_url}`}
-className="w-64 rounded-xl"
+  src={
+    product.image_url?.startsWith("http")
+      ? product.image_url
+      : `http://localhost:5000/uploads/${product.image_url}`
+  }
+  className="w-64 rounded-xl"
 />
 
 <div>
