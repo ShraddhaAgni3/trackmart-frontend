@@ -10,6 +10,7 @@ import VendorOrders from "./pages/vendor/VendorOrders";
 import VendorOrderDetails from "./pages/vendor/VendorOrderDetails";
 import VendorEarnings from "./pages/vendor/VendorEarnings";
 /* Public Pages */
+import Wishlist from "./pages/public/Wishlist";
 import Home from "./pages/public/Home";
 import Login from "./pages/public/Login";
 import RegisterCustomer from "./pages/public/RegisterCustomer";
@@ -42,6 +43,7 @@ function App() {
 
         {/* ================= PUBLIC ================= */}
         <Route element={<PublicLayout />}>
+          <Route path="/wishlist" element={<Wishlist/>} />
   <Route index element={<Home />} />
   <Route path="login" element={<Login />} />
   <Route path="register" element={<RegisterCustomer />} />
