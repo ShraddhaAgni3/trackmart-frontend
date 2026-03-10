@@ -73,13 +73,14 @@ className="bg-white border rounded-xl shadow-sm hover:shadow-lg transition flex 
 <div className="h-40 flex items-center justify-center bg-gray-50 rounded-t-xl p-4">
 
 <img
-src={p.image_url
-? `https://trackmart-backend.onrender.com/uploads/${p.image_url}`
-: "/placeholder.png"}
+src={
+  p.image_url?.startsWith("http")
+    ? p.image_url
+    : `http://localhost:5000/uploads/${p.image_url}`
+}
 alt={p.title}
 className="max-h-full object-contain"
 />
-
 </div>
 
 
