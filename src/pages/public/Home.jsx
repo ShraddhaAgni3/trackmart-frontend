@@ -246,17 +246,18 @@ className="max-h-full max-w-full object-contain"
 
 <button
 onClick={()=>handleWishlist(product.id)}
-className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
+className="absolute top-3 right-3 bg-white p-2 rounded-full shadow transform transition duration-200 hover:scale-110 active:scale-125"
 >
 
-<Heart
-size={22}
-className={
+<span
+className={`text-xl transition ${
 wishlist.includes(product.id)
-? "text-red-500 fill-red-500"
+? "text-red-500 scale-125"
 : "text-gray-400"
-}
-/>
+}`}
+>
+{wishlist.includes(product.id) ? "❤️" : "🤍"}
+</span>
 
 </button>
 
