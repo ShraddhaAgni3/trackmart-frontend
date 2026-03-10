@@ -130,10 +130,10 @@ export default function Home() {
                 {product.image_url && (
                   <div className="h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/uploads/${product.image_url}`}
-                      alt={product.title}
-                      className="max-h-full max-w-full object-contain"
-                    />
+  src={product.image_url}
+  alt={product.title}
+  className="max-h-full max-w-full object-contain"
+/>
                   </div>
                 )}
 
