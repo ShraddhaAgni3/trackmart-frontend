@@ -1,26 +1,59 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import NotificationBell from "./NotificationBell";
+import { getWishlist } from "../services/wishlistService";
 
 export default function Navbar() {
 
   const { role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  /* ================= FETCH WISHLIST COUNT ================= */
+
+  useEffect(() => {
+
+    const fetchWishlist = async () => {
+
+      if (role !== "customer") return;
+
+      try {
+
+        const res = await getWishlist();
+        setWishlistCount(res.data.length);
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
+
+    };
+
+    fetchWishlist();
+
+  }, [role]);
+
+
+
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
+
   return (
     <nav className="bg-surface border-b border-default px-8 py-4 flex justify-between items-center">
 
       {/* Logo */}
+
       <Link to="/" className="text-2xl font-bold font-primary">
         <span className="text-primary">Intake</span>
         <span className="text-strong">Mart</span>
       </Link>
+
 
       <div className="flex items-center space-x-6 font-medium">
 
@@ -58,6 +91,7 @@ export default function Navbar() {
           </>
         )}
 
+
         {/* ================= CUSTOMER ================= */}
 
         {role === "customer" && (
@@ -69,12 +103,30 @@ export default function Navbar() {
               Shop
             </Link>
 
+
+            {/* ❤️ Wishlist */}
+
+            <button
+              onClick={() => navigate("/wishlist")}
+              className="relative"
+            >
+              <span className="text-2xl">❤️</span>
+
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+
+
             <Link
               to="/customer/cart"
               className="text-strong hover:text-primary transition"
             >
               Cart
             </Link>
+
 
             <Link
               to="/customer/orders"
@@ -83,8 +135,11 @@ export default function Navbar() {
               Orders
             </Link>
 
+
             {/* Notification */}
+
             <NotificationBell />
+
 
             <button
               onClick={handleLogout}
@@ -94,6 +149,7 @@ export default function Navbar() {
             </button>
           </>
         )}
+
 
         {/* ================= VENDOR ================= */}
 
@@ -113,7 +169,6 @@ export default function Navbar() {
               Add Product
             </Link>
 
-            {/* Notification */}
             <NotificationBell />
 
             <button
@@ -124,6 +179,7 @@ export default function Navbar() {
             </button>
           </>
         )}
+
 
         {/* ================= ADMIN ================= */}
 
@@ -136,7 +192,6 @@ export default function Navbar() {
               Admin Panel
             </Link>
 
-            {/* Notification */}
             <NotificationBell />
 
             <button
