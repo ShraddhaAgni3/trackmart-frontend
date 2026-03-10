@@ -15,24 +15,16 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-
-  /* FETCH ALL DATA */
+  /* ================= FETCH PRODUCTS (PUBLIC) ================= */
 
   useEffect(() => {
 
-    const fetchData = async () => {
+    const fetchProducts = async () => {
 
       try {
 
-        const [productsRes, cartRes, wishlistRes] = await Promise.all([
-          getProducts(),
-          getCart(),
-          getWishlist()
-        ]);
-
-        setProducts(productsRes.data);
-        setCartItems(cartRes.data);
-        setWishlist(wishlistRes.data.map(w => w.product_id));
+        const res = await getProducts();
+        setProducts(res.data);
 
       } catch (err) {
 
@@ -46,13 +38,46 @@ export default function Home() {
 
     };
 
-    fetchData();
+    fetchProducts();
+
+  }, []);
+
+
+  /* ================= FETCH CART + WISHLIST (ONLY IF LOGGED IN) ================= */
+
+  useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    const fetchUserData = async () => {
+
+      try {
+
+        const [cartRes, wishlistRes] = await Promise.all([
+          getCart(),
+          getWishlist()
+        ]);
+
+        setCartItems(cartRes.data);
+        setWishlist(wishlistRes.data.map(w => w.product_id));
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
+
+    };
+
+    fetchUserData();
 
   }, []);
 
 
 
-  /* GET CART QUANTITY */
+  /* ================= GET CART QUANTITY ================= */
 
   const getQuantity = (productId) => {
 
@@ -62,8 +87,7 @@ export default function Home() {
   };
 
 
-
-  /* HEART STATUS */
+  /* ================= HEART STATUS ================= */
 
   const isHeartActive = (productId) => {
 
@@ -75,8 +99,7 @@ export default function Home() {
   };
 
 
-
-  /* ADD TO CART */
+  /* ================= ADD TO CART ================= */
 
   const increaseQty = async (product) => {
 
@@ -111,8 +134,7 @@ export default function Home() {
   };
 
 
-
-  /* REMOVE FROM CART */
+  /* ================= REMOVE FROM CART ================= */
 
   const decreaseQty = async (product) => {
 
@@ -139,10 +161,16 @@ export default function Home() {
   };
 
 
-
-  /* TOGGLE WISHLIST */
+  /* ================= TOGGLE WISHLIST ================= */
 
   const handleWishlist = async (productId) => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
     try {
 
@@ -156,12 +184,11 @@ export default function Home() {
 
     } catch (err) {
 
-      navigate("/login");
+      console.log(err);
 
     }
 
   };
-
 
 
   if (loading) {
@@ -173,7 +200,6 @@ export default function Home() {
     );
 
   }
-
 
 
   return (
@@ -205,7 +231,6 @@ export default function Home() {
           Featured Products
         </h2>
 
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
 
           {products.map(product => {
@@ -231,8 +256,6 @@ export default function Home() {
                       alt={product.title}
                       className="max-h-full max-w-full object-contain"
                     />
-
-                    {/* HEART */}
 
                     <button
                       onClick={() => handleWishlist(product.id)}
@@ -268,16 +291,11 @@ export default function Home() {
                     {product.description}
                   </p>
 
-
                   <div className="mt-4 space-y-2">
 
-                    <div className="flex justify-between items-center">
-
-                      <span className="text-primary font-bold text-lg">
-                        ₹{product.price}
-                      </span>
-
-                    </div>
+                    <span className="text-primary font-bold text-lg">
+                      ₹{product.price}
+                    </span>
 
                   </div>
 
