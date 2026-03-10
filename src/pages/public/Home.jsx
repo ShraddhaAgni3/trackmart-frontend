@@ -16,7 +16,7 @@ export default function Home() {
   const navigate = useNavigate();
 
 
-  /* ================= FETCH ALL DATA (PARALLEL) ================= */
+  /* FETCH ALL DATA */
 
   useEffect(() => {
 
@@ -52,7 +52,7 @@ export default function Home() {
 
 
 
-  /* ================= GET QUANTITY ================= */
+  /* GET CART QUANTITY */
 
   const getQuantity = (productId) => {
 
@@ -62,7 +62,8 @@ export default function Home() {
   };
 
 
-  /* ================= HEART STATUS ================= */
+
+  /* HEART STATUS */
 
   const isHeartActive = (productId) => {
 
@@ -75,7 +76,7 @@ export default function Home() {
 
 
 
-  /* ================= INCREASE ================= */
+  /* ADD TO CART */
 
   const increaseQty = async (product) => {
 
@@ -111,7 +112,7 @@ export default function Home() {
 
 
 
-  /* ================= DECREASE ================= */
+  /* REMOVE FROM CART */
 
   const decreaseQty = async (product) => {
 
@@ -139,7 +140,7 @@ export default function Home() {
 
 
 
-  /* ================= TOGGLE WISHLIST ================= */
+  /* TOGGLE WISHLIST */
 
   const handleWishlist = async (productId) => {
 
@@ -162,7 +163,6 @@ export default function Home() {
   };
 
 
-  /* ================= LOADING ================= */
 
   if (loading) {
 
@@ -206,7 +206,7 @@ export default function Home() {
         </h2>
 
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
 
           {products.map(product => {
 
@@ -216,7 +216,7 @@ export default function Home() {
 
               <div
                 key={product.id}
-                className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
+                className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 flex flex-col h-full hover:shadow-lg transition"
               >
 
                 {/* IMAGE */}
@@ -232,7 +232,7 @@ export default function Home() {
                       className="max-h-full max-w-full object-contain"
                     />
 
-                    {/* HEART ICON */}
+                    {/* HEART */}
 
                     <button
                       onClick={() => handleWishlist(product.id)}
@@ -256,28 +256,36 @@ export default function Home() {
 
 
 
-                <h3 className="font-primary text-lg font-semibold text-strong">
-                  {product.title}
-                </h3>
+                {/* CONTENT */}
+
+                <div className="flex-grow">
+
+                  <h3 className="font-primary text-lg font-semibold text-strong">
+                    {product.title}
+                  </h3>
+
+                  <p className="text-muted text-sm mt-2 line-clamp-2 min-h-[40px]">
+                    {product.description}
+                  </p>
 
 
-                <p className="text-muted text-sm mt-2 line-clamp-2">
-                  {product.description}
-                </p>
+                  <div className="mt-4 space-y-2">
 
+                    <div className="flex justify-between items-center">
 
-                <div className="mt-4 space-y-2">
+                      <span className="text-primary font-bold text-lg">
+                        ₹{product.price}
+                      </span>
 
-                  <div className="flex justify-between items-center">
-
-                    <span className="text-primary font-bold text-lg">
-                      ₹{product.price}
-                    </span>
+                    </div>
 
                   </div>
 
                 </div>
 
+
+
+                {/* CART BUTTONS */}
 
                 <div className="mt-6">
 
@@ -318,6 +326,9 @@ export default function Home() {
 
                 </div>
 
+
+
+                {/* DETAILS */}
 
                 <button
                   onClick={() => navigate(`/product/${product.id}`)}
