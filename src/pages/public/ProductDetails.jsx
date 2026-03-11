@@ -38,18 +38,16 @@ export default function ProductDetails() {
 
       {/* IMAGE */}
       <div className="h-[450px] bg-gray-50 rounded-2xl shadow flex items-center justify-center">
-        {product.image_url && (
-<img
-  src={
-    product.image_url?.startsWith("http")
-      ? product.image_url
-      : `${import.meta.env.VITE_API_URL}/uploads/${product.image_url}`
-  }
-  alt={product.title}
-  className="max-h-full max-w-full object-contain"
-/>
-        )}
-      </div>
+
+{product.image_url && (
+  <img
+    src={product.image_url}
+    alt={product.title}
+    className="max-h-full max-w-full object-contain"
+  />
+)}
+
+</div>
 
       {/* DETAILS */}
       <div className="space-y-6">
