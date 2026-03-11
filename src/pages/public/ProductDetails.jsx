@@ -40,7 +40,7 @@ export default function ProductDetails() {
       <div className="h-[450px] bg-gray-50 rounded-2xl shadow flex items-center justify-center">
         {product.image_url && (
           <img
-            src={`https://backend-shraddha.onrender.com/uploads/${product.image_url}`}
+            src={`https://trackmart-backend.onrender.com/uploads/${product.image_url}`}
             alt={product.title}
             className="max-h-full max-w-full object-contain"
           />
