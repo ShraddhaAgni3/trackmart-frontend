@@ -43,7 +43,9 @@ useEffect(() => {
   const fetchWishlist = async () => {
     try {
       const res = await getWishlist();
-      setWishlistIds(res.data.map(i => i.product_id));
+
+      setWishlistIds(res.data.map(i => String(i.product_id)));
+
     } catch (err) {
       console.log(err);
     }
