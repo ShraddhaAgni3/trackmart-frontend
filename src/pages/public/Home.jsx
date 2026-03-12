@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProducts } from "../../services/productService";
 import { getCart, updateCartItem } from "../../services/cartService";
-
+import { Heart } from "lucide-react";
+import { getWishlist, toggleWishlist } from "../../services/wishlistService";
 export default function Home() {
 
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [wishlistIds, setWishlistIds] = useState([]);
   const navigate = useNavigate();
 
   /* ================= FETCH PRODUCTS ================= */
@@ -36,13 +38,39 @@ export default function Home() {
 
     fetchCart();
   }, []);
+/* ================= FETCH WISHLIST ================= */
+useEffect(() => {
+  const fetchWishlist = async () => {
+    try {
+      const res = await getWishlist();
+      setWishlistIds(res.data.map(i => i.product_id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  fetchWishlist();
+}, []);
   /* ================= GET QUANTITY ================= */
   const getQuantity = (productId) => {
     const item = cartItems.find(i => i.id === productId);
     return item ? item.quantity : 0;
   };
+const toggleWishlistItem = async (productId) => {
+  try {
 
+    await toggleWishlist(productId);
+
+    setWishlistIds(prev =>
+      prev.includes(productId)
+        ? prev.filter(id => id !== productId)
+        : [...prev, productId]
+    );
+
+  } catch (err) {
+    navigate("/login");
+  }
+};
   /* ================= INCREASE ================= */
   const increaseQty = async (product) => {
     try {
@@ -128,13 +156,33 @@ export default function Home() {
 
                 {/* IMAGE */}
                 {product.image_url && (
-                  <div className="h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
-                    <img
+                  <div className="relative h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+
+<img
   src={product.image_url}
   alt={product.title}
   className="max-h-full max-w-full object-contain"
 />
-                  </div>
+
+<button
+  onClick={(e)=>{
+    e.stopPropagation();
+    toggleWishlistItem(product.id);
+  }}
+  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md"
+>
+
+<Heart
+  className={`w-5 h-5 transition ${
+    wishlistIds.includes(product.id)
+      ? "fill-red-500 text-red-500"
+      : "text-gray-400"
+  }`}
+/>
+
+</button>
+
+</div>
                 )}
 
                 {/* TITLE */}
