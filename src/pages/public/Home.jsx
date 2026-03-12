@@ -62,11 +62,9 @@ const toggleWishlistItem = async (productId) => {
 
     await toggleWishlist(productId);
 
-    /* REFRESH WISHLIST FROM DB */
-
     const res = await getWishlist();
 
-    setWishlistIds(res.data.map(i => i.product_id));
+    setWishlistIds(res.data.map(i => String(i.product_id)));
 
   } catch (err) {
 
@@ -178,7 +176,7 @@ const toggleWishlistItem = async (productId) => {
 
 <Heart
   className={`w-5 h-5 transition ${
-    wishlistIds.includes(product.id)
+    wishlistIds.includes(String(product.id))
       ? "fill-red-500 text-red-500"
       : "text-gray-400"
   }`}
