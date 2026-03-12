@@ -57,19 +57,23 @@ useEffect(() => {
     return item ? item.quantity : 0;
   };
 const toggleWishlistItem = async (productId) => {
+
   try {
 
     await toggleWishlist(productId);
 
-    setWishlistIds(prev =>
-      prev.includes(productId)
-        ? prev.filter(id => id !== productId)
-        : [...prev, productId]
-    );
+    /* REFRESH WISHLIST FROM DB */
+
+    const res = await getWishlist();
+
+    setWishlistIds(res.data.map(i => i.product_id));
 
   } catch (err) {
+
     navigate("/login");
+
   }
+
 };
   /* ================= INCREASE ================= */
   const increaseQty = async (product) => {
