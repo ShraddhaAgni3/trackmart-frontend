@@ -221,7 +221,7 @@ const toggleWishlistItem = async (productId) => {
                   </div>
 
                   <div className="text-sm text-gray-500">
-                    Available: {product.size} gm
+                    Available: {product.size} 
                   </div>
 
                 </div>
