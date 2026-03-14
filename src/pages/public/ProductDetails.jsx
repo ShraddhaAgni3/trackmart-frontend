@@ -18,8 +18,7 @@ export default function ProductDetails() {
 
   const [role, setRole] = useState("");
 
-
-  /* ================= LOAD USER ROLE ================= */
+  /* ===== LOAD ROLE ===== */
 
   useEffect(() => {
 
@@ -31,8 +30,7 @@ export default function ProductDetails() {
 
   }, []);
 
-
-  /* ================= FETCH PRODUCT ================= */
+  /* ===== FETCH PRODUCT ===== */
 
   useEffect(() => {
 
@@ -62,13 +60,9 @@ export default function ProductDetails() {
         }
 
       } catch (err) {
-
         console.log(err);
-
       } finally {
-
         setLoading(false);
-
       }
 
     };
@@ -78,14 +72,17 @@ export default function ProductDetails() {
   }, [id]);
 
 
-  /* ================= ADD TO CART ================= */
+
+  /* ===== ADD TO CART ===== */
 
   const handleAddToCart = async () => {
 
     const token = localStorage.getItem("token");
 
+    /* GUEST USER */
+
     if(!token){
-      navigate("/register");
+      navigate("/login");
       return;
     }
 
@@ -102,15 +99,13 @@ export default function ProductDetails() {
       }, 3000);
 
     } catch (err) {
-
       console.log(err);
-
     }
 
   };
 
 
-  /* ================= UPDATE QUANTITY ================= */
+  /* ===== UPDATE QTY ===== */
 
   const updateQuantity = async (newQty) => {
 
@@ -119,7 +114,7 @@ export default function ProductDetails() {
     const token = localStorage.getItem("token");
 
     if(!token){
-      navigate("/register");
+      navigate("/login");
       return;
     }
 
@@ -130,9 +125,7 @@ export default function ProductDetails() {
       await updateCartItem(product.id, newQty);
 
     } catch (err) {
-
       console.log(err);
-
     }
 
   };
@@ -142,196 +135,166 @@ export default function ProductDetails() {
   if (!product) return <p className="text-center mt-10">Product not found</p>;
 
 
+
 return (
 
-  <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10">
+<div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10">
 
-    {/* BACK BUTTON */}
+{/* BACK BUTTON */}
 
-    <button
-      onClick={() => navigate(-1)}
-      className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition"
-    >
-      <ArrowLeft className="w-6 h-6 text-gray-700" />
-    </button>
-
-
-    {/* TOP SECTION */}
-
-    <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-
-      {/* IMAGE */}
-
-      <div className="bg-bgSurface border border-borderDefault rounded-2xl shadow-card p-4 sm:p-6 flex items-center justify-center">
-
-        {product.image_url ? (
-
-          <img
-            src={product.image_url}
-            alt={product.title}
-            className="max-h-[280px] sm:max-h-[420px] object-contain"
-          />
-
-        ) : (
-
-          <div className="text-textMuted">No Image</div>
-
-        )}
-
-      </div>
+<button
+ onClick={() => navigate(-1)}
+ className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
+>
+ <ArrowLeft className="w-6 h-6 text-gray-700"/>
+</button>
 
 
-      {/* RIGHT DETAILS */}
+<div className="grid md:grid-cols-2 gap-8 lg:gap-12">
 
-      <div className="space-y-5">
+{/* IMAGE */}
 
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-primary font-bold text-primary">
-          {product.title}
-        </h1>
+<div className="bg-bgSurface border rounded-2xl p-6 flex items-center justify-center">
 
-        <div className="text-2xl sm:text-3xl font-semibold text-green-600">
-          ₹{product.price}
-        </div>
+{product.image_url ? (
 
-        <div className="text-sm sm:text-base text-textMuted">
-          Weight: <span className="font-semibold text-textStrong">{product.size}</span>
-        </div>
+<img
+ src={product.image_url}
+ alt={product.title}
+ className="max-h-[420px] object-contain"
+/>
 
+) : (
 
-        {product.stock === 0 ? (
+<div>No Image</div>
 
-          <span className="inline-block bg-red-100 text-dangerText px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-            Out of Stock
-          </span>
+)}
 
-        ) : (
-
-          <span className="inline-block bg-green-100 text-successText px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-            In Stock ({product.stock})
-          </span>
-
-        )}
+</div>
 
 
-        {/* ADD TO CART (ONLY CUSTOMER) */}
+{/* DETAILS */}
 
-        {product.stock > 0 && role === "customer" && (
+<div className="space-y-5">
 
-          <div className="pt-3">
+<h1 className="text-3xl font-bold">
+{product.title}
+</h1>
 
-            {!isAdded ? (
+<div className="text-3xl font-semibold text-green-600">
+₹{product.price}
+</div>
 
-              <button
-                onClick={handleAddToCart}
-                className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition"
-              >
-                Add to Cart
-              </button>
-
-            ) : (
-
-              <div className="flex items-center border border-borderDefault rounded-lg overflow-hidden w-fit">
-
-                <button
-                  onClick={() => updateQuantity(quantity - 1)}
-                  className="px-3 py-2 bg-gray-100 hover:bg-gray-200"
-                >
-                  -
-                </button>
-
-                <span className="px-4">{quantity}</span>
-
-                <button
-                  onClick={() => updateQuantity(quantity + 1)}
-                  className="px-3 py-2 bg-gray-100 hover:bg-gray-200"
-                >
-                  +
-                </button>
-
-              </div>
-
-            )}
-
-          </div>
-
-        )}
+<div>
+Weight: <span className="font-semibold">{product.size}</span>
+</div>
 
 
-        {/* NUTRITION */}
+{product.stock === 0 ? (
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<span className="bg-red-100 px-3 py-1 rounded-full text-sm">
+Out of Stock
+</span>
 
-          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-1-bg)"}}>
-            <p className="text-sm text-textMuted">Calories</p>
-            <p className="text-xl font-bold text-textStrong">{product.calories}</p>
-          </div>
+) : (
 
-          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-2-bg)"}}>
-            <p className="text-sm text-textMuted">Protein</p>
-            <p className="text-xl font-bold text-textStrong">{product.protein} g</p>
-          </div>
+<span className="bg-green-100 px-3 py-1 rounded-full text-sm">
+In Stock ({product.stock})
+</span>
 
-          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-4-bg)"}}>
-            <p className="text-sm text-textMuted">Fat</p>
-            <p className="text-xl font-bold text-textStrong">{product.fat} g</p>
-          </div>
-
-          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-3-bg)"}}>
-            <p className="text-sm text-textMuted">Sugar</p>
-            <p className="text-xl font-bold text-textStrong">{product.sugar} g</p>
-          </div>
-
-        </div>
+)}
 
 
-        {/* DESCRIPTION */}
 
-        <div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-5 shadow-card">
+{/* ADD TO CART */}
 
-          <h2 className="text-base sm:text-lg font-semibold text-black mb-2">
-            Description
-          </h2>
+{product.stock > 0 && role !== "vendor" && (
 
-          <p className="text-sm sm:text-base text-textStrong leading-relaxed">
-            {product.description}
-          </p>
+<div className="pt-3">
 
-        </div>
+{!isAdded ? (
 
-      </div>
+<button
+ onClick={handleAddToCart}
+ className="bg-primary text-white px-6 py-2 rounded-lg"
+>
+Add to Cart
+</button>
 
-    </div>
+) : (
+
+<div className="flex items-center border rounded-lg overflow-hidden">
+
+<button
+ onClick={() => updateQuantity(quantity - 1)}
+ className="px-3 py-2 bg-gray-100"
+>
+-
+</button>
+
+<span className="px-4">{quantity}</span>
+
+<button
+ onClick={() => updateQuantity(quantity + 1)}
+ className="px-3 py-2 bg-gray-100"
+>
++
+</button>
+
+</div>
+
+)}
+
+</div>
+
+)}
+
+
+
+{/* DESCRIPTION */}
+
+<div className="border rounded-xl p-5">
+
+<h2 className="font-semibold mb-2">
+Description
+</h2>
+
+<p>{product.description}</p>
+
+</div>
+
+</div>
+
+</div>
+
 
 
 {/* CART POPUP */}
 
 {showPopup && (
 
-<div className="fixed bottom-6 right-6 bg-white border border-borderDefault shadow-lg rounded-xl p-4 flex items-center gap-4 z-50">
+<div className="fixed bottom-6 right-6 bg-white border shadow-lg rounded-xl p-4 flex gap-4">
 
-  <p className="text-sm font-medium">
-    Item added to cart
-  </p>
+<p>Item added to cart</p>
 
-  <button
-    onClick={() => navigate("/cart")}
-    className="bg-primary text-white px-4 py-1 rounded"
-  >
-    View Cart
-  </button>
+<button
+ onClick={() => navigate("/cart")}
+ className="bg-primary text-white px-4 py-1 rounded"
+>
+View Cart
+</button>
 
-  <button
-    onClick={() => setShowPopup(false)}
-    className="text-gray-500"
-  >
-    ✕
-  </button>
+<button
+ onClick={() => setShowPopup(false)}
+>
+✕
+</button>
 
 </div>
 
 )}
 
-  </div>
+</div>
 
 );
 }
