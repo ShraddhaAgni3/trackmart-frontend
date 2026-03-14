@@ -16,24 +16,46 @@ export default function ProductDetails() {
   const [showPopup, setShowPopup] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
+  const [role, setRole] = useState(null);
+
+
+  /* ================= LOAD ROLE ================= */
+
+  useEffect(() => {
+
+    const userRole = localStorage.getItem("role");
+    setRole(userRole);
+
+  }, []);
+
+
+  /* ================= FETCH PRODUCT ================= */
+
   useEffect(() => {
 
     const fetchData = async () => {
+
       try {
 
         const productRes = await getProducts();
         const found = productRes.data.find(p => p.id === id);
         setProduct(found);
 
-        const cartRes = await getCart();
+        const token = localStorage.getItem("token");
 
-        const cartItem = cartRes.data.find(
-          item => (item.product_id?.id || item.product_id) === id
-        );
+        if(token){
 
-        if (cartItem) {
-          setIsAdded(true);
-          setQuantity(cartItem.quantity);
+          const cartRes = await getCart();
+
+          const cartItem = cartRes.data.find(
+            item => (item.product_id?.id || item.product_id) === id
+          );
+
+          if (cartItem) {
+            setIsAdded(true);
+            setQuantity(cartItem.quantity);
+          }
+
         }
 
       } catch (err) {
@@ -41,6 +63,7 @@ export default function ProductDetails() {
       } finally {
         setLoading(false);
       }
+
     };
 
     fetchData();
@@ -48,7 +71,17 @@ export default function ProductDetails() {
   }, [id]);
 
 
+  /* ================= ADD TO CART ================= */
+
   const handleAddToCart = async () => {
+
+    const token = localStorage.getItem("token");
+
+    if(!token){
+      navigate("/login");
+      return;
+    }
+
     try {
 
       await updateCartItem(product.id, 1);
@@ -64,12 +97,22 @@ export default function ProductDetails() {
     } catch (err) {
       console.log(err);
     }
+
   };
 
+
+  /* ================= UPDATE QUANTITY ================= */
 
   const updateQuantity = async (newQty) => {
 
     if (newQty < 1) return;
+
+    const token = localStorage.getItem("token");
+
+    if(!token){
+      navigate("/register");
+      return;
+    }
 
     try {
 
@@ -87,10 +130,13 @@ export default function ProductDetails() {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!product) return <p className="text-center mt-10">Product not found</p>;
 
+
 return (
+
   <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10">
 
-    {/* SIMPLE BACK ARROW */}
+    {/* BACK BUTTON */}
+
     <button
       onClick={() => navigate(-1)}
       className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition"
@@ -100,56 +146,65 @@ return (
 
 
     {/* TOP SECTION */}
+
     <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
 
       {/* IMAGE */}
+
       <div className="bg-bgSurface border border-borderDefault rounded-2xl shadow-card p-4 sm:p-6 flex items-center justify-center">
 
         {product.image_url ? (
+
           <img
             src={product.image_url}
             alt={product.title}
             className="max-h-[280px] sm:max-h-[420px] object-contain"
           />
+
         ) : (
+
           <div className="text-textMuted">No Image</div>
+
         )}
 
       </div>
 
 
       {/* RIGHT DETAILS */}
+
       <div className="space-y-5">
 
-        {/* TITLE */}
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-primary font-bold text-primary">
           {product.title}
         </h1>
 
-        {/* PRICE */}
         <div className="text-2xl sm:text-3xl font-semibold text-green-600">
           ₹{product.price}
         </div>
 
-        {/* SIZE */}
         <div className="text-sm sm:text-base text-textMuted">
           Weight: <span className="font-semibold text-textStrong">{product.size}</span>
         </div>
 
-        {/* STOCK */}
+
         {product.stock === 0 ? (
+
           <span className="inline-block bg-red-100 text-dangerText px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
             Out of Stock
           </span>
+
         ) : (
+
           <span className="inline-block bg-green-100 text-successText px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
             In Stock ({product.stock})
           </span>
+
         )}
 
 
-        {/* ADD TO CART */}
-        {product.stock > 0 && (
+        {/* ADD TO CART (HIDDEN FOR VENDOR) */}
+
+        {product.stock > 0 && role !== "vendor" && (
 
           <div className="pt-3">
 
@@ -191,45 +246,45 @@ return (
         )}
 
 
-{/* NUTRITION STATS */}
+        {/* NUTRITION */}
 
-<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 
-  <div className="rounded-xl p-4 text-center"
-       style={{background:"var(--color-stat-1-bg)"}}>
-    <p className="text-sm text-textMuted">Calories</p>
-    <p className="text-xl font-bold text-textStrong">{product.calories}</p>
-  </div>
+          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-1-bg)"}}>
+            <p className="text-sm text-textMuted">Calories</p>
+            <p className="text-xl font-bold text-textStrong">{product.calories}</p>
+          </div>
 
-  <div className="rounded-xl p-4 text-center"
-       style={{background:"var(--color-stat-2-bg)"}}>
-    <p className="text-sm text-textMuted">Protein</p>
-    <p className="text-xl font-bold text-textStrong">{product.protein} g</p>
-  </div>
+          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-2-bg)"}}>
+            <p className="text-sm text-textMuted">Protein</p>
+            <p className="text-xl font-bold text-textStrong">{product.protein} g</p>
+          </div>
 
-  <div className="rounded-xl p-4 text-center"
-       style={{background:"var(--color-stat-4-bg)"}}>
-    <p className="text-sm text-textMuted">Fat</p>
-    <p className="text-xl font-bold text-textStrong">{product.fat} g</p>
-  </div>
+          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-4-bg)"}}>
+            <p className="text-sm text-textMuted">Fat</p>
+            <p className="text-xl font-bold text-textStrong">{product.fat} g</p>
+          </div>
 
-  <div className="rounded-xl p-4 text-center"
-       style={{background:"var(--color-stat-3-bg)"}}>
-    <p className="text-sm text-textMuted">Sugar</p>
-    <p className="text-xl font-bold text-textStrong">{product.sugar} g</p>
-  </div>
+          <div className="rounded-xl p-4 text-center" style={{background:"var(--color-stat-3-bg)"}}>
+            <p className="text-sm text-textMuted">Sugar</p>
+            <p className="text-xl font-bold text-textStrong">{product.sugar} g</p>
+          </div>
 
-</div>
+        </div>
 
 
         {/* DESCRIPTION */}
+
         <div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-5 shadow-card">
+
           <h2 className="text-base sm:text-lg font-semibold text-black mb-2">
             Description
           </h2>
+
           <p className="text-sm sm:text-base text-textStrong leading-relaxed">
             {product.description}
           </p>
+
         </div>
 
       </div>
@@ -237,6 +292,7 @@ return (
 
 
 {/* VIEW CART POPUP */}
+
 {showPopup && (
 
 <div className="fixed bottom-6 right-6 bg-white border border-borderDefault shadow-lg rounded-xl p-4 flex items-center gap-4 z-50">
@@ -264,5 +320,6 @@ return (
 )}
 
   </div>
+
 );
 }
