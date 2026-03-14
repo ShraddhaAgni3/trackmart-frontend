@@ -228,8 +228,85 @@ export default function ProductDetails() {
 
         </div>
       </div>
+{/* HOW TO USE */}
 
+{product.how_to_use && (
+  <div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-5 shadow-card">
+    
+    <h2 className="text-base sm:text-lg font-semibold text-black mb-2">
+      How to Use
+    </h2>
 
+    <ul className="list-disc pl-5 sm:pl-6 space-y-2 text-sm sm:text-base text-textStrong">
+      {product.how_to_use.split("\n").map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+
+  </div>
+)}
+{/* MAKING PROCESS */}
+
+{product.making_process && (
+  <div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-6 shadow-card">
+
+    <h2 className="text-base sm:text-lg font-semibold text-black mb-3">
+      Making Process
+    </h2>
+
+    <ul className="list-disc pl-5 sm:pl-6 space-y-2 text-sm sm:text-base text-textStrong">
+      {product.making_process.split("\n").map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+
+  </div>
+)}{/* BENEFITS */}
+
+{product.benefits && product.benefits.length > 0 && (
+
+  <div className="space-y-8">
+
+    <h2 className="text-2xl sm:text-3xl font-bold text-center">
+      Benefits
+    </h2>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+      {product.benefits.map((benefit, index) => (
+
+        <div
+          key={index}
+          className="bg-bgSurface border border-borderDefault rounded-xl shadow-card overflow-hidden hover:shadow-lg transition"
+        >
+
+          <img
+            src={benefit.image}
+            alt={benefit.title}
+            className="w-full h-44 sm:h-52 object-cover"
+          />
+
+          <div className="p-4 sm:p-6 space-y-2">
+
+            <h3 className="text-base sm:text-lg font-semibold text-textStrong">
+              {benefit.title}
+            </h3>
+
+            <p className="text-sm text-textStrong leading-relaxed">
+              {benefit.description}
+            </p>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+)}
       {/* VIEW CART POPUP */}
       {showPopup && (
         <div className="fixed bottom-6 right-6 bg-white border border-borderDefault shadow-lg rounded-xl p-4 flex items-center gap-4 z-50">
