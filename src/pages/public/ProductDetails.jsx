@@ -16,15 +16,18 @@ export default function ProductDetails() {
   const [showPopup, setShowPopup] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState("");
 
 
-  /* ================= LOAD ROLE ================= */
+  /* ================= LOAD USER ROLE ================= */
 
   useEffect(() => {
 
     const userRole = localStorage.getItem("role");
-    setRole(userRole);
+
+    if(userRole){
+      setRole(userRole.toLowerCase());
+    }
 
   }, []);
 
@@ -59,9 +62,13 @@ export default function ProductDetails() {
         }
 
       } catch (err) {
+
         console.log(err);
+
       } finally {
+
         setLoading(false);
+
       }
 
     };
@@ -78,7 +85,7 @@ export default function ProductDetails() {
     const token = localStorage.getItem("token");
 
     if(!token){
-      navigate("/login");
+      navigate("/register");
       return;
     }
 
@@ -95,7 +102,9 @@ export default function ProductDetails() {
       }, 3000);
 
     } catch (err) {
+
       console.log(err);
+
     }
 
   };
@@ -121,7 +130,9 @@ export default function ProductDetails() {
       await updateCartItem(product.id, newQty);
 
     } catch (err) {
+
       console.log(err);
+
     }
 
   };
@@ -202,9 +213,9 @@ return (
         )}
 
 
-        {/* ADD TO CART (HIDDEN FOR VENDOR) */}
+        {/* ADD TO CART (ONLY CUSTOMER) */}
 
-        {product.stock > 0 && role !== "vendor" && (
+        {product.stock > 0 && role === "customer" && (
 
           <div className="pt-3">
 
@@ -288,10 +299,11 @@ return (
         </div>
 
       </div>
+
     </div>
 
 
-{/* VIEW CART POPUP */}
+{/* CART POPUP */}
 
 {showPopup && (
 
