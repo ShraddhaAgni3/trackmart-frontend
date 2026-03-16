@@ -7,102 +7,139 @@ import Footer from "../../components/Footer";
 export default function AddProduct() {
 
   const { token } = useContext(AuthContext);
-  const [categories, setCategories] = useState([]);
+  const [categories,setCategories] = useState([]);
 
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    category_id: "",
-    care_type: "",
-    concern_type: "",
-    ingredients: "",
-    price: "",
-    stock: "",
-    size: "",
-    delivery_charge: "",
-    calories: "",
-    sugar: "",
-    fat: "",
-    protein: "",
-    how_to_use: "",
-    making_process: "",
-    product_image: null,
-    ingredients_image: null
+  const [form,setForm] = useState({
+    title:"",
+    description:"",
+    category_id:"",
+    care_type:"",
+    concern_type:"",
+    ingredients:"",
+    price:"",
+    stock:"",
+    size:"",
+    delivery_charge:"",
+    calories:"",
+    sugar:"",
+    fat:"",
+    protein:"",
+    how_to_use:"",
+    making_process:"",
+    product_image:null,
+    ingredients_image:null
   });
+
 
   /* ================= LOAD CATEGORIES ================= */
 
-  useEffect(() => {
+  useEffect(()=>{
 
-    const fetchCategories = async () => {
-      try {
+    const fetchCategories = async()=>{
+
+      try{
+
         const res = await getCategories();
         setCategories(res.data);
-      } catch (err) {
-        console.log("Category Error:", err);
+
+      }catch(err){
+
+        console.log(err);
+
       }
+
     };
 
     fetchCategories();
 
-  }, []);
+  },[]);
+
+
 
   /* ================= HEALTH PREVIEW ================= */
 
-  const calculateHealth = () => {
-    if (Number(form.sugar) > 20 || Number(form.fat) > 20) {
+  const calculateHealth = ()=>{
+
+    if(Number(form.sugar)>20 || Number(form.fat)>20){
       return "Unhealthy";
     }
+
     return "Healthy";
+
   };
+
+
+
+  /* ================= MULTI SELECT HANDLER ================= */
+
+  const handleMultiSelect = (field,value,checked)=>{
+
+    let values = form[field] ? form[field].split(",") : [];
+
+    if(checked){
+      values.push(value);
+    }else{
+      values = values.filter(v=>v!==value);
+    }
+
+    setForm({
+      ...form,
+      [field]:values.join(",")
+    });
+
+  };
+
+
 
   /* ================= SUBMIT ================= */
 
-  const handleSubmit = async () => {
+  const handleSubmit = async()=>{
 
-    try {
+    try{
 
-      if (!form.title || !form.price || !form.stock || !form.size) {
+      if(!form.title || !form.price || !form.stock || !form.size){
         alert("Please fill required fields");
         return;
       }
 
       const formData = new FormData();
 
-      Object.keys(form).forEach(key => {
-        if (form[key] !== null && form[key] !== "") {
-          formData.append(key, form[key]);
+      Object.keys(form).forEach(key=>{
+
+        if(form[key]!==null && form[key]!==""){
+          formData.append(key,form[key]);
         }
+
       });
 
-      formData.append("vendor_claimed_health", calculateHealth());
+      formData.append("vendor_claimed_health",calculateHealth());
 
-      await createProduct(formData, token);
+      await createProduct(formData,token);
 
       alert("Product added successfully");
 
       setForm({
-        title: "",
-        description: "",
-        category_id: "",
-        care_type: "",
-        concern_type: "",
-        ingredients: "",
-        price: "",
-        stock: "",
-        size: "",
-        delivery_charge: "",
-        calories: "",
-        sugar: "",
-        fat: "",
-        protein: "",
-        how_to_use: "",
-        making_process: "",
-        product_image: null,
-        ingredients_image: null
+        title:"",
+        description:"",
+        category_id:"",
+        care_type:"",
+        concern_type:"",
+        ingredients:"",
+        price:"",
+        stock:"",
+        size:"",
+        delivery_charge:"",
+        calories:"",
+        sugar:"",
+        fat:"",
+        protein:"",
+        how_to_use:"",
+        making_process:"",
+        product_image:null,
+        ingredients_image:null
       });
 
-    } catch (err) {
+    }catch(err){
 
       console.log(err);
       alert(err.response?.data?.message || "Error adding product");
@@ -111,7 +148,9 @@ export default function AddProduct() {
 
   };
 
-  return (
+
+
+  return(
 
     <div className="max-w-4xl mx-auto space-y-10">
 
@@ -119,9 +158,12 @@ export default function AddProduct() {
         Add New Product
       </h1>
 
+
+
       {/* PRODUCT INFO */}
 
       <div className="bg-white border rounded-2xl shadow p-8 space-y-6">
+
 
         <input
           value={form.title}
@@ -130,12 +172,14 @@ export default function AddProduct() {
           onChange={(e)=>setForm({...form,title:e.target.value})}
         />
 
+
         <textarea
           value={form.description}
           placeholder="Description"
           className="w-full border rounded-xl px-4 py-3"
           onChange={(e)=>setForm({...form,description:e.target.value})}
         />
+
 
         {/* CATEGORY */}
 
@@ -144,9 +188,10 @@ export default function AddProduct() {
           className="w-full border rounded-xl px-4 py-3"
           onChange={(e)=>setForm({...form,category_id:e.target.value})}
         >
+
           <option value="">Select Category</option>
 
-          {categories.map(cat => (
+          {categories.map(cat=>(
             <option key={cat.id} value={cat.id}>
               {cat.name}
             </option>
@@ -154,49 +199,91 @@ export default function AddProduct() {
 
         </select>
 
+
+
         {/* CARE TYPE */}
 
         <div>
-          <p className="text-sm font-semibold mb-1">Select Care Type</p>
 
-          <select
-            multiple
-            value={form.care_type ? form.care_type.split(",") : []}
-            onChange={(e)=>{
-              const values=[...e.target.selectedOptions].map(o=>o.value)
-              setForm({...form,care_type:values.join(",")})
-            }}
-            className="w-full border rounded-xl px-4 py-3"
-          >
-            <option value="Skin Care">Skin Care</option>
-            <option value="Hair Care">Hair Care</option>
-            <option value="Digestive Care">Digestive Care</option>
-            <option value="Immunity Care">Immunity Care</option>
-            <option value="Heart Care">Heart Care</option>
-          </select>
+          <p className="text-sm font-semibold mb-2">
+            Select Care Type
+          </p>
+
+          <div className="grid grid-cols-2 gap-2">
+
+            {[
+              "Skin Care",
+              "Hair Care",
+              "Digestive Care",
+              "Immunity Care",
+              "Heart Care"
+            ].map(item=>(
+              
+              <label key={item} className="flex items-center gap-2">
+
+                <input
+                  type="checkbox"
+                  checked={form.care_type?.includes(item)}
+                  onChange={(e)=>handleMultiSelect(
+                    "care_type",
+                    item,
+                    e.target.checked
+                  )}
+                />
+
+                {item}
+
+              </label>
+
+            ))}
+
+          </div>
+
         </div>
+
+
 
         {/* CONCERN TYPE */}
 
         <div>
-          <p className="text-sm font-semibold mb-1">Select Concern</p>
 
-          <select
-            multiple
-            value={form.concern_type ? form.concern_type.split(",") : []}
-            onChange={(e)=>{
-              const values=[...e.target.selectedOptions].map(o=>o.value)
-              setForm({...form,concern_type:values.join(",")})
-            }}
-            className="w-full border rounded-xl px-4 py-3"
-          >
-            <option value="Immunity">Immunity</option>
-            <option value="Digestion">Digestion</option>
-            <option value="Skin Health">Skin Health</option>
-            <option value="Weight Loss">Weight Loss</option>
-            <option value="Energy Boost">Energy Boost</option>
-          </select>
+          <p className="text-sm font-semibold mb-2">
+            Select Concern
+          </p>
+
+          <div className="grid grid-cols-2 gap-2">
+
+            {[
+              "Immunity",
+              "Digestion",
+              "Skin Health",
+              "Weight Loss",
+              "Energy Boost"
+            ].map(item=>(
+              
+              <label key={item} className="flex items-center gap-2">
+
+                <input
+                  type="checkbox"
+                  checked={form.concern_type?.includes(item)}
+                  onChange={(e)=>handleMultiSelect(
+                    "concern_type",
+                    item,
+                    e.target.checked
+                  )}
+                />
+
+                {item}
+
+              </label>
+
+            ))}
+
+          </div>
+
         </div>
+
+
 
         {/* PRICE + STOCK */}
 
@@ -220,6 +307,8 @@ export default function AddProduct() {
 
         </div>
 
+
+
         <input
           type="text"
           value={form.size}
@@ -227,6 +316,7 @@ export default function AddProduct() {
           className="w-full border rounded-xl px-4 py-3"
           onChange={(e)=>setForm({...form,size:e.target.value})}
         />
+
 
         <input
           type="number"
@@ -236,6 +326,7 @@ export default function AddProduct() {
           onChange={(e)=>setForm({...form,delivery_charge:e.target.value})}
         />
 
+
         <textarea
           value={form.how_to_use}
           placeholder="How to Use"
@@ -243,12 +334,14 @@ export default function AddProduct() {
           onChange={(e)=>setForm({...form,how_to_use:e.target.value})}
         />
 
+
         <textarea
           value={form.making_process}
           placeholder="Making Process"
           className="w-full border rounded-xl px-4 py-3"
           onChange={(e)=>setForm({...form,making_process:e.target.value})}
         />
+
 
         <p>Product Image</p>
 
@@ -260,6 +353,8 @@ export default function AddProduct() {
         />
 
       </div>
+
+
 
       {/* NUTRITION */}
 
@@ -283,6 +378,7 @@ export default function AddProduct() {
           className="w-full border rounded-xl px-4 py-3"
           onChange={(e)=>setForm({...form,ingredients_image:e.target.files[0]})}
         />
+
 
         <div className="grid grid-cols-4 gap-4">
 
@@ -320,8 +416,9 @@ export default function AddProduct() {
 
         </div>
 
+
         <span className={`px-4 py-2 rounded-full text-sm font-semibold
-        ${calculateHealth() === "Healthy"
+        ${calculateHealth()==="Healthy"
         ? "bg-green-100 text-green-700"
         : "bg-red-100 text-red-700"}`}>
 
@@ -330,6 +427,8 @@ export default function AddProduct() {
         </span>
 
       </div>
+
+
 
       <div className="flex justify-end">
 
@@ -341,6 +440,7 @@ export default function AddProduct() {
         </button>
 
       </div>
+
 
       <Footer/>
 
