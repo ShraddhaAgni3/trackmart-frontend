@@ -156,39 +156,47 @@ export default function AddProduct() {
 
         {/* CARE TYPE */}
 
-        <select
-multiple
-value={form.care_type}
-onChange={(e)=>{
- const values=[...e.target.selectedOptions].map(o=>o.value)
- setForm({...form,care_type:values.join(",")})
-}}
->
-          <option value="">Select Care Type</option>
-          <option value="Skin Care">Skin Care</option>
-          <option value="Hair Care">Hair Care</option>
-          <option value="Digestive Care">Digestive Care</option>
-          <option value="Immunity Care">Immunity Care</option>
-          <option value="Heart Care">Heart Care</option>
-        </select>
+        <div>
+          <p className="text-sm font-semibold mb-1">Select Care Type</p>
 
-        {/* CONCERN */}
+          <select
+            multiple
+            value={form.care_type ? form.care_type.split(",") : []}
+            onChange={(e)=>{
+              const values=[...e.target.selectedOptions].map(o=>o.value)
+              setForm({...form,care_type:values.join(",")})
+            }}
+            className="w-full border rounded-xl px-4 py-3"
+          >
+            <option value="Skin Care">Skin Care</option>
+            <option value="Hair Care">Hair Care</option>
+            <option value="Digestive Care">Digestive Care</option>
+            <option value="Immunity Care">Immunity Care</option>
+            <option value="Heart Care">Heart Care</option>
+          </select>
+        </div>
 
-        <select
-multiple
-value={form.concern_type}
-onChange={(e)=>{
- const values=[...e.target.selectedOptions].map(o=>o.value)
- setForm({...form,concern_type:values.join(",")})
-}}
->
-          <option value="">Select Concern</option>
-          <option value="Immunity">Immunity</option>
-          <option value="Digestion">Digestion</option>
-          <option value="Skin Health">Skin Health</option>
-          <option value="Weight Loss">Weight Loss</option>
-          <option value="Energy Boost">Energy Boost</option>
-        </select>
+        {/* CONCERN TYPE */}
+
+        <div>
+          <p className="text-sm font-semibold mb-1">Select Concern</p>
+
+          <select
+            multiple
+            value={form.concern_type ? form.concern_type.split(",") : []}
+            onChange={(e)=>{
+              const values=[...e.target.selectedOptions].map(o=>o.value)
+              setForm({...form,concern_type:values.join(",")})
+            }}
+            className="w-full border rounded-xl px-4 py-3"
+          >
+            <option value="Immunity">Immunity</option>
+            <option value="Digestion">Digestion</option>
+            <option value="Skin Health">Skin Health</option>
+            <option value="Weight Loss">Weight Loss</option>
+            <option value="Energy Boost">Energy Boost</option>
+          </select>
+        </div>
 
         {/* PRICE + STOCK */}
 
