@@ -7,60 +7,54 @@ import Footer from "../../components/Footer";
 export default function AddProduct() {
 
   const { token } = useContext(AuthContext);
-  const [categories,setCategories] = useState([]);
 
-  const [form,setForm] = useState({
-    title:"",
-    description:"",
-    category_id:"",
-    care_type:"",
-    concern_type:"",
-    ingredients:"",
-    price:"",
-    stock:"",
-    size:"",
-    delivery_charge:"",
-    calories:"",
-    sugar:"",
-    fat:"",
-    protein:"",
-    how_to_use:"",
-    making_process:"",
-    product_image:null,
-    ingredients_image:null
+  const [categories, setCategories] = useState([]);
+
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    category_id: "",
+    care_type: "",
+    concern_type: "",
+    ingredients: "",
+    price: "",
+    stock: "",
+    size: "",
+    delivery_charge: "",
+    calories: "",
+    sugar: "",
+    fat: "",
+    protein: "",
+    how_to_use: "",
+    making_process: "",
+    product_image: null,
+    ingredients_image: null
   });
-
 
   /* ================= LOAD CATEGORIES ================= */
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const fetchCategories = async()=>{
+    const fetchCategories = async () => {
 
-      try{
-
+      try {
         const res = await getCategories();
         setCategories(res.data);
-
-      }catch(err){
-
+      } catch (err) {
         console.log(err);
-
       }
 
     };
 
     fetchCategories();
 
-  },[]);
-
-
+  }, []);
 
   /* ================= HEALTH PREVIEW ================= */
 
-  const calculateHealth = ()=>{
+  const calculateHealth = () => {
 
-    if(Number(form.sugar)>20 || Number(form.fat)>20){
+    if (Number(form.sugar) > 20 || Number(form.fat) > 20) {
       return "Unhealthy";
     }
 
@@ -68,78 +62,74 @@ export default function AddProduct() {
 
   };
 
-
-
   /* ================= MULTI SELECT HANDLER ================= */
 
-  const handleMultiSelect = (field,value,checked)=>{
+  const handleMultiSelect = (field, value, checked) => {
 
     let values = form[field] ? form[field].split(",") : [];
 
-    if(checked){
-      values.push(value);
-    }else{
-      values = values.filter(v=>v!==value);
+    if (checked) {
+      if (!values.includes(value)) values.push(value);
+    } else {
+      values = values.filter(v => v !== value);
     }
 
     setForm({
       ...form,
-      [field]:values.join(",")
+      [field]: values.join(",")
     });
 
   };
 
-
-
   /* ================= SUBMIT ================= */
 
-  const handleSubmit = async()=>{
+  const handleSubmit = async () => {
 
-    try{
+    try {
 
-      if(!form.title || !form.price || !form.stock || !form.size){
+      if (!form.title || !form.price || !form.stock || !form.size) {
         alert("Please fill required fields");
         return;
       }
 
       const formData = new FormData();
 
-      Object.keys(form).forEach(key=>{
+      Object.keys(form).forEach(key => {
 
-        if(form[key]!==null && form[key]!==""){
-          formData.append(key,form[key]);
+        if (form[key] !== null && form[key] !== "") {
+          formData.append(key, form[key]);
         }
 
       });
 
-      formData.append("vendor_claimed_health",calculateHealth());
+      formData.append("vendor_claimed_health", calculateHealth());
 
-      await createProduct(formData,token);
+      await createProduct(formData, token);
 
       alert("Product added successfully");
 
       setForm({
-        title:"",
-        description:"",
-        category_id:"",
-        care_type:"",
-        concern_type:"",
-        ingredients:"",
-        price:"",
-        stock:"",
-        size:"",
-        delivery_charge:"",
-        calories:"",
-        sugar:"",
-        fat:"",
-        protein:"",
-        how_to_use:"",
-        making_process:"",
-        product_image:null,
-        ingredients_image:null
+        title: "",
+        description: "",
+        category_id: "",
+        care_type: "",
+        concern_type: "",
+        ingredients: "",
+        price: "",
+        stock: "",
+        size: "",
+        delivery_charge: "",
+        calories: "",
+        sugar: "",
+        fat: "",
+        protein: "",
+        how_to_use: "",
+        making_process: "",
+        product_image: null,
+        ingredients_image: null
       });
 
-    }catch(err){
+    } catch (err) {
 
       console.log(err);
       alert(err.response?.data?.message || "Error adding product");
@@ -148,9 +138,7 @@ export default function AddProduct() {
 
   };
 
-
-
-  return(
+  return (
 
     <div className="max-w-4xl mx-auto space-y-10">
 
@@ -158,48 +146,41 @@ export default function AddProduct() {
         Add New Product
       </h1>
 
-
-
       {/* PRODUCT INFO */}
 
       <div className="bg-white border rounded-2xl shadow p-8 space-y-6">
-
 
         <input
           value={form.title}
           placeholder="Product Title"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,title:e.target.value})}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
         />
-
 
         <textarea
           value={form.description}
           placeholder="Description"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,description:e.target.value})}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
-
 
         {/* CATEGORY */}
 
         <select
           value={form.category_id}
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,category_id:e.target.value})}
+          onChange={(e) => setForm({ ...form, category_id: e.target.value })}
         >
 
           <option value="">Select Category</option>
 
-          {categories.map(cat=>(
+          {categories.map(cat => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
             </option>
           ))}
 
         </select>
-
-
 
         {/* CARE TYPE */}
 
@@ -209,7 +190,7 @@ export default function AddProduct() {
             Select Care Type
           </p>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3">
 
             {[
               "Skin Care",
@@ -217,18 +198,17 @@ export default function AddProduct() {
               "Digestive Care",
               "Immunity Care",
               "Heart Care"
-            ].map(item=>(
-              
-              <label key={item} className="flex items-center gap-2">
+            ].map(item => (
+
+              <label key={item} className="flex items-center gap-2 cursor-pointer">
 
                 <input
                   type="checkbox"
-                  checked={form.care_type?.includes(item)}
-                  onChange={(e)=>handleMultiSelect(
-                    "care_type",
-                    item,
-                    e.target.checked
-                  )}
+                  className="w-4 h-4"
+                  checked={form.care_type?.split(",").includes(item)}
+                  onChange={(e) =>
+                    handleMultiSelect("care_type", item, e.target.checked)
+                  }
                 />
 
                 {item}
@@ -240,8 +220,6 @@ export default function AddProduct() {
           </div>
 
         </div>
-
-
 
         {/* CONCERN TYPE */}
 
@@ -251,7 +229,7 @@ export default function AddProduct() {
             Select Concern
           </p>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3">
 
             {[
               "Immunity",
@@ -259,18 +237,17 @@ export default function AddProduct() {
               "Skin Health",
               "Weight Loss",
               "Energy Boost"
-            ].map(item=>(
-              
-              <label key={item} className="flex items-center gap-2">
+            ].map(item => (
+
+              <label key={item} className="flex items-center gap-2 cursor-pointer">
 
                 <input
                   type="checkbox"
-                  checked={form.concern_type?.includes(item)}
-                  onChange={(e)=>handleMultiSelect(
-                    "concern_type",
-                    item,
-                    e.target.checked
-                  )}
+                  className="w-4 h-4"
+                  checked={form.concern_type?.split(",").includes(item)}
+                  onChange={(e) =>
+                    handleMultiSelect("concern_type", item, e.target.checked)
+                  }
                 />
 
                 {item}
@@ -282,8 +259,6 @@ export default function AddProduct() {
           </div>
 
         </div>
-
-
 
         {/* PRICE + STOCK */}
 
@@ -294,7 +269,7 @@ export default function AddProduct() {
             value={form.price}
             placeholder="Price"
             className="border rounded-xl px-4 py-3"
-            onChange={(e)=>setForm({...form,price:e.target.value})}
+            onChange={(e) => setForm({ ...form, price: e.target.value })}
           />
 
           <input
@@ -302,46 +277,40 @@ export default function AddProduct() {
             value={form.stock}
             placeholder="Stock"
             className="border rounded-xl px-4 py-3"
-            onChange={(e)=>setForm({...form,stock:e.target.value})}
+            onChange={(e) => setForm({ ...form, stock: e.target.value })}
           />
 
         </div>
-
-
 
         <input
           type="text"
           value={form.size}
           placeholder="Size (100g / 250g)"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,size:e.target.value})}
+          onChange={(e) => setForm({ ...form, size: e.target.value })}
         />
-
 
         <input
           type="number"
           value={form.delivery_charge}
           placeholder="Delivery Charge"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,delivery_charge:e.target.value})}
+          onChange={(e) => setForm({ ...form, delivery_charge: e.target.value })}
         />
-
 
         <textarea
           value={form.how_to_use}
           placeholder="How to Use"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,how_to_use:e.target.value})}
+          onChange={(e) => setForm({ ...form, how_to_use: e.target.value })}
         />
-
 
         <textarea
           value={form.making_process}
           placeholder="Making Process"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,making_process:e.target.value})}
+          onChange={(e) => setForm({ ...form, making_process: e.target.value })}
         />
-
 
         <p>Product Image</p>
 
@@ -349,12 +318,12 @@ export default function AddProduct() {
           type="file"
           accept="image/*"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,product_image:e.target.files[0]})}
+          onChange={(e) =>
+            setForm({ ...form, product_image: e.target.files[0] })
+          }
         />
 
       </div>
-
-
 
       {/* NUTRITION */}
 
@@ -364,7 +333,7 @@ export default function AddProduct() {
           value={form.ingredients}
           placeholder="Ingredients"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,ingredients:e.target.value})}
+          onChange={(e) => setForm({ ...form, ingredients: e.target.value })}
         />
 
         <p className="text-sm text-gray-500">
@@ -376,9 +345,10 @@ export default function AddProduct() {
           accept="image/*"
           capture="environment"
           className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,ingredients_image:e.target.files[0]})}
+          onChange={(e) =>
+            setForm({ ...form, ingredients_image: e.target.files[0] })
+          }
         />
-
 
         <div className="grid grid-cols-4 gap-4">
 
@@ -387,7 +357,7 @@ export default function AddProduct() {
             value={form.calories}
             placeholder="Calories"
             className="border rounded-xl px-4 py-3"
-            onChange={(e)=>setForm({...form,calories:e.target.value})}
+            onChange={(e) => setForm({ ...form, calories: e.target.value })}
           />
 
           <input
@@ -395,7 +365,7 @@ export default function AddProduct() {
             value={form.sugar}
             placeholder="Sugar"
             className="border rounded-xl px-4 py-3"
-            onChange={(e)=>setForm({...form,sugar:e.target.value})}
+            onChange={(e) => setForm({ ...form, sugar: e.target.value })}
           />
 
           <input
@@ -403,7 +373,7 @@ export default function AddProduct() {
             value={form.fat}
             placeholder="Fat"
             className="border rounded-xl px-4 py-3"
-            onChange={(e)=>setForm({...form,fat:e.target.value})}
+            onChange={(e) => setForm({ ...form, fat: e.target.value })}
           />
 
           <input
@@ -411,24 +381,21 @@ export default function AddProduct() {
             value={form.protein}
             placeholder="Protein"
             className="border rounded-xl px-4 py-3"
-            onChange={(e)=>setForm({...form,protein:e.target.value})}
+            onChange={(e) => setForm({ ...form, protein: e.target.value })}
           />
 
         </div>
 
-
         <span className={`px-4 py-2 rounded-full text-sm font-semibold
-        ${calculateHealth()==="Healthy"
-        ? "bg-green-100 text-green-700"
-        : "bg-red-100 text-red-700"}`}>
+        ${calculateHealth() === "Healthy"
+            ? "bg-green-100 text-green-700"
+            : "bg-red-100 text-red-700"}`}>
 
           Health Rating: {calculateHealth()}
 
         </span>
 
       </div>
-
-
 
       <div className="flex justify-end">
 
@@ -441,8 +408,7 @@ export default function AddProduct() {
 
       </div>
 
-
-      <Footer/>
+      <Footer />
 
     </div>
 
