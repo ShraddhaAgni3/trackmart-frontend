@@ -157,10 +157,13 @@ export default function AddProduct() {
         {/* CARE TYPE */}
 
         <select
-          value={form.care_type}
-          className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,care_type:e.target.value})}
-        >
+multiple
+value={form.care_type}
+onChange={(e)=>{
+ const values=[...e.target.selectedOptions].map(o=>o.value)
+ setForm({...form,care_type:values.join(",")})
+}}
+>
           <option value="">Select Care Type</option>
           <option value="Skin Care">Skin Care</option>
           <option value="Hair Care">Hair Care</option>
@@ -172,10 +175,13 @@ export default function AddProduct() {
         {/* CONCERN */}
 
         <select
-          value={form.concern_type}
-          className="w-full border rounded-xl px-4 py-3"
-          onChange={(e)=>setForm({...form,concern_type:e.target.value})}
-        >
+multiple
+value={form.concern_type}
+onChange={(e)=>{
+ const values=[...e.target.selectedOptions].map(o=>o.value)
+ setForm({...form,concern_type:values.join(",")})
+}}
+>
           <option value="">Select Concern</option>
           <option value="Immunity">Immunity</option>
           <option value="Digestion">Digestion</option>
