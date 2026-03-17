@@ -39,7 +39,7 @@ export default function Home() {
     const fetchProducts = async()=>{
 
       try{
-        setLoading(true); // ✅ start
+        setLoading(true); // ✅ start loading
 
         const res = await getProducts({
           search:searchQuery,
@@ -55,7 +55,7 @@ export default function Home() {
       }catch(err){
         console.log(err);
       }finally{
-        setLoading(false); // ✅ stop
+        setLoading(false); // ✅ stop loading
       }
 
     };
@@ -211,7 +211,7 @@ export default function Home() {
       </section>
 
 
-      {/* SEARCH + FILTER */}
+      {/* SEARCH + FILTER BAR */}
       <section className="flex flex-wrap gap-4 items-center justify-center">
 
         <div className="flex border border-default rounded-xl overflow-hidden">
@@ -227,19 +227,23 @@ export default function Home() {
           </button>
         </div>
 
-        <select value={care} onChange={(e)=>setCare(e.target.value)} className="border rounded-xl px-3 py-2">
+        <select value={care} onChange={(e)=>setCare(e.target.value)} className="border border-default rounded-xl px-3 py-2">
           <option value="">Care</option>
           <option value="Skin Care">Skin Care</option>
           <option value="Hair Care">Hair Care</option>
+          <option value="Digestive Care">Digestive Care</option>
+          <option value="Immunity Care">Immunity Care</option>
         </select>
 
-        <select value={concern} onChange={(e)=>setConcern(e.target.value)} className="border rounded-xl px-3 py-2">
+        <select value={concern} onChange={(e)=>setConcern(e.target.value)} className="border border-default rounded-xl px-3 py-2">
           <option value="">Concern</option>
           <option value="Immunity">Immunity</option>
           <option value="Digestion">Digestion</option>
+          <option value="Skin Health">Skin Health</option>
+          <option value="Weight Loss">Weight Loss</option>
         </select>
 
-        <select value={sort} onChange={(e)=>setSort(e.target.value)} className="border rounded-xl px-3 py-2">
+        <select value={sort} onChange={(e)=>setSort(e.target.value)} className="border border-default rounded-xl px-3 py-2">
           <option value="featured">Featured</option>
           <option value="price_low">Price Low → High</option>
           <option value="price_high">Price High → Low</option>
@@ -255,17 +259,49 @@ export default function Home() {
         <aside className="w-64 sticky top-0 h-fit">
           <h3 className="font-semibold mb-4">Categories</h3>
 
-          {categories.map(cat => (
-            <label key={cat.id} className="flex gap-2">
+          <div className="space-y-2">
+            <label className="flex gap-2">
               <input
                 type="radio"
-                value={cat.id}
-                checked={category==cat.id}
-                onChange={(e)=>setCategory(e.target.value)}
+                name="category"
+                value=""
+                checked={category===""}
+                onChange={()=>setCategory("")}
               />
-              {cat.name}
+              All Products
             </label>
-          ))}
+
+            {categories.map(cat => (
+              <label key={cat.id} className="flex gap-2">
+                <input
+                  type="radio"
+                  name="category"
+                  value={cat.id}
+                  checked={category==cat.id}
+                  onChange={(e)=>setCategory(e.target.value)}
+                />
+                {cat.name}
+              </label>
+            ))}
+          </div>
+
+          <h3 className="font-semibold mt-6 mb-3">Price Range</h3>
+
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            step="50"
+            value={price}
+            onChange={(e)=>setPrice(e.target.value)}
+            className="w-full"
+          />
+
+          <div className="flex justify-between text-sm text-gray-500 mt-2">
+            <span>₹0</span>
+            <span>₹{price}</span>
+          </div>
+
         </aside>
 
 
@@ -276,41 +312,27 @@ export default function Home() {
 
             {loading ? (
 
-              <div className="col-span-full text-center py-20 text-gray-500">
+              <div className="col-span-full text-center py-20 text-gray-500 text-lg">
                 Loading products...
               </div>
 
             ) : products.length === 0 ? (
 
-              <div className="col-span-full text-center py-20 text-gray-500">
+              <div className="col-span-full text-center py-20 text-gray-500 text-lg">
                 No products found
               </div>
 
             ) : (
 
-              products.map(product => {
-
+              products.map(product=>{
                 const quantity = getQuantity(product.id);
 
-                return (
-                  <div key={product.id} className="border p-4 rounded-xl">
-
+                return(
+                  <div key={product.id} className="bg-white border rounded-2xl p-6">
                     <h3>{product.title}</h3>
                     <p>₹{product.price}</p>
-
-                    {quantity === 0 ? (
-                      <button onClick={()=>increaseQty(product)}>Add</button>
-                    ) : (
-                      <div>
-                        <button onClick={()=>decreaseQty(product)}>-</button>
-                        {quantity}
-                        <button onClick={()=>increaseQty(product)}>+</button>
-                      </div>
-                    )}
-
                   </div>
                 )
-
               })
 
             )}
