@@ -426,8 +426,7 @@ Order Overview
 
 <p>
 ₹{
-(Number(item.price)*Number(item.quantity)) +
-Number(item.delivery_charge || 0)
+(Number(item.price)*Number(item.quantity)) 
 }
 </p>
 
