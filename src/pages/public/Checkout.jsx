@@ -101,18 +101,6 @@ const placeOrder = async()=>{
 
 };
 
-
-/* FINAL TOTAL WITH DELIVERY */
-
-const totalprice = cartItems.reduce(
-  (acc,item)=>
-    acc +
-    (Number(item.price)*Number(item.quantity)) +
-    Number(item.delivery_charge || 0),
-  0
-);
-
-
 /* SAVE / UPDATE ADDRESS */
 
 const handleAdd = async()=>{
@@ -450,7 +438,7 @@ Number(item.delivery_charge || 0)
 <div className="flex justify-between font-bold mt-4">
 
 <p>Total</p>
-<p>₹{totalprice}</p>
+<p>₹{totalAmount}</p>
 
 </div>
 
