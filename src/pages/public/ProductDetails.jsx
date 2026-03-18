@@ -29,7 +29,7 @@ export default function ProductDetails() {
       try {
 
         const productRes = await getProducts();
-        const found = productRes.data.find(p => p.id === id);
+        const found = productRes.data.find(p => p.id === Number(id));
         setProduct(found);
 
         // Only fetch cart if user is a customer (others don't have a cart)
@@ -151,12 +151,12 @@ export default function ProductDetails() {
           )}
 
           {/* INGREDIENT PREVIEW */}
-          {product.product.ingredients_image_url && (
+          {product.ingredients_image_url && (
             <div className="mt-4">
               <p className="text-sm font-medium mb-2">Ingredients</p>
 
               <img
-                src={product.product.ingredients_image_url}
+                src={product.ingredients_image_url}
                 alt="ingredients"
                 onClick={() => setShowIngredient(true)}
                 className="w-20 h-20 object-cover rounded-lg cursor-pointer border hover:scale-105 transition"
@@ -251,7 +251,7 @@ export default function ProductDetails() {
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
           <div className="relative">
             <img
-              src={product.product.ingredients_image_url}
+              src={product.ingredients_image_url}
               alt="ingredients"
               className="max-h-[80vh] rounded-lg shadow-lg"
             />
