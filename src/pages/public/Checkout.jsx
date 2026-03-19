@@ -265,7 +265,6 @@ return(
 {/* SAVED ADDRESSES */}
 
 <div className="space-y-4">
-
 {addresses.map(addr=>(
 
 <div
