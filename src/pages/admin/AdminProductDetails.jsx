@@ -115,7 +115,24 @@ In Stock
 </div>
 
 </div>
+{/* INGREDIENT LABEL IMAGE */}
 
+{product.ingredients_image_url && (
+
+<div>
+
+<h3 className="font-semibold text-lg">
+Ingredients Label
+</h3>
+
+<img
+src={product.ingredients_image_url}
+className="mt-3 w-64 rounded-lg border"
+/>
+
+</div>
+
+)}
 </div>
 
 
