@@ -339,7 +339,7 @@ const ingredientImages = product.ingredients_image_url
 
   </div>
 
-
+)}
      {/* POPUP */}
       {showPopup && (
         <div className="fixed bottom-6 right-6 bg-white p-4 shadow rounded">
