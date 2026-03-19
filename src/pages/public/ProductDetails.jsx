@@ -95,6 +95,9 @@ const [selectedImage, setSelectedImage] = useState(null);
 const ingredientImages = product.ingredients_image_url
   ? product.ingredients_image_url.split(",")
   : [];
+  const ingredientList = product.ingredients
+  ? product.ingredients.split("\n")
+  : [];
   return (
     <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10">
 
@@ -245,7 +248,27 @@ const ingredientImages = product.ingredients_image_url
       ))}
 
     </div>
+{/* INGREDIENT LIST */}
 
+{ingredientList.length > 0 && (
+
+  <div className="mt-4">
+
+    <h3 className="text-sm font-semibold mb-2 text-textMuted">
+      Ingredients List
+    </h3>
+
+    <ul className="list-disc pl-5 space-y-1 text-sm text-textStrong">
+
+      {ingredientList.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+
+    </ul>
+
+  </div>
+
+)}
   </div>
 
 )}
