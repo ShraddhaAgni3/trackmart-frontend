@@ -114,9 +114,7 @@ In Stock
 
             </div>
 
-          </div>
-
-        </div>
+       
 
         {/* ✅ INGREDIENT LABEL (FULL WIDTH) */}
         {product.ingredients_image_url && (
@@ -198,7 +196,9 @@ In Stock
           </div>
 
         )}
+   </div>
 
+        </div>
 {/* DESCRIPTION */}
 
 <div>
