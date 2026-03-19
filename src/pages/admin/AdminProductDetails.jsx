@@ -110,94 +110,94 @@ Low Stock
 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-successText">
 In Stock
 </span>
-)}
+              )}
 
-</div>
-{/* INGREDIENT LABEL */}
+            </div>
 
-{product.ingredients_image_url && (
+          </div>
 
-<div className="relative">
+        </div>
 
-  <h3 className="font-semibold text-lg">
-    Ingredients Label
-  </h3>
+        {/* ✅ INGREDIENT LABEL (FULL WIDTH) */}
+        {product.ingredients_image_url && (
 
-  {/* SMALL THUMBNAILS */}
-  <div className="flex gap-2 mt-3">
+          <div className="relative">
 
-    {product.ingredients_image_url.split(",").map((img,i)=>(
+            <h3 className="font-semibold text-lg">
+              Ingredients Label
+            </h3>
 
-      <div
-        key={i}
-        className="w-12 h-12 rounded-lg overflow-hidden border cursor-pointer"
-        onClick={() => setSelectedImage(img.trim())}
-      >
-        <img
-          src={img.trim()}
-          className="w-full h-full object-cover"
-        />
-      </div>
+            <div className="flex gap-2 mt-3">
 
-    ))}
+              {product.ingredients_image_url.split(",").map((img, i) => (
 
-  </div>
+                <div
+                  key={i}
+                  className="w-12 h-12 rounded-lg overflow-hidden border cursor-pointer"
+                  onClick={() => setSelectedImage(img.trim())}
+                >
+                  <img
+                    src={img.trim()}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-  {/* FLOATING OVERLAY (INSIDE SAME DIV) */}
-  {selectedImage && (
-    <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-xl z-10">
+              ))}
 
-      <div className="relative">
+            </div>
 
-        <img
-          src={selectedImage}
-          className="max-h-[200px] object-contain rounded-lg"
-        />
+            {/* FLOATING OVERLAY */}
+            {selectedImage && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-xl z-10">
 
-        <button
-          onClick={() => setSelectedImage(null)}
-          className="absolute top-1 right-1 bg-white rounded-full px-2 text-sm"
-        >
-          ✕
-        </button>
+                <div className="relative">
 
-      </div>
+                  <img
+                    src={selectedImage}
+                    className="max-h-[200px] object-contain rounded-lg"
+                  />
 
-    </div>
-  )}
+                  <button
+                    onClick={() => setSelectedImage(null)}
+                    className="absolute top-1 right-1 bg-white rounded-full px-2 text-sm"
+                  >
+                    ✕
+                  </button>
 
-</div>
+                </div>
 
-)}
-  {product.ingredients && (
+              </div>
+            )}
 
-<div className="mt-4">
+          </div>
 
-  <h3 className="font-semibold text-lg">
-    Key Ingredients
-  </h3>
+        )}
 
-  <div className="flex flex-wrap gap-2 mt-2">
+        {/* ✅ KEY INGREDIENTS */}
+        {product.ingredients && (
 
-    {product.ingredients.split("\n").map((item,i)=>(
-      <span
-        key={i}
-        className="px-3 py-1 text-sm bg-gray-100 border rounded-full"
-      >
-        {item}
-      </span>
-    ))}
-    
-</div>
+          <div className="mt-4">
 
+            <h3 className="font-semibold text-lg">
+              Key Ingredients
+            </h3>
 
-  </div>
+            <div className="flex flex-wrap gap-2 mt-2">
 
-</div>
+              {product.ingredients.split("\n").map((item, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 text-sm bg-gray-100 border rounded-full"
+                >
+                  {item}
+                </span>
+              ))}
 
-)}
-</div>
+            </div>
 
+          </div>
+
+        )}
 
 {/* DESCRIPTION */}
 
