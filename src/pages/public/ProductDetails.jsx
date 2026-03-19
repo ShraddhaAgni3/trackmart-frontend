@@ -339,60 +339,40 @@ const ingredientImages = product.ingredients_image_url
 
   </div>
 
-)}
-      {/* VIEW CART POPUP */}
+
+     {/* POPUP */}
       {showPopup && (
-        <div className="fixed bottom-6 right-6 bg-white border border-borderDefault shadow-lg rounded-xl p-4 flex items-center gap-4 z-50">
-          <p className="text-sm font-medium">Item added to cart</p>
-          <button
-            onClick={() => navigate("/cart")}
-            className="bg-primary text-white px-4 py-1 rounded"
-          >
-            View Cart
-          </button>
-          <button onClick={() => setShowPopup(false)} className="text-gray-500">
-            ✕
-          </button>
+        <div className="fixed bottom-6 right-6 bg-white p-4 shadow rounded">
+          <p>Item added to cart</p>
+          <button onClick={() => navigate("/cart")}>View Cart</button>
         </div>
       )}
-{/* FLOATING IMAGE VIEW */}
 
-{selectedImage && (
-  <div
-    className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 animate-fadeIn"
-    onClick={() => setSelectedImage(null)} // click outside to close
-  >
+      {/* ✅ FLOATING IMAGE VIEW (FIXED) */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            className="relative bg-white p-4 rounded-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedImage}
+              alt="full"
+              className="max-h-[80vh] max-w-[90vw]"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-2 right-2 bg-white px-2 py-1 rounded"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
-   {/* FLOATING IMAGE VIEW */}
-
-{selectedImage && (
-  <div
-    className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 animate-fadeIn"
-    onClick={() => setSelectedImage(null)}
-  >
-
-    <div
-      className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-4 animate-scaleIn"
-      onClick={(e) => e.stopPropagation()}
-    >
-
-      <img
-        src={selectedImage}
-        alt="Full Ingredient"
-        className="max-h-[75vh] max-w-[85vw] rounded-xl object-contain"
-      />
-
-      <button
-        onClick={() => setSelectedImage(null)}
-        className="absolute -top-3 -right-3 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow-lg hover:scale-110 transition"
-      >
-        ✕
-      </button>
-
-    </div>
-
-  </div>
-)}
     </div>
   );
 }
