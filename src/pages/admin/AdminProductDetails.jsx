@@ -111,6 +111,8 @@ Low Stock
 In Stock
 </span>
 )}
+
+</div>
 {/* INGREDIENT LABEL */}
 
 {product.ingredients_image_url && (
@@ -185,8 +187,7 @@ In Stock
         {item}
       </span>
     ))}
-</div>
-
+    
 </div>
 
 
