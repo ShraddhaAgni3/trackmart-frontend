@@ -18,7 +18,7 @@ export default function ProductDetails() {
   const [quantity, setQuantity]   = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [isAdded, setIsAdded]     = useState(false);
-const [showIngredient, setShowIngredient] = useState(false);
+const [selectedImage, setSelectedImage] = useState(null);
   // Button should show only when:
   // 1. Not logged in (role === null)  → show button, clicking redirects to login
   // 2. Logged in as customer          → show button, clicking adds to cart
@@ -92,7 +92,9 @@ const [showIngredient, setShowIngredient] = useState(false);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!product) return <p className="text-center mt-10">Product not found</p>;
-
+const ingredientImages = product.ingredients_image_url
+  ? product.ingredients_image_url.split(",")
+  : [];
   return (
     <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10">
 
@@ -106,97 +108,159 @@ const [showIngredient, setShowIngredient] = useState(false);
 
 
       {/* TOP SECTION */}
-<div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
 
-  {/* LEFT → IMAGE (smaller controlled) */}
-  <div className="bg-bgSurface border border-borderDefault rounded-2xl shadow-card p-4 flex justify-center">
-
-    <img
-      src={product.image_url}
-      alt={product.title}
-      className="h-[250px] sm:h-[320px] object-contain"
-    />
-
-  </div>
-
-
-  {/* RIGHT → MAIN INFO */}
-  <div className="space-y-4">
-
-    <h1 className="text-2xl sm:text-3xl font-bold text-primary">
-      {product.title}
-    </h1>
-
-    <p className="text-2xl font-semibold text-green-600">
-      ₹{product.price}
-    </p>
-
-    {/* STOCK */}
-    <p className={`text-sm font-semibold ${product.stock > 0 ? "text-green-600" : "text-red-500"}`}>
-      {product.stock > 0 ? `In Stock (${product.stock})` : "Out of Stock"}
-    </p>
-
-    {/* CALORIES */}
-    <p className="text-sm text-textMuted">
-      Calories: <span className="font-semibold">{product.calories}</span>
-    </p>
-
-    {/* ADD TO CART */}
-    {canAddToCart && product.stock > 0 && (
-      !isAdded ? (
-        <button
-          onClick={handleAddToCart}
-          className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90"
-        >
-          Add to Cart
-        </button>
-      ) : (
-        <div className="flex items-center border rounded-lg w-fit">
-          <button onClick={() => updateQuantity(quantity - 1)} className="px-3 py-2">-</button>
-          <span className="px-4">{quantity}</span>
-          <button onClick={() => updateQuantity(quantity + 1)} className="px-3 py-2">+</button>
+        {/* IMAGE */}
+        <div className="bg-bgSurface border border-borderDefault rounded-2xl shadow-card p-4 sm:p-6 flex items-center justify-center">
+          {product.image_url ? (
+            <img
+              src={product.image_url}
+              alt={product.title}
+              className="max-h-[280px] sm:max-h-[420px] object-contain"
+            />
+          ) : (
+            <div className="text-textMuted">No Image</div>
+          )}
         </div>
-      )
-    )}
-{/* INGREDIENT MODAL */}
-{showIngredient && (
-  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
 
-    <div className="relative">
 
-      <img
-        src={product.ingredient_image_url}
-        alt="ingredients"
-        className="max-h-[80vh] rounded-lg shadow-lg"
-      />
+        {/* RIGHT DETAILS */}
+        <div className="space-y-5">
 
-      <button
-        onClick={() => setShowIngredient(false)}
-        className="absolute top-2 right-2 bg-white rounded-full px-3 py-1"
-      >
-        ✕
-      </button>
+          {/* TITLE */}
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-primary font-bold text-primary">
+            {product.title}
+          </h1>
+
+          {/* PRICE */}
+          <div className="text-2xl sm:text-3xl font-semibold text-green-600">
+            ₹{product.price}
+          </div>
+
+          {/* SIZE */}
+          <div className="text-sm sm:text-base text-textMuted">
+            Weight: <span className="font-semibold text-textStrong">{product.size}</span>
+          </div>
+
+          {/* STOCK */}
+          {product.stock === 0 ? (
+            <span className="inline-block bg-red-100 text-dangerText px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
+              Out of Stock
+            </span>
+          ) : (
+            <span className="inline-block bg-green-100 text-successText px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
+              In Stock ({product.stock})
+            </span>
+          )}
+
+
+          {/* ADD TO CART — only shown to guests and customers, hidden for vendor/admin */}
+          {canAddToCart && product.stock > 0 && (
+
+            <div className="pt-3">
+
+              {/* Guest (not logged in) OR customer who hasn't added yet */}
+              {!isAdded ? (
+                <button
+                  onClick={handleAddToCart}
+                  className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition"
+                >
+                  Add to Cart
+                </button>
+
+              ) : (
+                /* Customer who already added — show qty controls */
+                <div className="flex items-center border border-borderDefault rounded-lg overflow-hidden w-fit">
+                  <button
+                    onClick={() => updateQuantity(quantity - 1)}
+                    className="px-3 py-2 bg-gray-100 hover:bg-gray-200"
+                  >
+                    -
+                  </button>
+                  <span className="px-4">{quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(quantity + 1)}
+                    className="px-3 py-2 bg-gray-100 hover:bg-gray-200"
+                  >
+                    +
+                  </button>
+                </div>
+              )}
+
+            </div>
+
+          )}
+
+
+          {/* NUTRITION STATS */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+
+            <div className="rounded-xl p-4 text-center" style={{ background: "var(--color-stat-1-bg)" }}>
+              <p className="text-sm text-textMuted">Calories</p>
+              <p className="text-xl font-bold text-textStrong">{product.calories}</p>
+            </div>
+
+            <div className="rounded-xl p-4 text-center" style={{ background: "var(--color-stat-2-bg)" }}>
+              <p className="text-sm text-textMuted">Protein</p>
+              <p className="text-xl font-bold text-textStrong">{product.protein} g</p>
+            </div>
+
+            <div className="rounded-xl p-4 text-center" style={{ background: "var(--color-stat-4-bg)" }}>
+              <p className="text-sm text-textMuted">Fat</p>
+              <p className="text-xl font-bold text-textStrong">{product.fat} g</p>
+            </div>
+
+            <div className="rounded-xl p-4 text-center" style={{ background: "var(--color-stat-3-bg)" }}>
+              <p className="text-sm text-textMuted">Sugar</p>
+              <p className="text-xl font-bold text-textStrong">{product.sugar} g</p>
+            </div>
+
+          </div>
+{/* INGREDIENT IMAGES */}
+
+{ingredientImages.length > 0 && (
+
+  <div className="mt-5">
+
+    <h3 className="text-sm font-semibold mb-2 text-textMuted">
+      Ingredients
+    </h3>
+
+    <div className="flex gap-2 overflow-x-auto">
+
+      {ingredientImages.map((img, index) => (
+
+        <div
+          key={index}
+          className="w-12 h-12 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition"
+          onClick={() => setSelectedImage(img.trim())}
+        >
+          <img
+            src={img.trim()}
+            alt="ingredient"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+      ))}
 
     </div>
 
   </div>
+
 )}
-    {/* INGREDIENT PREVIEW */}
-    {product.ingredient_image_url && (
-      <div className="mt-4">
-        <p className="text-sm font-medium mb-2">Ingredients</p>
-
-        <img
-          src={product.ingredient_image_url}
-          alt="ingredients"
-          onClick={() => setShowIngredient(true)}
-          className="w-20 h-20 object-cover rounded-lg cursor-pointer border hover:scale-105 transition"
-        />
       </div>
-    )}
+        {/* DESCRIPTION */}
+          <div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-5 shadow-card">
+            <h2 className="text-base sm:text-lg font-semibold text-black mb-2">
+              Description
+            </h2>
+            <p className="text-sm sm:text-base text-textStrong leading-relaxed">
+              {product.description}
+            </p>
+          </div>
 
-  </div>
-</div>
+        </div>
 {/* HOW TO USE */}
 
 {product.how_to_use && (
@@ -291,7 +355,44 @@ const [showIngredient, setShowIngredient] = useState(false);
           </button>
         </div>
       )}
+{/* FLOATING IMAGE VIEW */}
 
+{selectedImage && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 animate-fadeIn"
+    onClick={() => setSelectedImage(null)} // click outside to close
+  >
+
+   {/* FLOATING IMAGE VIEW */}
+
+{selectedImage && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 animate-fadeIn"
+    onClick={() => setSelectedImage(null)}
+  >
+
+    <div
+      className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-4 animate-scaleIn"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      <img
+        src={selectedImage}
+        alt="Full Ingredient"
+        className="max-h-[75vh] max-w-[85vw] rounded-xl object-contain"
+      />
+
+      <button
+        onClick={() => setSelectedImage(null)}
+        className="absolute -top-3 -right-3 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow-lg hover:scale-110 transition"
+      >
+        ✕
+      </button>
+
+    </div>
+
+  </div>
+)}
     </div>
   );
 }
