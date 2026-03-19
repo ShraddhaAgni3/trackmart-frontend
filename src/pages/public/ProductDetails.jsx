@@ -250,17 +250,19 @@ const ingredientImages = product.ingredients_image_url
 
 )}
       </div>
-        {/* DESCRIPTION */}
-          <div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-5 shadow-card">
-            <h2 className="text-base sm:text-lg font-semibold text-black mb-2">
-              Description
-            </h2>
-            <p className="text-sm sm:text-base text-textStrong leading-relaxed">
-              {product.description}
-            </p>
-          </div>
-
         </div>
+       {/* DESCRIPTION */}
+
+<div className="bg-bgSurface border border-borderDefault rounded-xl p-4 sm:p-5 shadow-card w-full">
+  <h2 className="text-base sm:text-lg font-semibold text-black mb-2">
+    Description
+  </h2>
+  <p className="text-sm sm:text-base text-textStrong leading-relaxed">
+    {product.description}
+  </p>
+</div>
+
+        
 {/* HOW TO USE */}
 
 {product.how_to_use && (
