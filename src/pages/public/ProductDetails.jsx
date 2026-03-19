@@ -248,23 +248,28 @@ const ingredientImages = product.ingredients_image_url
       ))}
 
     </div>
-{/* INGREDIENT LIST */}
+{/* INGREDIENT LIST (COMPACT) */}
 
 {ingredientList.length > 0 && (
 
   <div className="mt-4">
 
     <h3 className="text-sm font-semibold mb-2 text-textMuted">
-      Ingredients List
+      Ingredients
     </h3>
 
-    <ul className="list-disc pl-5 space-y-1 text-sm text-textStrong">
+    <div className="flex flex-wrap gap-2">
 
       {ingredientList.map((item, index) => (
-        <li key={index}>{item}</li>
+        <span
+          key={index}
+          className="px-3 py-1 text-xs sm:text-sm bg-gray-100 border border-gray-200 rounded-full text-textStrong"
+        >
+          {item}
+        </span>
       ))}
 
-    </ul>
+    </div>
 
   </div>
 
