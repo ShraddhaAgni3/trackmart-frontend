@@ -6,7 +6,7 @@ export default function AdminProductDetails(){
 
 const { id } = useParams();
 const [product,setProduct] = useState(null);
-
+const [selectedImage, setSelectedImage] = useState(null);
 useEffect(()=>{
 
 const fetchProduct = async()=>{
@@ -115,20 +115,82 @@ In Stock
 </div>
 
 </div>
-{/* INGREDIENT LABEL IMAGE */}
+{/* INGREDIENT LABEL */}
 
 {product.ingredients_image_url && (
 
-<div>
+<div className="relative">
 
-<h3 className="font-semibold text-lg">
-Ingredients Label
-</h3>
+  <h3 className="font-semibold text-lg">
+    Ingredients Label
+  </h3>
 
-<img
-src={product.ingredients_image_url}
-className="mt-3 w-64 rounded-lg border"
-/>
+  {/* SMALL THUMBNAILS */}
+  <div className="flex gap-2 mt-3">
+
+    {product.ingredients_image_url.split(",").map((img,i)=>(
+
+      <div
+        key={i}
+        className="w-12 h-12 rounded-lg overflow-hidden border cursor-pointer"
+        onClick={() => setSelectedImage(img.trim())}
+      >
+        <img
+          src={img.trim()}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+    ))}
+
+  </div>
+
+  {/* FLOATING OVERLAY (INSIDE SAME DIV) */}
+  {selectedImage && (
+    <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-xl z-10">
+
+      <div className="relative">
+
+        <img
+          src={selectedImage}
+          className="max-h-[200px] object-contain rounded-lg"
+        />
+
+        <button
+          onClick={() => setSelectedImage(null)}
+          className="absolute top-1 right-1 bg-white rounded-full px-2 text-sm"
+        >
+          ✕
+        </button>
+
+      </div>
+
+    </div>
+  )}
+
+</div>
+
+)}
+  {product.ingredients && (
+
+<div className="mt-4">
+
+  <h3 className="font-semibold text-lg">
+    Key Ingredients
+  </h3>
+
+  <div className="flex flex-wrap gap-2 mt-2">
+
+    {product.ingredients.split("\n").map((item,i)=>(
+      <span
+        key={i}
+        className="px-3 py-1 text-sm bg-gray-100 border rounded-full"
+      >
+        {item}
+      </span>
+    ))}
+
+  </div>
 
 </div>
 
@@ -189,44 +251,6 @@ Sugar
 
 </div>
 
-
-{/* INGREDIENTS */}
-
-{product.ingredients && (
-
-<div>
-
-<h3 className="font-semibold text-lg">
-Ingredients
-</h3>
-
-<p className="text-textMuted mt-2">
-{product.ingredients}
-</p>
-
-</div>
-
-)}
-
-
-{/* INGREDIENT LABEL IMAGE */}
-
-{product.ingredients_image_url && (
-
-<div>
-
-<h3 className="font-semibold text-lg">
-Ingredients Label
-</h3>
-
-<img
-src={product.ingredients_image_url}
-className="mt-3 w-64 rounded-lg border"
-/>
-
-</div>
-
-)}
 
 
 {/* HOW TO USE */}
