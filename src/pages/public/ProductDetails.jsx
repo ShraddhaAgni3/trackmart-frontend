@@ -226,7 +226,7 @@ const ingredientImages = product.ingredients_image_url
   <div className="mt-5">
 
     <h3 className="text-sm font-semibold mb-2 text-textMuted">
-      Ingredients
+     Ingredients Overview
     </h3>
 
     <div className="flex gap-2 overflow-x-auto">
@@ -255,7 +255,7 @@ const ingredientImages = product.ingredients_image_url
   <div className="mt-4">
 
     <h3 className="text-sm font-semibold mb-2 text-textMuted">
-      Ingredients
+      Key Ingredients
     </h3>
 
     <div className="flex flex-wrap gap-2">
