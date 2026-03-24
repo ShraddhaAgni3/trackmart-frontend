@@ -368,7 +368,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
             <button
               onClick={() => navigate("/products")}
-              className="bg-white text-black text-[10px] px-2 py-[3px] mt-1 rounded"
+           className="bg-white text-black text-[10px] px-2 py-[3px] mt-1 rounded"
             >
               Shop
             </button>
@@ -434,8 +434,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
           src={ad.image}
           className="w-10 h-10 rounded-lg object-cover"
         />
-
-        <div className="ml-3 flex-1 flex flex-col justify-between h-full">
+<div className="ml-2 flex-1 flex flex-col justify-center">
           <p className="text-xs font-semibold leading-tight">{ad.title}</p>
           <p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
           <p className="text-[9px] text-gray-500">{ad.code}</p>
@@ -528,7 +527,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     {/* BUTTON */}
     <button
       onClick={() => navigate("/products")}
-      className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit font-medium"
+      className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit font-medium shrink-0"
     >
       {deal.btn}
     </button>
