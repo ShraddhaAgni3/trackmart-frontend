@@ -351,7 +351,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       <section className="flex gap-6 items-start">
 
   {/* LEFT ADS */}
-  <div className="hidden md:grid grid-cols-2 gap-2 w-[300px] shrink-0">
+  <div className="hidden md:grid grid-cols-2 gap-2 w-[320px] shrink-0">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
 
@@ -428,7 +428,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     return (
       <div
         key={i}
-        className={`relative h-[60px] w-full rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+        className={`relative h-[60px] w-full rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
       >
         <img
           src={ad.image}
