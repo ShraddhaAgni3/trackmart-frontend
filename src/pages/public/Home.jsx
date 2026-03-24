@@ -382,7 +382,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
   </div>
 
         {/* SEARCH + FILTER */}
-        <div className="flex flex-nowrap overflow-x-auto gap-2 items-center flex-1">
+       <div className="flex flex-wrap gap-2 items-center flex-1">
 
           <div className="flex border border-default rounded-xl overflow-hidden">
             <input
