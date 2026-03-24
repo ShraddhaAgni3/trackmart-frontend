@@ -34,34 +34,39 @@ const [totalPages, setTotalPages] = useState(1);
   const canAddToCart = role === null || role === "customer";
 const adsData = [
   {
-    title: "30% OFF",
-    desc: "Healthy snacks",
-    color: "orange",
-    image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=100&q=80"
+    title: "20% OFF",
+    desc: "On Beverages",
+    code: "DRINK20",
+    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200",
+    bg: "from-orange-200 to-orange-100"
   },
   {
-    title: "Nutrition+",
-    desc: "Wellness picks",
-    color: "blue",
-    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=100&q=80"
+    title: "Buy 1 Get 1",
+    desc: "Free snacks",
+    code: "BOGO",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200",
+    bg: "from-green-200 to-green-100"
   },
   {
-    title: "Flash Sale",
-    desc: "Ends today",
-    color: "yellow",
-    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=100&q=80"
+    title: "Flat ₹100 OFF",
+    desc: "Above ₹499",
+    code: "SAVE100",
+    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04?w=200",
+    bg: "from-purple-200 to-purple-100"
   },
   {
-    title: "BOGO Deal",
-    desc: "Buy 1 Get 1",
-    color: "pink",
-    image: "https://images.unsplash.com/photo-1506617564039-2f3b650b7010?w=100&q=80"
+    title: "Flash Deal",
+    desc: "Ends tonight",
+    code: "FLASH",
+    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=200",
+    bg: "from-yellow-200 to-yellow-100"
   },
   {
-    title: "Organic",
-    desc: "100% natural",
-    color: "green",
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=100&q=80"
+    title: "Organic Sale",
+    desc: "Healthy picks",
+    code: "HEALTH10",
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200",
+    bg: "from-green-100 to-white"
   }
 ];
 const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
@@ -353,27 +358,28 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
     return (
       <div
-        key={i}
-        className="relative h-[48px] rounded-lg overflow-hidden shadow-sm"
-      >
+  key={i}
+  className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center p-2`}
+>
 
-        {/* IMAGE */}
-        <img
-          src={ad.image}
-          className="w-full h-full object-cover"
-        />
+  {/* IMAGE */}
+  <img
+    src={ad.image}
+    className="w-12 h-12 rounded-lg object-cover"
+  />
 
-        {/* OVERLAY */}
-        <div className="absolute inset-0 bg-black/40 flex flex-col justify-between px-2 py-1">
+  {/* TEXT */}
+  <div className="ml-2 flex-1">
+    <p className="text-[11px] font-bold">{ad.title}</p>
+    <p className="text-[9px] text-gray-600">{ad.desc}</p>
+    <p className="text-[8px] text-gray-500">{ad.code}</p>
+  </div>
 
-          <div>
-            <p className="text-white text-[10px] font-semibold leading-tight">
-              {ad.title}
-            </p>
-            <p className="text-white text-[9px] opacity-90 leading-tight">
-              {ad.desc}
-            </p>
-          </div>
+  {/* TICKET CUT */}
+  <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+  <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+
+</div>
 
           <button
             onClick={() => navigate("/products")}
