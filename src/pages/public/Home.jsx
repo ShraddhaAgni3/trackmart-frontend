@@ -384,40 +384,51 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
   </div>
 
   {/* CENTER FILTERS */}
-  <div className="flex flex-1 flex-wrap gap-2 items-center">
+ <div className="flex flex-1 gap-2 items-center min-w-0">
 
-    <div className="flex border border-default rounded-xl overflow-hidden">
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={searchText}
-        onChange={(e)=>setSearchText(e.target.value)}
-        className="px-2 py-2 outline-none w-72"
-      />
-      <button onClick={handleSearch} className="bg-primary text-white px-5">
-        Search
-      </button>
-    </div>
-
-    <select value={care} onChange={(e)=>setCare(e.target.value)}
-      className="border border-default rounded-xl px-3 py-2">
-      <option value="">Care</option>
-    </select>
-
-    <select value={concern} onChange={(e)=>setConcern(e.target.value)}
-      className="border border-default rounded-xl px-3 py-2">
-      <option value="">Concern</option>
-    </select>
-
-    <select value={sort} onChange={(e)=>setSort(e.target.value)}
-      className="border border-default rounded-xl px-3 py-2">
-      <option value="featured">Featured</option>
-      <option value="price_low">Price Low → High</option>
-      <option value="price_high">Price High → Low</option>
-    </select>
-
+  <div className="flex border border-default rounded-xl overflow-hidden shrink-0">
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={searchText}
+      onChange={(e)=>setSearchText(e.target.value)}
+      className="px-2 py-2 outline-none w-60 shrink-0"
+    />
+    <button
+      onClick={handleSearch}
+      className="bg-primary text-white px-4 shrink-0"
+    >
+      Search
+    </button>
   </div>
 
+  <select
+    value={care}
+    onChange={(e)=>setCare(e.target.value)}
+    className="border border-default rounded-xl px-3 py-2 shrink-0"
+  >
+    <option value="">Care</option>
+  </select>
+
+  <select
+    value={concern}
+    onChange={(e)=>setConcern(e.target.value)}
+    className="border border-default rounded-xl px-3 py-2 shrink-0"
+  >
+    <option value="">Concern</option>
+  </select>
+
+  <select
+    value={sort}
+    onChange={(e)=>setSort(e.target.value)}
+    className="border border-default rounded-xl px-3 py-2 shrink-0"
+  >
+    <option value="featured">Featured</option>
+    <option value="price_low">Price Low → High</option>
+    <option value="price_high">Price High → Low</option>
+  </select>
+
+</div>
   {/* RIGHT ADS (UNCHANGED DESIGN) */}
   <div className="hidden md:flex flex-col gap-2 w-[220px] shrink-0">
 
