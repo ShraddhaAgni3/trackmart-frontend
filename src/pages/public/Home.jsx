@@ -347,123 +347,76 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       
       </section>
 
-      {/* SEARCH + FILTER BAR */}
-      <section className="flex gap-6 items-start">
 
-  {/* LEFT ADS */}
-  <div className="hidden md:grid grid-cols-2 gap-2 w-[320px] shrink-0">
-    {adIndexes.map((index, i) => {
-      const ad = adsData[index];
+{/* SEARCH + FILTER BAR */}
+<section className="flex gap-6 items-start">
 
-      return (
-      <div
-  key={i}
-  className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
->
-  <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
+  <div className="flex flex-1 justify-between items-start gap-4">
 
-  <div className="ml-2 flex-1 flex flex-col justify-center">
-    <p className="text-xs font-semibold leading-tight">{ad.title}</p>
-    <p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
-    <p className="text-[9px] text-gray-500">{ad.code}</p>
-  </div>
+    {/* FILTERS */}
+    <div className="flex flex-wrap gap-2 items-center">
 
-  <button
-    onClick={() => navigate("/products")}
-    className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
-  >
-    Shop
-  </button>
-
-  <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-  <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-</div>
-      );
-    })}
-  </div>
-
-        {/* SEARCH + FILTER */}
-       <div className="flex flex-wrap gap-2 items-center flex-1">
-
-          <div className="flex border border-default rounded-xl overflow-hidden">
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchText}
-              onChange={(e)=>setSearchText(e.target.value)}
-              className="px-2 py-2 outline-none w-72"
-            />
-            <button onClick={handleSearch} className="bg-primary text-white px-5">Search</button>
-          </div>
-
-          <select value={care} onChange={(e)=>setCare(e.target.value)} className="border border-default rounded-xl px-3 py-2">
-            <option value="">Care</option>
-            <option value="Skin Care">Skin Care</option>
-            <option value="Hair Care">Hair Care</option>
-            <option value="Digestive Care">Digestive Care</option>
-            <option value="Immunity Care">Immunity Care</option>
-          </select>
-
-          <select value={concern} onChange={(e)=>setConcern(e.target.value)} className="border border-default rounded-xl px-3 py-2">
-            <option value="">Concern</option>
-            <option value="Immunity">Immunity</option>
-            <option value="Digestion">Digestion</option>
-            <option value="Skin Health">Skin Health</option>
-            <option value="Weight Loss">Weight Loss</option>
-          </select>
-
-          <div className="flex items-center gap-2">
-
-            <select value={sort} onChange={(e)=>setSort(e.target.value)} className="border border-default rounded-xl px-3 py-2">
-              <option value="featured">Featured</option>
-              <option value="price_low">Price Low → High</option>
-              <option value="price_high">Price High → Low</option>
-            </select>
-
-            {/* RIGHT ADS — 2 vertical with image */}
-        <div className="hidden md:flex flex-col gap-2 w-[220px]">
-
-  {adIndexes.slice(2,4).map((index, i) => {
-    const ad = adsData[index];
-
-    return (
-      <div
-        key={i}
-        className={`relative h-[60px] w-full rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
-      >
-        <img
-          src={ad.image}
-          className="w-10 h-10 rounded-lg object-cover"
+      <div className="flex border rounded-xl overflow-hidden">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchText}
+          onChange={(e)=>setSearchText(e.target.value)}
+          className="px-3 py-2 outline-none w-72"
         />
-<div className="ml-2 flex-1 flex flex-col justify-center">
-          <p className="text-xs font-semibold leading-tight">{ad.title}</p>
-          <p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
-          <p className="text-[9px] text-gray-500">{ad.code}</p>
-
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-white text-black text-[10px] px-2 py-[3px] mt-1 rounded w-fit"
-          >
-            Shop
-          </button>
-        </div>
-
-        <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-        <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-
+        <button
+          onClick={handleSearch}
+          className="bg-primary text-white px-4"
+        >
+          Search
+        </button>
       </div>
-    );
-  })}
 
-</div>
+      <select value={care} onChange={(e)=>setCare(e.target.value)}
+        className="border rounded-xl px-3 py-2">
+        <option value="">Care</option>
+        <option value="Skin Care">Skin Care</option>
+      </select>
 
+      <select value={concern} onChange={(e)=>setConcern(e.target.value)}
+        className="border rounded-xl px-3 py-2">
+        <option value="">Concern</option>
+        <option value="Immunity">Immunity</option>
+      </select>
+
+      <select value={sort} onChange={(e)=>setSort(e.target.value)}
+        className="border rounded-xl px-3 py-2">
+        <option value="featured">Featured</option>
+        <option value="price_low">Low → High</option>
+      </select>
+
+    </div>
+
+    {/* RIGHT COUPONS */}
+    <div className="hidden md:flex flex-col gap-2 w-[220px] shrink-0">
+      {adIndexes.slice(2,4).map((index, i) => {
+        const ad = adsData[index];
+
+        return (
+          <div key={i} className="h-[60px] flex items-center px-2 bg-white shadow rounded-xl">
+            <img src={ad.image} className="w-10 h-10 rounded" />
+
+            <div className="ml-2 flex-1">
+              <p className="text-xs font-semibold">{ad.title}</p>
+              <p className="text-[10px]">{ad.desc}</p>
             </div>
 
+            <button className="text-[9px] bg-black text-white px-2 py-1 rounded">
+              Shop
+            </button>
           </div>
+        );
+      })}
+    </div>
 
-        
+  </div>
 
-      </section>
+</section>
 
       {/* SIDEBAR + PRODUCTS */}
       <section id="products-section" className="flex gap-10 h-[80vh] overflow-hidden">
