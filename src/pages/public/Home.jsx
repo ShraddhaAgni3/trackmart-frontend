@@ -356,27 +356,28 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       const ad = adsData[index];
 
       return (
-        <div
-          key={i}className={`relative min-h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
-        >
-          <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
+      <div
+  key={i}
+  className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
+>
+  <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
 
-          <div className="ml-3 flex-1 flex flex-col justify-between h-full">
-            <p className="text-xs font-semibold leading-tight">{ad.title}</p>
-<p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
-<p className="text-[9px] text-gray-500">{ad.code}</p>
+  <div className="ml-2 flex-1 flex flex-col justify-center">
+    <p className="text-xs font-semibold leading-tight">{ad.title}</p>
+    <p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
+    <p className="text-[9px] text-gray-500">{ad.code}</p>
+  </div>
 
-            <button
-              onClick={() => navigate("/products")}
-           className="bg-white text-black text-[10px] px-2 py-[3px] mt-1 rounded"
-            >
-              Shop
-            </button>
-          </div>
+  <button
+    onClick={() => navigate("/products")}
+    className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+  >
+    Shop
+  </button>
 
-          <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-          <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-        </div>
+  <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+  <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+</div>
       );
     })}
   </div>
