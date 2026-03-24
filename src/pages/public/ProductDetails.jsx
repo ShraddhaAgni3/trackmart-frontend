@@ -25,37 +25,34 @@ const [selectedImage, setSelectedImage] = useState(null);
   // 3. Logged in as vendor or admin   → hide button completely
   const canAddToCart = role === null || role === "customer";
 
-  useEffect(() => {
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const productRes = await getProductById(id);
+      setProduct(productRes.data);
 
-    const fetchData = async () => {
-      try {
+      if (role === "customer") {
+        const cartRes = await getCart();
+        const cartItem = cartRes.data.find(
+          item =>
+            String(item.product_id?.id || item.product_id) === String(id)
+        );
 
-        const productRes = await getProducts();
-        const found = productRes.data.find(p => p.id === id);
-        setProduct(found);
-
-        // Only fetch cart if user is a customer (others don't have a cart)
-        if (role === "customer") {
-          const cartRes = await getCart();
-          const cartItem = cartRes.data.find(
-            item => (item.product_id?.id || item.product_id) === id
-          );
-          if (cartItem) {
-            setIsAdded(true);
-            setQuantity(cartItem.quantity);
-          }
+        if (cartItem) {
+          setIsAdded(true);
+          setQuantity(cartItem.quantity);
         }
-
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
       }
-    };
 
-    fetchData();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  }, [id, role]);
+  fetchData();
+}, [id, role]);
 
 
   const handleAddToCart = async () => {
