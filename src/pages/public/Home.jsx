@@ -373,6 +373,12 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     <p className="text-[11px] font-bold">{ad.title}</p>
     <p className="text-[9px] text-gray-600">{ad.desc}</p>
     <p className="text-[8px] text-gray-500">{ad.code}</p>
+    <button
+  onClick={() => navigate("/products")}
+  className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit"
+>
+  Shop
+</button>
   </div>
 
   {/* TICKET CUT */}
@@ -381,12 +387,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
 </div>
 
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit"
-          >
-            Shop
-          </button>
+          
 
         </div>
 
