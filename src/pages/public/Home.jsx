@@ -348,54 +348,39 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       </section>
 
       {/* SEARCH + FILTER BAR */}
-      <section className="flex gap-6 items-center justify-between">
+      <section className="flex gap-6 items-start">
 
-        {/* LEFT ADS — 2x2 grid with image */}
-        <div className="hidden md:grid grid-cols-2 gap-2 w-[260px] shrink-0">
+  {/* LEFT ADS */}
+  <div className="hidden md:grid grid-cols-2 gap-2 w-[260px] shrink-0">
+    {adIndexes.map((index, i) => {
+      const ad = adsData[index];
 
-  {adIndexes.map((index, i) => {
-    const ad = adsData[index];
+      return (
+        <div
+          key={i}
+          className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center p-2`}
+        >
+          <img src={ad.image} className="w-12 h-12 rounded-lg object-cover" />
 
-    return (
-      <div
-  key={i}
-  className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center p-2`}
->
+          <div className="ml-2 flex-1">
+            <p className="text-[11px] font-bold">{ad.title}</p>
+            <p className="text-[9px] text-gray-600">{ad.desc}</p>
+            <p className="text-[8px] text-gray-500">{ad.code}</p>
 
-  {/* IMAGE */}
-  <img
-    src={ad.image}
-    className="w-12 h-12 rounded-lg object-cover"
-  />
+            <button
+              onClick={() => navigate("/products")}
+              className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit"
+            >
+              Shop
+            </button>
+          </div>
 
-  {/* TEXT */}
-  <div className="ml-2 flex-1">
-    <p className="text-[11px] font-bold">{ad.title}</p>
-    <p className="text-[9px] text-gray-600">{ad.desc}</p>
-    <p className="text-[8px] text-gray-500">{ad.code}</p>
-    <button
-  onClick={() => navigate("/products")}
-  className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit"
->
-  Shop
-</button>
-  </div>
-
-  {/* TICKET CUT */}
-  <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-  <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
-
-</div>
-
-          
-
+          <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+          <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
         </div>
-
-      </div>
-    );
-  })}
-
-</div>
+      );
+    })}
+  </div>
 
         {/* SEARCH + FILTER */}
         <div className="flex flex-nowrap overflow-x-auto gap-2 items-center flex-1">
