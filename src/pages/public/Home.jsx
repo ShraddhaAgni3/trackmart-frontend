@@ -666,7 +666,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 </div>
       </section>
 
-   
+    </div>
 
   );
 
