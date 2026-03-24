@@ -344,7 +344,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
             </div>
           </div>
 
-        </div>
+      
       </section>
 
       {/* SEARCH + FILTER BAR */}
