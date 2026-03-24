@@ -16,6 +16,7 @@ export default function Home() {
   const [categories,setCategories] = useState([]);
 
   const [cartItems,setCartItems] = useState([]);
+  
   const [wishlistIds,setWishlistIds] = useState([]);
 const [page, setPage] = useState(1);
 const limit = 8;// 9 products per page
