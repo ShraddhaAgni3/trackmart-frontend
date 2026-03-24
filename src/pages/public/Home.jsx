@@ -351,15 +351,15 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       <section className="flex gap-6 items-start">
 
   {/* LEFT ADS */}
-  <div className="hidden md:grid grid-cols-2 gap-2 w-[260px] shrink-0">
+  <div className="hidden md:grid grid-cols-2 gap-2 w-[300px] shrink-0">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
 
       return (
         <div
-          key={i}className={`relative min-h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
+          key={i}className={`relative min-h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
         >
-          <img src={ad.image} className="w-12 h-12 rounded-lg object-cover" />
+          <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
 
           <div className="ml-3 flex-1 flex flex-col justify-between h-full">
             <p className="text-xs font-semibold leading-tight">{ad.title}</p>
