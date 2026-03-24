@@ -357,19 +357,18 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
       return (
         <div
-          key={i}
-          className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center p-2`}
+          key={i}className={`relative min-h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
           <img src={ad.image} className="w-12 h-12 rounded-lg object-cover" />
 
-          <div className="ml-2 flex-1">
-            <p className="text-[11px] font-bold">{ad.title}</p>
-            <p className="text-[9px] text-gray-600">{ad.desc}</p>
-            <p className="text-[8px] text-gray-500">{ad.code}</p>
+          <div className="ml-3 flex-1 flex flex-col justify-between h-full">
+            <p className="text-xs font-semibold leading-tight">{ad.title}</p>
+<p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
+<p className="text-[9px] text-gray-500">{ad.code}</p>
 
             <button
               onClick={() => navigate("/products")}
-              className="bg-white text-black text-[9px] px-2 py-[2px] rounded w-fit"
+              className="bg-white text-black text-[10px] px-2 py-[3px] mt-1 rounded"
             >
               Shop
             </button>
@@ -421,23 +420,42 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
             </select>
 
             {/* RIGHT ADS — 2 vertical with image */}
-            <div className="hidden md:flex flex-col gap-2">
+        <div className="hidden md:flex flex-col gap-2 w-[220px]">
 
-              <div className="flex items-center gap-0 bg-white border border-purple-200 rounded-xl overflow-hidden shadow-sm">
-                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=100&q=80" className="w-10 h-10 object-cover flex-shrink-0" />
-                <div className="px-3 py-2">
-                  <p className="text-xs font-bold text-purple-600 whitespace-nowrap">Best Nutrition</p>
-                  <p className="text-[10px] text-gray-400">Top rated</p>
-                </div>
-              </div>
+  {adIndexes.slice(2,4).map((index, i) => {
+    const ad = adsData[index];
 
-              <div className="flex items-center gap-0 bg-white border border-green-200 rounded-xl overflow-hidden shadow-sm">
-                <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=100&q=80" className="w-10 h-10 object-cover flex-shrink-0" />
-                <div className="px-3 py-2">
-                  <p className="text-xs font-bold text-green-600 whitespace-nowrap">Organic Picks</p>
-                  <p className="text-[10px] text-gray-400">100% natural</p>
-                </div>
-              </div>
+    return (
+      <div
+        key={i}
+        className={`relative min-h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+      >
+        <img
+          src={ad.image}
+          className="w-12 h-12 rounded-lg object-cover"
+        />
+
+        <div className="ml-3 flex-1 flex flex-col justify-between h-full">
+          <p className="text-xs font-semibold leading-tight">{ad.title}</p>
+          <p className="text-[10px] text-gray-700 leading-tight">{ad.desc}</p>
+          <p className="text-[9px] text-gray-500">{ad.code}</p>
+
+          <button
+            onClick={() => navigate("/products")}
+            className="bg-white text-black text-[10px] px-2 py-[3px] mt-1 rounded w-fit"
+          >
+            Shop
+          </button>
+        </div>
+
+        <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+        <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full"></div>
+
+      </div>
+    );
+  })}
+
+</div>
 
             </div>
 
