@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import { getProducts } from "../../services/productService";
+import { getProducts,getProductById  } from "../../services/productService";
 import { updateCartItem, getCart } from "../../services/cartService";
 import { ArrowLeft } from "lucide-react";
 import { AuthContext } from "../../context/AuthContext";
