@@ -357,7 +357,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
       return (
         <div
-          key={i}className={`relative min-h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          key={i}className={`relative min-h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
         >
           <img src={ad.image} className="w-12 h-12 rounded-lg object-cover" />
 
@@ -428,11 +428,11 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     return (
       <div
         key={i}
-        className={`relative min-h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+        className={`relative h-[60px] w-full rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
       >
         <img
           src={ad.image}
-          className="w-12 h-12 rounded-lg object-cover"
+          className="w-10 h-10 rounded-lg object-cover"
         />
 
         <div className="ml-3 flex-1 flex flex-col justify-between h-full">
