@@ -376,9 +376,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       );
     })}
   </div>
+{/* CENTER FILTERS */}
+<div className="flex flex-1 items-center justify-center">
 
-  {/* CENTER FILTERS */}
-  <div className="flex flex-1 flex-col items-center justify-center gap-3">
+  <div className="flex gap-2 items-center">
 
     <div className="flex border border-default rounded-xl overflow-hidden">
       <input
@@ -386,7 +387,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         placeholder="Search products..."
         value={searchText}
         onChange={(e)=>setSearchText(e.target.value)}
-        className="px-2 py-2 outline-none w-60"
+        className="px-2 py-2 outline-none w-48"
       />
       <button
         onClick={handleSearch}
@@ -396,43 +397,43 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
       </button>
     </div>
 
-    <div className="flex gap-2 items-center">
-      <select
-        value={care}
-        onChange={(e)=>setCare(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2"
-      >
-        <option value="">Care</option>
-        <option value="Skin Care">Skin Care</option>
-        <option value="Hair Care">Hair Care</option>
-        <option value="Digestive Care">Digestive Care</option>
-        <option value="Immunity Care">Immunity Care</option>
-      </select>
+    <select
+      value={care}
+      onChange={(e)=>setCare(e.target.value)}
+      className="border border-default rounded-xl px-3 py-2"
+    >
+      <option value="">Care</option>
+      <option value="Skin Care">Skin Care</option>
+      <option value="Hair Care">Hair Care</option>
+      <option value="Digestive Care">Digestive Care</option>
+      <option value="Immunity Care">Immunity Care</option>
+    </select>
 
-      <select
-        value={concern}
-        onChange={(e)=>setConcern(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2"
-      >
-        <option value="">Concern</option>
-        <option value="Immunity">Immunity</option>
-        <option value="Digestion">Digestion</option>
-        <option value="Skin Health">Skin Health</option>
-        <option value="Weight Loss">Weight Loss</option>
-      </select>
+    <select
+      value={concern}
+      onChange={(e)=>setConcern(e.target.value)}
+      className="border border-default rounded-xl px-3 py-2"
+    >
+      <option value="">Concern</option>
+      <option value="Immunity">Immunity</option>
+      <option value="Digestion">Digestion</option>
+      <option value="Skin Health">Skin Health</option>
+      <option value="Weight Loss">Weight Loss</option>
+    </select>
 
-      <select
-        value={sort}
-        onChange={(e)=>setSort(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2"
-      >
-        <option value="featured">Featured</option>
-        <option value="price_low">Price Low → High</option>
-        <option value="price_high">Price High → Low</option>
-      </select>
-    </div>
+    <select
+      value={sort}
+      onChange={(e)=>setSort(e.target.value)}
+      className="border border-default rounded-xl px-3 py-2"
+    >
+      <option value="featured">Featured</option>
+      <option value="price_low">Price Low → High</option>
+      <option value="price_high">Price High → Low</option>
+    </select>
 
   </div>
+
+</div>
 
   {/* RIGHT ADS */}
   <div className="hidden md:flex flex-col gap-2 w-[220px] shrink-0">
