@@ -157,6 +157,11 @@ export default function Navbar() {
               <button onClick={() => navigate("/wishlist")}>Wishlist ({wishlistCount})</button>
               <Link to="/customer/cart">Cart</Link>
               <Link to="/customer/orders">Orders</Link>
+              <Link
+  to="/profile"
+>
+  Profile
+</Link>
               <button onClick={handleLogout}>Logout</button>
             </>
           )}
