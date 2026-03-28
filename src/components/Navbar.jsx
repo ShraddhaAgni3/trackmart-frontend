@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import NotificationBell from "./NotificationBell";
 import { getWishlist } from "../services/wishlistService";
+import { Menu, X } from "lucide-react"; // ✅ NEW
 
 export default function Navbar() {
 
@@ -10,200 +11,173 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false); // ✅ mobile menu
 
   /* ================= FETCH WISHLIST COUNT ================= */
 
   useEffect(() => {
-
     const fetchWishlist = async () => {
-
       if (role !== "customer") return;
 
       try {
-
         const res = await getWishlist();
         setWishlistCount(res.data.length);
-
       } catch (err) {
-
         console.log(err);
-
       }
-
     };
 
     fetchWishlist();
-
   }, [role]);
-
-
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
+  // ✅ ABOUT SCROLL
+  const handleAboutClick = () => {
+    navigate("/");
+
+    setTimeout(() => {
+      const section = document.getElementById("about-section");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+
+    setIsOpen(false);
+  };
 
   return (
-    <nav className="bg-surface border-b border-default px-8 py-4 flex justify-between items-center">
+    <nav className="bg-surface border-b border-default px-6 md:px-8 py-4">
 
-      {/* Logo */}
+      <div className="flex justify-between items-center">
 
-      <Link to="/" className="text-2xl font-bold font-primary">
-        <span className="text-primary">Intake</span>
-        <span className="text-strong">Mart</span>
-      </Link>
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-bold font-primary">
+          <span className="text-primary">Track</span>
+          <span className="text-strong">Mart</span>
+        </Link>
 
+        {/* ✅ Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-6 font-medium">
 
-      <div className="flex items-center space-x-6 font-medium">
+          {!role && (
+            <>
+              <Link to="/" className="text-strong hover:text-primary">Shop</Link>
 
-        {/* ================= GUEST ================= */}
+              <button onClick={handleAboutClick} className="hover:text-primary">
+                About
+              </button>
 
-        {!role && (
-          <>
-            <Link
-              to="/"
-              className="text-strong hover:text-primary transition"
-            >
-              Shop
-            </Link>
+              <Link to="/login" className="btn-primary">Login</Link>
+              <Link to="/register" className="btn-outline">Register</Link>
+              <Link to="/apply-vendor" className="hover:text-primary">
+                Become Seller
+              </Link>
+            </>
+          )}
 
-            <Link
-              to="/login"
-              className="btn-primary"
-            >
-              Login
-            </Link>
+          {role === "customer" && (
+            <>
+              <Link to="/" className="hover:text-primary">Shop</Link>
 
-            <Link
-              to="/register"
-              className="btn-outline"
-            >
-              Register
-            </Link>
+              <button onClick={handleAboutClick} className="hover:text-primary">
+                About
+              </button>
 
-            <Link
-              to="/apply-vendor"
-              className="text-strong hover:text-primary transition"
-            >
-              Become Seller
-            </Link>
-          </>
-        )}
+              {/* Wishlist */}
+              <button onClick={() => navigate("/wishlist")} className="relative">
+                ❤️
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 rounded-full">
+                    {wishlistCount}
+                  </span>
+                )}
+              </button>
 
+              <Link to="/customer/cart">Cart</Link>
+              <Link to="/customer/orders">Orders</Link>
 
-        {/* ================= CUSTOMER ================= */}
+              <NotificationBell />
 
-        {role === "customer" && (
-          <>
-            <Link
-              to="/"
-              className="text-strong hover:text-primary transition"
-            >
-              Shop
-            </Link>
+              <button onClick={handleLogout} className="btn-primary">
+                Logout
+              </button>
+            </>
+          )}
 
+          {role === "vendor" && (
+            <>
+              <Link to="/vendor">Dashboard</Link>
+              <Link to="/vendor/add-product">Add Product</Link>
+              <NotificationBell />
+              <button onClick={handleLogout} className="btn-primary">Logout</button>
+            </>
+          )}
 
-            {/* ❤️ Wishlist */}
+          {role === "admin" && (
+            <>
+              <Link to="/admin">Admin Panel</Link>
+              <NotificationBell />
+              <button onClick={handleLogout} className="btn-primary">Logout</button>
+            </>
+          )}
+        </div>
 
-            <button
-              onClick={() => navigate("/wishlist")}
-              className="relative"
-            >
-              <span className="text-2xl">❤️</span>
-
-              {wishlistCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
-
-
-            <Link
-              to="/customer/cart"
-              className="text-strong hover:text-primary transition"
-            >
-              Cart
-            </Link>
-
-
-            <Link
-              to="/customer/orders"
-              className="text-strong hover:text-primary transition"
-            >
-              Orders
-            </Link>
-
-
-            {/* Notification */}
-
-            <NotificationBell />
-
-
-            <button
-              onClick={handleLogout}
-              className="btn-primary"
-            >
-              Logout
-            </button>
-          </>
-        )}
-
-
-        {/* ================= VENDOR ================= */}
-
-        {role === "vendor" && (
-          <>
-            <Link
-              to="/vendor"
-              className="text-strong hover:text-primary transition"
-            >
-              Dashboard
-            </Link>
-
-            <Link
-              to="/vendor/add-product"
-              className="text-strong hover:text-primary transition"
-            >
-              Add Product
-            </Link>
-
-            <NotificationBell />
-
-            <button
-              onClick={handleLogout}
-              className="btn-primary"
-            >
-              Logout
-            </button>
-          </>
-        )}
-
-
-        {/* ================= ADMIN ================= */}
-
-        {role === "admin" && (
-          <>
-            <Link
-              to="/admin"
-              className="text-strong hover:text-primary transition"
-            >
-              Admin Panel
-            </Link>
-
-            <NotificationBell />
-
-            <button
-              onClick={handleLogout}
-              className="btn-primary"
-            >
-              Logout
-            </button>
-          </>
-        )}
+        {/* ✅ Mobile Menu Button */}
+        <button
+          className="md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X /> : <Menu />}
+        </button>
 
       </div>
+
+      {/* ✅ Mobile Dropdown */}
+      {isOpen && (
+        <div className="md:hidden mt-4 flex flex-col gap-4 font-medium">
+
+          {!role && (
+            <>
+              <Link to="/" onClick={()=>setIsOpen(false)}>Shop</Link>
+              <button onClick={handleAboutClick}>About</button>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+              <Link to="/apply-vendor">Become Seller</Link>
+            </>
+          )}
+
+          {role === "customer" && (
+            <>
+              <Link to="/" onClick={()=>setIsOpen(false)}>Shop</Link>
+              <button onClick={handleAboutClick}>About</button>
+              <button onClick={() => navigate("/wishlist")}>Wishlist ({wishlistCount})</button>
+              <Link to="/customer/cart">Cart</Link>
+              <Link to="/customer/orders">Orders</Link>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          )}
+
+          {role === "vendor" && (
+            <>
+              <Link to="/vendor">Dashboard</Link>
+              <Link to="/vendor/add-product">Add Product</Link>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          )}
+
+          {role === "admin" && (
+            <>
+              <Link to="/admin">Admin Panel</Link>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          )}
+
+        </div>
+      )}
 
     </nav>
   );
