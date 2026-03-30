@@ -195,13 +195,6 @@ Send Reply
         {msg.message}
       </p>
 
-      {/* OPTIONAL: SHOW REPLY */}
-      {msg.reply && (
-        <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
-          <p className="text-sm text-green-700 font-semibold">
-            Admin Reply
-          </p>
-          <p>{msg.reply}</p>
         </div>
       )}
 
