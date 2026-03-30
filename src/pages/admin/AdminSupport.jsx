@@ -159,49 +159,30 @@ Send Reply
     </p>
   )}
 
-  {messages.map(msg => (
+ {messages.map(msg => (
 
-    <div
-      key={msg.id}
-      className={`bg-bgSurface border border-borderDefault rounded-xl p-6 space-y-4 ${
-        msg.status === "unread" ? "bg-yellow-50" : ""
-      }`}
-    >
+  <div
+    key={msg.id}
+    className="bg-bgSurface border border-borderDefault rounded-xl p-6 space-y-4"
+  >
 
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="font-semibold text-lg">
-            {msg.name}
-          </h3>
+    <div>
+      <h3 className="font-semibold text-lg">
+        {msg.name}
+      </h3>
 
-          <p className="text-textMuted text-sm">
-            {msg.email} {msg.phone && `(${msg.phone})`}
-          </p>
-        </div>
-
-        {/* STATUS */}
-        <span
-          className={`text-xs px-3 py-1 rounded-full ${
-            msg.status === "unread"
-              ? "bg-yellow-100 text-yellow-700"
-              : "bg-green-100 text-green-700"
-          }`}
-        >
-          {msg.status}
-        </span>
-      </div>
-
-      <p className="text-textStrong">
-        {msg.message}
+      <p className="text-textMuted text-sm">
+        {msg.email} {msg.phone && `(${msg.phone})`}
       </p>
-
-        </div>
-      )}
-
     </div>
 
-  ))}
+    <p className="text-textStrong">
+      {msg.message}
+    </p>
 
+  </div>
+
+))}
 </div>
 
 </div>
