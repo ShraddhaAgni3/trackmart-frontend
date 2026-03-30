@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Facebook, Twitter, Instagram, Youtube, Linkedin, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext"; // path adjust karo
 
 export default function Footer() {
 
   const { role } = useContext(AuthContext);
 
-  // 🔥 Dynamic dashboard
+  // 🔥 dynamic dashboard path
   const dashboardPath =
     role === "admin"
       ? "/admin"
@@ -21,13 +21,16 @@ export default function Footer() {
     { label: "Profile", path: dashboardPath },
     { label: "Products", path: dashboardPath },
   ];
-
+const contactPath =
+  role === "admin"
+    ? "/admin/support"
+    : "/contact";
   const legalLinks = [
     { label: "Privacy Policy", path: "/privacy" },
     { label: "Terms & Conditions", path: "/terms" },
     { label: "Refund & Return Policy", path: "/refund" },
     { label: "Shipping Policy", path: "/shipping" },
-    { label: "Contact", path: "/contact" },
+    { label: role === "admin" ? "Support Panel" : "Contact", path: contactPath },
   ];
 
   return (
@@ -49,6 +52,7 @@ export default function Footer() {
 
             {/* SOCIAL ICONS */}
             <div className="flex gap-4">
+              
               <a className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border-default)] text-[var(--color-text-muted)] hover:text-blue-600 hover:border-blue-600 transition">
                 <Facebook size={18} />
               </a>
@@ -68,6 +72,7 @@ export default function Footer() {
               <a className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border-default)] text-[var(--color-text-muted)] hover:text-blue-700 hover:border-blue-700 transition">
                 <Linkedin size={18} />
               </a>
+
             </div>
           </div>
 
@@ -80,10 +85,7 @@ export default function Footer() {
             <ul className="space-y-3 text-[var(--color-text-muted)]">
               {quickLinks.map((item, i) => (
                 <li key={i}>
-                  <Link
-                    to={item.path}
-                    className="hover:text-[var(--color-primary)] transition"
-                  >
+                  <Link to={item.path} className="hover:text-[var(--color-primary)] transition">
                     {item.label}
                   </Link>
                 </li>
@@ -91,21 +93,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* LEGAL (🔥 FIXED) */}
+          {/* LEGAL */}
           <div>
             <h3 className="font-semibold mb-4 text-[var(--color-text-strong)]">
-              Legal
+              Important links
             </h3>
 
             <ul className="space-y-3 text-[var(--color-text-muted)]">
               {legalLinks.map((item, i) => (
                 <li key={i}>
-                  <button
-                    onClick={() => (window.location.href = item.path)}
-                    className="hover:text-[var(--color-primary)] transition text-left"
-                  >
+                  <Link to={item.path} className="hover:text-[var(--color-primary)] transition">
                     {item.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
