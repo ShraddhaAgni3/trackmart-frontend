@@ -157,7 +157,7 @@ handler: async function (response) {
     console.log("VERIFY ERROR:", err.response?.data); // ✅ ADD
     alert("Verification error");
   }
-}
+},
 
       modal: {
         ondismiss: () => {
