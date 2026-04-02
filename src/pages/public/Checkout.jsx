@@ -122,35 +122,42 @@ useEffect(()=>{
       currency: "INR",
       name: "HealthMart",
       order_id: order.id,
+handler: async function (response) {
+  try {
 
-      handler: async function (response) {
-        try {
-          const verifyRes = await api.post("/payment/verify", {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature
-          });
+    console.log("RAZORPAY RESPONSE:", response);
 
-          if (verifyRes.data.success) {
+    const verifyRes = await api.post("/payment/verify", {
+      razorpay_order_id: response.razorpay_order_id,
+      razorpay_payment_id: response.razorpay_payment_id,
+      razorpay_signature: response.razorpay_signature
+    });
 
-            // ✅ STEP 3: Update payment status
-            await api.patch("/orders/payment-status", {
-              order_id: dbOrderId,
-              payment_id: response.razorpay_payment_id
-            });
+    console.log("VERIFY RESPONSE:", verifyRes.data); // ✅ ADD
 
-            alert("Payment successful!");
-            window.location.href = "/customer/orders";
+    if (verifyRes.data.success) {
 
-          } else {
-            alert("Payment verification failed");
-          }
+      console.log("DB ORDER ID:", dbOrderId); // ✅ ADD
 
-        } catch (err) {
-          console.log(err);
-          alert("Verification error");
-        }
-      },
+      await api.patch("/orders/payment-status", {
+        order_id: dbOrderId,
+        payment_id: response.razorpay_payment_id
+      });
+
+      console.log("PAYMENT STATUS UPDATED"); // ✅ ADD
+
+      alert("Payment successful!");
+      window.location.href = "/customer/orders";
+
+    } else {
+      alert("Payment verification failed");
+    }
+
+  } catch (err) {
+    console.log("VERIFY ERROR:", err.response?.data); // ✅ ADD
+    alert("Verification error");
+  }
+}
 
       modal: {
         ondismiss: () => {
