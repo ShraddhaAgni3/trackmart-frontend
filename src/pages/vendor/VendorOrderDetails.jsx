@@ -77,22 +77,21 @@ console.log(err);
 
 /* ================= MARK DELIVERED ================= */
 
-const markDelivered = async()=>{
+const markDelivered = async (itemId) => {
+  try {
 
-try{
+    await api.patch("/orders/deliver-item", {
+      item_id: itemId
+    });
 
-const res = await api.put(`/vendor/orders/${id}/deliver`);
+    alert("Item delivered");
 
-setOrder(res.data.order);
+    fetchOrder(); // refresh UI
 
-alert("Order delivered");
-
-}catch(err){
-
-console.log(err);
-
-}
-
+  } catch (err) {
+    console.log(err);
+    alert("Failed to update");
+  }
 };
 
 
@@ -261,22 +260,30 @@ Order Delivered
 
 <div className="space-y-3">
 
-<p className="text-blue-700 font-semibold">
-Order Confirmed
-</p>
+  <p className="text-blue-700 font-semibold">
+    Order Confirmed
+  </p>
 
-<p className="text-sm">
-Delivery Date: {order.delivery_date
-? new Date(order.delivery_date).toLocaleDateString()
-: "Not set"}
-</p>
+  <p className="text-sm">
+    Delivery Date: {order.delivery_date
+      ? new Date(order.delivery_date).toLocaleDateString()
+      : "Not set"}
+  </p>
 
-<button
-onClick={markDelivered}
-className="bg-green-600 text-white px-6 py-2 rounded-xl"
->
-Mark as Delivered
-</button>
+  {items.map(item => (
+
+    <button
+      key={item.id}
+      onClick={() => markDelivered(item.id)}
+      className="bg-green-600 text-white px-6 py-2 rounded-xl w-full"
+      disabled={item.item_status === "delivered"}
+    >
+      {item.item_status === "delivered"
+        ? `${item.title} - Delivered`
+        : `Deliver ${item.title}`}
+    </button>
+
+  ))}
 
 </div>
 
