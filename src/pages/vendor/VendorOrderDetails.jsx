@@ -80,7 +80,7 @@ console.log(err);
 const markDelivered = async (itemId) => {
   try {
 
-    await api.patch("/orders/deliver-item", {
+    await api.patch("/vendor/deliver-item", {
       item_id: itemId
     });
 
