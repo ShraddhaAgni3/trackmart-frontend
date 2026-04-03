@@ -83,14 +83,13 @@ const markDelivered = async (itemId) => {
 
     alert("Item delivered");
 
-    fetchOrder(); // refresh UI
+    fetchOrder(); // refresh
 
   } catch (err) {
-    console.log(err);
-    alert("Failed to update");
+    console.log("ERROR:", err.response?.data || err.message);
+    alert(err.response?.data?.message || "Failed to update");
   }
 };
-
 
 
 if(!order) return <p>Loading...</p>;
