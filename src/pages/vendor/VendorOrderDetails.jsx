@@ -259,18 +259,10 @@ Order Delivered
 
 {/* CONFIRMED */}
 
-{order.order_status === "confirmed" && (
-
 <div className="space-y-3">
 
   <p className="text-blue-700 font-semibold">
-    Order Confirmed
-  </p>
-
-  <p className="text-sm">
-    Delivery Date: {order.delivery_date
-      ? new Date(order.delivery_date).toLocaleDateString()
-      : "Not set"}
+    Items Delivery
   </p>
 
   {items.map(item => (
@@ -279,18 +271,18 @@ Order Delivered
       key={item.id}
       onClick={() => markDelivered(item.id)}
       className="bg-green-600 text-white px-6 py-2 rounded-xl w-full"
-      disabled={item.item_status === "delivered"}
+      disabled={item.item_status !== "confirmed"}
     >
       {item.item_status === "delivered"
         ? `${item.title} - Delivered`
-        : `Deliver ${item.title}`}
+        : item.item_status === "confirmed"
+        ? `Deliver ${item.title}`
+        : `Not Ready (${item.item_status})`}
     </button>
 
   ))}
 
 </div>
-
-)}
 
 
 
@@ -312,11 +304,25 @@ onChange={(e)=>setDate(e.target.value)}
 className="border p-2 rounded w-full"
 />
 
-<button onClick={() => confirmOrder(item.id)}
-className="bg-primary text-white px-6 py-2 rounded-xl"
->
-Confirm Order
-</button>
+{items.map(item => (
+
+  <div key={item.id} className="space-y-2">
+
+    <p>{item.title}</p>
+
+    <button
+      onClick={() => confirmOrder(item.id)}
+      disabled={item.item_status !== "pending"}
+      className="bg-blue-600 text-white px-6 py-2 rounded-xl w-full"
+    >
+      {item.item_status === "confirmed"
+        ? `${item.title} - Confirmed`
+        : `Confirm ${item.title}`}
+    </button>
+
+  </div>
+
+))}
 
 </div>
 
