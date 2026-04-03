@@ -73,7 +73,11 @@ No orders received yet
 
 
 
-{orders.map(order=>(
+{orders.map(order => {
+
+  const status = order.item_status?.toLowerCase();  // 👈 ADD THIS
+
+  return (
 
 <div
 key={order.order_id}
@@ -158,8 +162,8 @@ View Details
 </div>
 
 </div>
-
-))}
+);
+    })}
 <Footer/>
 </div>
 
