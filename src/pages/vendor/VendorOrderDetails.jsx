@@ -103,7 +103,9 @@ const markDelivered = async () => {
 if(!order) return <p>Loading...</p>;
 
 
-
+const hasPending = items.some(i => i.item_status === "pending");
+const hasConfirmed = items.some(i => i.item_status === "confirmed");
+const allDelivered = items.every(i => i.item_status === "delivered");
 return(
 
 <div className="space-y-6">
@@ -256,44 +258,53 @@ Qty: {item.quantity}
 
 </div>
 {/* ================= ACTION ================= */}
-
 <div className="border p-6 rounded-xl space-y-4">
 
-{/* DELIVER */}
+{/* ✅ DELIVER BUTTON */}
 
-<button
-onClick={markDelivered}
-className="bg-green-600 text-white px-6 py-2 rounded-xl"
-disabled={!items.some(i => i.item_status === "confirmed")}
->
-Mark as Delivered
-</button>
+{!hasPending && hasConfirmed && !allDelivered && (
+  <button
+    onClick={markDelivered}
+    className="bg-green-600 text-white px-6 py-2 rounded-xl"
+  >
+    Mark as Delivered
+  </button>
+)}
 
-{/* CONFIRM */}
+{/* ✅ CONFIRM BUTTON */}
 
-<div className="space-y-3">
+{hasPending && (
+  <div className="space-y-3">
 
-<p className="font-semibold">
-Select Delivery Date
-</p>
+    <p className="font-semibold">
+      Select Delivery Date
+    </p>
 
-<input
-type="date"
-value={date}
-min={new Date().toISOString().split("T")[0]}
-onChange={(e)=>setDate(e.target.value)}
-className="border p-2 rounded w-full"
-/>
+    <input
+      type="date"
+      value={date}
+      min={new Date().toISOString().split("T")[0]}
+      onChange={(e)=>setDate(e.target.value)}
+      className="border p-2 rounded w-full"
+    />
 
-<button
-onClick={confirmOrder}
-className="bg-primary text-white px-6 py-2 rounded-xl"
-disabled={!items.some(i => i.item_status === "pending")}
->
-Confirm Order
-</button>
+    <button
+      onClick={confirmOrder}
+      className="bg-primary text-white px-6 py-2 rounded-xl"
+    >
+      Confirm Order
+    </button>
 
-</div>
+  </div>
+)}
+
+{/* ✅ ALL DONE MESSAGE */}
+
+{allDelivered && (
+  <p className="text-green-600 font-semibold">
+    All items delivered
+  </p>
+)}
 
 </div>
 
