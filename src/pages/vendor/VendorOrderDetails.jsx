@@ -299,7 +299,7 @@ Confirm Order
 
 {/* PENDING / DEFAULT */}
 
-</div>
+
 <Footer/>
 </div>
 
