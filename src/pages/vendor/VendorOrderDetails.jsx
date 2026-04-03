@@ -242,8 +242,10 @@ className="border p-4 rounded-lg flex justify-between"
 {item.title}
 </p>
 
-<p className="text-sm text-gray-500">
-Qty: {item.quantity}
+<p className="text-xs text-gray-400">
+  Delivery: {item.delivery_date 
+    ? new Date(item.delivery_date).toLocaleDateString()
+    : "Not set"}
 </p>
 
 </div>
