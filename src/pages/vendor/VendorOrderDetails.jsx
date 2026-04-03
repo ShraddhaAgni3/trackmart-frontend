@@ -41,38 +41,35 @@ fetchOrder();
 
 /* ================= CONFIRM ORDER ================= */
 
-const confirmOrder = async()=>{
+const confirmItem = async (itemId) => {
+  try {
 
-try{
+    if (!date) {
+      alert("Please select delivery date");
+      return;
+    }
 
-if(!date){
-alert("Please select delivery date");
-return;
-}
+    const today = new Date().toISOString().split("T")[0];
 
-const today = new Date().toISOString().split("T")[0];
+    if (date < today) {
+      alert("Please select present or future date");
+      return;
+    }
 
-if(date < today){
-alert("Please select present or future date");
-return;
-}
+    await api.patch("/vendor/confirm-item", {
+      item_id: itemId,
+      delivery_date: date
+    });
 
-const res = await api.put(`/vendor/orders/${id}/confirm`,{
-delivery_date:date
-});
+    alert("Item confirmed");
 
-setOrder(res.data.order);
+    fetchOrder(); // ✅ IMPORTANT
 
-alert("Order confirmed");
-
-}catch(err){
-
-console.log(err);
-
-}
-
+  } catch (err) {
+    console.log("ERROR:", err.response?.data || err.message);
+    alert("Failed to confirm");
+  }
 };
-
 
 
 /* ================= MARK DELIVERED ================= */
