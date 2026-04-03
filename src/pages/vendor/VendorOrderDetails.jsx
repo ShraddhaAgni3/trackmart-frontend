@@ -41,7 +41,7 @@ fetchOrder();
 
 /* ================= CONFIRM ORDER ================= */
 
-const confirmOrder = async (itemId) => {
+const confirmOrder = async () => {
   try {
 
     if (!date) {
@@ -56,38 +56,46 @@ const confirmOrder = async (itemId) => {
       return;
     }
 
-    await api.patch("/vendor/confirm-item", {
-      item_id: itemId,
-      delivery_date: date
-    });
+    // 🔥 get only pending items of THIS vendor
+    const pendingItems = items.filter(i => i.item_status === "pending");
 
-    alert("Item confirmed");
+    for (let item of pendingItems) {
+      await api.patch("/vendor/confirm-item", {
+        item_id: item.id,
+        delivery_date: date
+      });
+    }
 
-    fetchOrder(); // ✅ IMPORTANT
+    alert("Items confirmed");
+
+    fetchOrder();
 
   } catch (err) {
-    console.log("ERROR:", err.response?.data || err.message);
+    console.log(err);
     alert("Failed to confirm");
   }
 };
 
-
 /* ================= MARK DELIVERED ================= */
-
-const markDelivered = async (itemId) => {
+const markDelivered = async () => {
   try {
 
-    await api.patch("/vendor/deliver-item", {
-      item_id: itemId
-    });
+    // 🔥 only confirmed items
+    const confirmedItems = items.filter(i => i.item_status === "confirmed");
 
-    alert("Item delivered");
+    for (let item of confirmedItems) {
+      await api.patch("/vendor/deliver-item", {
+        item_id: item.id
+      });
+    }
 
-    fetchOrder(); // refresh
+    alert("Items delivered");
+
+    fetchOrder();
 
   } catch (err) {
-    console.log("ERROR:", err.response?.data || err.message);
-    alert(err.response?.data?.message || "Failed to update");
+    console.log(err);
+    alert("Failed to update");
   }
 };
 
@@ -114,8 +122,18 @@ Order ID: {order.id.slice(0,8)}
 </p>
 
 {(() => {
+
+  if (items.length === 0) {
+    return (
+      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-600">
+        No Items
+      </span>
+    );
+  }
+
   const allDelivered = items.every(i => i.item_status === "delivered");
   const anyDelivered = items.some(i => i.item_status === "delivered");
+  const anyConfirmed = items.some(i => i.item_status === "confirmed");
 
   let status = "Pending";
   let style = "bg-yellow-200 text-yellow-800";
@@ -126,7 +144,7 @@ Order ID: {order.id.slice(0,8)}
   } else if (anyDelivered) {
     status = "Partially Delivered";
     style = "bg-blue-200 text-blue-800";
-  } else if (order.order_status === "confirmed") {
+  } else if (anyConfirmed) {
     status = "Confirmed";
     style = "bg-blue-200 text-blue-800";
   }
@@ -241,54 +259,17 @@ Qty: {item.quantity}
 
 <div className="border p-6 rounded-xl space-y-4">
 
-{/* DELIVERED */}
+{/* DELIVER */}
 
-{order.order_status === "delivered" && (
+<button
+onClick={markDelivered}
+className="bg-green-600 text-white px-6 py-2 rounded-xl"
+disabled={!items.some(i => i.item_status === "confirmed")}
+>
+Mark as Delivered
+</button>
 
-<div className="bg-green-100 p-4 rounded">
-
-<p className="text-green-700 font-semibold">
-Order Delivered
-</p>
-
-</div>
-
-)}
-
-
-
-{/* CONFIRMED */}
-
-<div className="space-y-3">
-
-  <p className="text-blue-700 font-semibold">
-    Items Delivery
-  </p>
-
-  {items.map(item => (
-
-    <button
-      key={item.id}
-      onClick={() => markDelivered(item.id)}
-      className="bg-green-600 text-white px-6 py-2 rounded-xl w-full"
-      disabled={item.item_status !== "confirmed"}
-    >
-      {item.item_status === "delivered"
-        ? `${item.title} - Delivered`
-        : item.item_status === "confirmed"
-        ? `Deliver ${item.title}`
-        : `Not Ready (${item.item_status})`}
-    </button>
-
-  ))}
-
-</div>
-
-
-
-{/* PENDING / DEFAULT */}
-
-{order.order_status !== "confirmed" && order.order_status !== "delivered" && (
+{/* CONFIRM */}
 
 <div className="space-y-3">
 
@@ -304,29 +285,19 @@ onChange={(e)=>setDate(e.target.value)}
 className="border p-2 rounded w-full"
 />
 
-{items.map(item => (
-
-  <div key={item.id} className="space-y-2">
-
-    <p>{item.title}</p>
-
-    <button
-      onClick={() => confirmOrder(item.id)}
-      disabled={item.item_status !== "pending"}
-      className="bg-blue-600 text-white px-6 py-2 rounded-xl w-full"
-    >
-      {item.item_status === "confirmed"
-        ? `${item.title} - Confirmed`
-        : `Confirm ${item.title}`}
-    </button>
-
-  </div>
-
-))}
+<button
+onClick={confirmOrder}
+className="bg-primary text-white px-6 py-2 rounded-xl"
+disabled={!items.some(i => i.item_status === "pending")}
+>
+Confirm Order
+</button>
 
 </div>
 
-)}
+</div>
+
+{/* PENDING / DEFAULT */}
 
 </div>
 <Footer/>
