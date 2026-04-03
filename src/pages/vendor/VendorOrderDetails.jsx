@@ -117,23 +117,30 @@ Order Details
 Order ID: {order.id.slice(0,8)}
 </p>
 
-<span
-className={`px-3 py-1 rounded-full text-xs font-semibold ${
-order.order_status==="delivered"
-? "bg-green-200 text-green-800"
-: order.order_status==="confirmed"
-? "bg-blue-200 text-blue-800"
-: "bg-yellow-200 text-yellow-800"
-}`}
->
+{(() => {
+  const allDelivered = items.every(i => i.item_status === "delivered");
+  const anyDelivered = items.some(i => i.item_status === "delivered");
 
-{order.order_status==="delivered"
-? "Delivered"
-: order.order_status==="confirmed"
-? "Confirmed"
-: "Pending"}
+  let status = "Pending";
+  let style = "bg-yellow-200 text-yellow-800";
 
-</span>
+  if (allDelivered) {
+    status = "Delivered";
+    style = "bg-green-200 text-green-800";
+  } else if (anyDelivered) {
+    status = "Partially Delivered";
+    style = "bg-blue-200 text-blue-800";
+  } else if (order.order_status === "confirmed") {
+    status = "Confirmed";
+    style = "bg-blue-200 text-blue-800";
+  }
+
+  return (
+    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style}`}>
+      {status}
+    </span>
+  );
+})()}
 
 </div>
 
