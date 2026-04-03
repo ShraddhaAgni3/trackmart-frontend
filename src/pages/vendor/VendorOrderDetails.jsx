@@ -41,7 +41,7 @@ fetchOrder();
 
 /* ================= CONFIRM ORDER ================= */
 
-const confirmItem = async (itemId) => {
+const confirmOrder = async (itemId) => {
   try {
 
     if (!date) {
