@@ -81,13 +81,21 @@ export default function Orders() {
 
       <div className="space-y-6">
 
-        {orders.map((order) => (
-const allDelivered = order.items.every(i => i.item_status === "delivered");
- const anyConfirmed = order.items.some(i => i.item_status === "confirmed");
-          <div
-            key={order.id}
-            className="bg-bgSurface border border-borderDefault rounded-2xl shadow-card p-6"
-          >
+        {orders.map((order) => {
+
+  const allDelivered =
+    order.items?.length > 0 &&
+    order.items.every(i => i.item_status === "delivered");
+
+  const anyConfirmed =
+    order.items?.some(i => i.item_status === "confirmed");
+
+  return (
+
+    <div
+      key={order.id}
+      className="bg-bgSurface border border-borderDefault rounded-2xl shadow-card p-6"
+    >
 
             {/* ORDER HEADER */}
 
