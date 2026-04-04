@@ -25,33 +25,32 @@ console.log(err);
 fetchData();
 
 },[]);
-
-
-const clearPayment = async(id)=>{
-
-try{
-
 const clearPayment = async (vendorId) => {
   try {
 
-    // Step 1: create order
+    // ✅ Step 1: Create order
     const { data } = await api.post("/create-vendor-order", {
       vendorId
     });
 
-    // Step 2: open Razorpay
+    // ✅ Step 2: Razorpay open
     const options = {
       key: data.key,
       amount: data.order.amount,
       order_id: data.order.id,
 
       handler: async function (response) {
+
+        // ✅ Step 3: verify
         await api.post("/verify-vendor", {
           ...response,
           vendorId
         });
 
         alert("Payment Successful ✅");
+
+        // UI update
+        setVendors(prev => prev.filter(v => v.vendor_id !== vendorId));
       }
     };
 
@@ -59,16 +58,8 @@ const clearPayment = async (vendorId) => {
     rzp.open();
 
   } catch (err) {
-    console.log(err);
+    console.log("PAYMENT ERROR:", err);
   }
-};
-
-setVendors(prev=>prev.filter(v=>v.vendor_id!==id));
-
-}catch(err){
-console.log(err);
-}
-
 };
 
 
