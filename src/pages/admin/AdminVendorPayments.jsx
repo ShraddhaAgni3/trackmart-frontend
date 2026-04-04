@@ -31,7 +31,37 @@ const clearPayment = async(id)=>{
 
 try{
 
-await api.post(`/admin/vendor-payout/${id}`);
+const clearPayment = async (vendorId) => {
+  try {
+
+    // Step 1: create order
+    const { data } = await api.post("/create-vendor-order", {
+      vendorId
+    });
+
+    // Step 2: open Razorpay
+    const options = {
+      key: data.key,
+      amount: data.order.amount,
+      order_id: data.order.id,
+
+      handler: async function (response) {
+        await api.post("/verify-vendor", {
+          ...response,
+          vendorId
+        });
+
+        alert("Payment Successful ✅");
+      }
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 setVendors(prev=>prev.filter(v=>v.vendor_id!==id));
 
