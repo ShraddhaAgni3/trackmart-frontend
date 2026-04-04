@@ -27,41 +27,43 @@ fetchData();
 },[]);
 const clearPayment = async (vendorId) => {
   try {
+    console.log("clicked", vendorId);
 
-    // ✅ Step 1: Create order
-    const { data } = await api.post("/create-vendor-order", {
+    const { data } = await api.post("/api/payment/create-vendor-order", {
       vendorId
     });
 
-    // ✅ Step 2: Razorpay open
+    console.log("order data:", data);
+
     const options = {
       key: data.key,
       amount: data.order.amount,
       order_id: data.order.id,
 
       handler: async function (response) {
+        console.log("payment response:", response);
 
-        // ✅ Step 3: verify
-        await api.post("/verify-vendor", {
+        await api.post("/api/payment/verify-vendor", {
           ...response,
           vendorId
         });
 
         alert("Payment Successful ✅");
-
-        // UI update
-        setVendors(prev => prev.filter(v => v.vendor_id !== vendorId));
       }
     };
+
+    if (!window.Razorpay) {
+      alert("Razorpay SDK not loaded ❌");
+      return;
+    }
 
     const rzp = new window.Razorpay(options);
     rzp.open();
 
   } catch (err) {
-    console.log("PAYMENT ERROR:", err);
+    console.log("ERROR:", err);
   }
 };
-
 
 return(
 
