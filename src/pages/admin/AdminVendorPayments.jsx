@@ -43,7 +43,7 @@ const clearPayment = async (vendorId) => {
       handler: async function (response) {
         console.log("payment response:", response);
 
-        await api.post("/api/payment/verify-vendor", {
+        await api.post("/payment/verify-vendor", {
           ...response,
           vendorId
         });
