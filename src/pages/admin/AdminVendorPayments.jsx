@@ -29,7 +29,7 @@ const clearPayment = async (vendorId) => {
   try {
     console.log("clicked", vendorId);
 
-    const { data } = await api.post("/api/payment/create-vendor-order", {
+    const { data } = await api.post("/payment/create-vendor-order", {
       vendorId
     });
 
