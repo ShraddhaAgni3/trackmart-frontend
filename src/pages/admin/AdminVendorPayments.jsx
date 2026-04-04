@@ -25,45 +25,22 @@ console.log(err);
 fetchData();
 
 },[]);
-const clearPayment = async (vendorId) => {
-  try {
-    console.log("clicked", vendorId);
 
-    const { data } = await api.post("/payment/create-vendor-order", {
-      vendorId
-    });
 
-    console.log("order data:", data);
+const clearPayment = async(id)=>{
 
-    const options = {
-      key: data.key,
-      amount: data.order.amount,
-      order_id: data.order.id,
+try{
 
-      handler: async function (response) {
-        console.log("payment response:", response);
+await api.post(`/admin/vendor-payout/${id}`);
 
-        await api.post("/payment/verify-vendor", {
-          ...response,
-          vendorId
-        });
+setVendors(prev=>prev.filter(v=>v.vendor_id!==id));
 
-        alert("Payment Successful ✅");
-      }
-    };
+}catch(err){
+console.log(err);
+}
 
-    if (!window.Razorpay) {
-      alert("Razorpay SDK not loaded ❌");
-      return;
-    }
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-
-  } catch (err) {
-    console.log("ERROR:", err);
-  }
 };
+
 
 return(
 
