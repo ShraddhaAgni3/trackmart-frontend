@@ -237,6 +237,26 @@ Sugar<br/><strong>{product.sugar} g</strong>
 </ul>
 </div>
 )}
+  {/* MAKING PROCESS */}
+{product.making_process && (
+
+<div>
+
+<h3 className="font-semibold text-base md:text-lg">
+Making Process
+</h3>
+
+<ul className="list-disc pl-6 mt-2 space-y-1 text-sm md:text-base text-textMuted">
+
+{product.making_process.split("\n").map((item,i)=>(
+<li key={i}>{item}</li>
+))}
+
+</ul>
+
+</div>
+
+)}
 
 {/* BENEFITS */}
 {benefits && benefits.length > 0 && (
