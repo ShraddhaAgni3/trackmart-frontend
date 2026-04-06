@@ -408,7 +408,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
 </section>
 {/* SEARCH + FILTER BAR */}
-<section className="flex gap-6 items-center">
+<section className="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center">
 
   {/* LEFT ADS */}
   <div className="hidden md:grid grid-cols-2 gap-2 w-[300px] shrink-0">
@@ -437,9 +437,9 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     })}
   </div>
 {/* CENTER FILTERS */}
-<div className="flex flex-1 items-center justify-center">
+<div className="w-full flex flex-col md:flex-row items-stretch md:items-center justify-center gap-2">
 
-  <div className="flex gap-2 items-center">
+<div className="flex flex-wrap gap-2 items-center w-full justify-center">
 
     <div className="flex border border-default rounded-xl overflow-hidden">
       <input
@@ -447,7 +447,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         placeholder="Search products..."
         value={searchText}
         onChange={(e)=>setSearchText(e.target.value)}
-        className="px-2 py-2 outline-none w-48"
+        className="px-2 py-2 outline-none w-full md:w-48"
       />
       <button
         onClick={handleSearch}
@@ -460,7 +460,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     <select
       value={care}
       onChange={(e)=>setCare(e.target.value)}
-      className="border border-default rounded-xl px-3 py-2"
+     className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
     >
       <option value="">Care</option>
       <option value="Skin Care">Skin Care</option>
@@ -472,7 +472,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     <select
       value={concern}
       onChange={(e)=>setConcern(e.target.value)}
-      className="border border-default rounded-xl px-3 py-2"
+      className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
     >
       <option value="">Concern</option>
       <option value="Immunity">Immunity</option>
@@ -484,7 +484,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     <select
       value={sort}
       onChange={(e)=>setSort(e.target.value)}
-      className="border border-default rounded-xl px-3 py-2"
+     className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
     >
       <option value="featured">Featured</option>
       <option value="price_low">Price Low → High</option>
@@ -611,7 +611,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
         {/* PRODUCTS GRID */}
         <div className="flex-1 overflow-y-auto pr-2">
-         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
