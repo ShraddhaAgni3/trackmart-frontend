@@ -524,10 +524,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
 </section>
       {/* SIDEBAR + PRODUCTS */}
-      <section id="products-section" className="flex gap-10 h-[80vh] overflow-hidden">
+    <section id="products-section" className="flex flex-col md:flex-row gap-6 md:gap-10">
 
         {/* SIDEBAR */}
-        <aside className="w-64 sticky top-0 h-fit">
+       <aside className="w-full md:w-64 md:sticky md:top-0 h-fit">
 
           <h3 className="font-semibold mb-4">Categories</h3>
 
@@ -611,7 +611,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
         {/* PRODUCTS GRID */}
         <div className="flex-1 overflow-y-auto pr-2">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
@@ -623,10 +623,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                 return(
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
+                    className="bg-white border border-gray-200 rounded-2xl shadow-md p-4 md:p-6 flex flex-col justify-between hover:shadow-lg transition h-full"
                   >
                     {product.image_url && (
-                      <div className="relative h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+                      <div className="relative h-40 sm:h-44 md:h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
                         <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
                         {role==="customer" && (
                           <button
