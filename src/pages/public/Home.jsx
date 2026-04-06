@@ -292,7 +292,7 @@ useEffect(() => {
 
     <div className="space-y-16">
 
-      {/* HERO */}
+     
      {/* HERO */}
 <section className="relative w-full rounded-2xl overflow-hidden h-auto md:h-[480px]">
 
@@ -443,12 +443,12 @@ useEffect(() => {
   </div>
 
 </section>
-{/* SEARCH + FILTER BAR */}
+
 {/* SEARCH + FILTER BAR */}
 <section className="flex flex-col md:flex-row gap-6 md:gap-10">
 
   {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-10">
+  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-[calc((100vw-100%)/2+24px)]">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
@@ -534,7 +534,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 RIGHT ADS */}
-  <div className="flex flex-row md:flex-col gap-2 w-full md:max-w-[200px] shrink-0 md:-mr-10">
+  <div className="flex flex-row md:flex-col gap-2 w-full md:max-w-[200px] shrink-0 md:-mr-[calc((100vw-100%)/2+24px)]">
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
