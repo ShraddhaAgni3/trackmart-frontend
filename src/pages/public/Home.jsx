@@ -19,7 +19,7 @@ export default function Home() {
   
   const [wishlistIds,setWishlistIds] = useState([]);
 const [page, setPage] = useState(1);
-const limit = window.innerWidth < 768 ? 6 : 8;// 9 products per page
+const [limit, setLimit] = useState(window.innerWidth < 768 ? 6 : 8);// 9 products per page
 const [totalPages, setTotalPages] = useState(1);
   const [category,setCategory] = useState("");
   const [care,setCare] = useState("");
