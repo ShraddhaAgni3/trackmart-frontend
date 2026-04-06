@@ -13,11 +13,13 @@ export default function Sidebar({ role }) {
 
   return (
     <>
-      {/* 🔥 EDGE TRIGGER (mobile only) */}
-      <div
-        className="md:hidden fixed top-0 left-0 h-full w-3 z-40"
+      {/* 🔥 MOBILE OPEN BUTTON */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow"
         onClick={() => setIsOpen(true)}
-      />
+      >
+        ☰
+      </button>
 
       {/* 🔥 OVERLAY */}
       {isOpen && (
@@ -30,7 +32,7 @@ export default function Sidebar({ role }) {
       {/* 🔥 SIDEBAR */}
       <div
         className={`
-          fixed md:static top-0 left-0 h-full w-64 bg-white border-r p-6 z-50
+          fixed top-0 left-0 h-full w-64 bg-white border-r p-6 z-50
           transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
@@ -44,27 +46,99 @@ export default function Sidebar({ role }) {
           {role === "admin" && "Admin Panel"}
         </h2>
 
-        {/* CUSTOMER */}
+        {/* ================= CUSTOMER ================= */}
         {role === "customer" && (
           <div className="space-y-2">
 
-            <NavLink
-              to="/customer"
-              onClick={()=>setIsOpen(false)}
+            <NavLink to="/customer" onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`
-              }
-            >
+                `${baseLink} ${isActive ? activeLink : ""}`}>
               Dashboard
             </NavLink>
 
-            <NavLink
-              to="/customer/orders"
-              onClick={()=>setIsOpen(false)}
+            <NavLink to="/customer/orders" onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`
-              }
-            >
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Orders
+            </NavLink>
+
+          </div>
+        )}
+
+        {/* ================= ADMIN ================= */}
+        {role === "admin" && (
+          <div className="space-y-2">
+
+            <NavLink to="/admin" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Dashboard
+            </NavLink>
+
+            <NavLink to="/admin/approve-vendors" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Approve Vendors
+            </NavLink>
+
+            <NavLink to="/admin/vendors" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Vendors
+            </NavLink>
+
+            <NavLink to="/admin/products" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Products
+            </NavLink>
+
+            <NavLink to="/admin/orders" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Orders
+            </NavLink>
+
+            <NavLink to="/admin/vendor-payments" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Payments
+            </NavLink>
+
+            <NavLink to="/admin/support" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Support
+            </NavLink>
+
+          </div>
+        )}
+
+        {/* ================= VENDOR ================= */}
+        {role === "vendor" && (
+          <div className="space-y-2">
+
+            <NavLink to="/vendor" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Dashboard
+            </NavLink>
+
+            <NavLink to="/vendor/add-product" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              Add Product
+            </NavLink>
+
+            <NavLink to="/vendor/products" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
+              My Products
+            </NavLink>
+
+            <NavLink to="/vendor/orders" onClick={()=>setIsOpen(false)}
+              className={({ isActive }) =>
+                `${baseLink} ${isActive ? activeLink : ""}`}>
               Orders
             </NavLink>
 
