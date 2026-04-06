@@ -610,8 +610,8 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         </aside>
 
         {/* PRODUCTS GRID */}
-        <div className="flex-1 overflow-y-auto pr-2">
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+  <div className="flex-1 pr-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 items-stretch">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
@@ -623,10 +623,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                 return(
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-2xl shadow-md p-4 md:p-6 flex flex-col justify-between hover:shadow-lg transition h-full"
+                   className="bg-white border border-gray-200 rounded-2xl shadow-md p-3 sm:p-4 md:p-6 flex flex-col justify-between hover:shadow-lg transition h-full w-full"
                   >
                     {product.image_url && (
-                      <div className="relative h-40 sm:h-44 md:h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+                      <div className="relative h-36 sm:h-40 md:h-56 w-full bg-gray-50 flex items-center justify-center rounded-xl mb-4">
                         <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
                         {role==="customer" && (
                           <button
@@ -658,8 +658,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                         {quantity===0 ? (
                           <button
                             onClick={()=>increaseQty(product)}
-                          className="bg-primary text-white w-full py-2 text-sm md:text-base  text-sm md:text-baserounded-xl font-semibold hover:bg-primaryHover transition"
-                          >
+                          className="bg-primary text-white w-full py-2 text-sm md:text-base rounded-xl font-semibold hover:bg-primaryHover transition"   >
                             Add to Cart
                           </button>
                         ) : (
