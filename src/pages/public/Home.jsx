@@ -496,7 +496,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 </div>
 
   {/* RIGHT ADS */}
-  <div className="flex md:flex flex-row md:flex-col gap-2 w-full md:w-[220px] flex-col gap-2 w-[220px] shrink-0">
+  <div className="flex flex-row md:flex-col gap-2 w-full md:w-[220px] shrink-0">
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
