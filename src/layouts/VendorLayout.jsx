@@ -6,11 +6,11 @@ export default function VendorLayout() {
   return (
     <div className="flex min-h-screen bg-bgApp">
 
-      {/* 🔥 Sidebar always render */}
+      {/* Sidebar */}
       <Sidebar role="vendor" />
 
       {/* Main Section */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col md:ml-64">
 
         {/* Navbar */}
         <div className="sticky top-0 z-10 bg-bgApp">
