@@ -411,7 +411,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 <section className="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center">
 
   {/* LEFT ADS */}
-  <div className="grid grid-cols-2 md:grid-cols-2 grid-cols-2 gap-2 w-[300px] shrink-0">
+  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
@@ -447,7 +447,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         placeholder="Search products..."
         value={searchText}
         onChange={(e)=>setSearchText(e.target.value)}
-        className="px-2 py-2 outline-none w-48"
+        className="px-2 py-2 outline-none w-full md:w-48"
       />
       <button
         onClick={handleSearch}
@@ -524,10 +524,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
 </section>
       {/* SIDEBAR + PRODUCTS */}
-      <section id="products-section" className="flex gap-10 flex flex-col md:flex-row gap-6 md:gap-10">
+      <section id="products-section" className="flex flex-col md:flex-row gap-6 md:gap-10">
 
         {/* SIDEBAR */}
-        <aside className="w-64 sticky top-0 h-fit">
+        <aside className="w-full md:w-64 md:sticky md:top-0 h-fit">
 
           <h3 className="font-semibold mb-4">Categories</h3>
 
@@ -610,8 +610,8 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         </aside>
 
         {/* PRODUCTS GRID */}
-        <div className="flex-1 overflow-y-auto pr-2">
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 gap-6">
+        <div className="flex-1 pr-2">
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
