@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCart, updateCartItem } from "../../services/cartService";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+
 export default function Cart() {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function Cart() {
 
   return (
     <div className="space-y-8 md:space-y-10">
-<ArrowLeft className="w-5 h-5" />
+
       {/* Header */}
       <h1 className="text-2xl md:text-3xl font-bold text-textStrong">
         Your Cart
