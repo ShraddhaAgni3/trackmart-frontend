@@ -445,7 +445,7 @@ useEffect(() => {
 </section>
 {/* SEARCH + FILTER BAR */}
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center">
+<section className="flex flex-col md:flex-row gap-6 md:gap-10">
 
   {/* 🔥 LEFT ADS */}
   <div className="grid grid-cols-2 md:grid-cols-2 gap-2 w-full md:w-[300px] shrink-0">
@@ -560,14 +560,14 @@ useEffect(() => {
 
 </section>
       {/* SIDEBAR + PRODUCTS */}
-      <section id="products-section" className="flex gap-10 h-[80vh] overflow-hidden">
+      <section id="products-section" className="flex flex-col md:flex-row gap-6 md:gap-10">
 
         {/* SIDEBAR */}
-        <aside className="w-64 sticky top-0 h-fit">
+        <aside className="w-full md:w-64 md:sticky md:top-0 h-fit p-4 md:p-0">
 
           <h3 className="font-semibold mb-4">Categories</h3>
 
-          <div className="space-y-2">
+          <div className="space-y-2 text-sm md:text-base">
             <label className="flex gap-2">
               <input type="radio" name="category" value="" checked={category===""} onChange={()=>setCategory("")} />
               All Products
@@ -591,7 +591,7 @@ useEffect(() => {
             type="range" min="0" max="1000" step="50"
             value={price}
             onChange={(e)=>setPrice(e.target.value)}
-            className="w-full"
+            className="w-full accent-primary"
           />
           <div className="flex justify-between text-sm text-gray-500 mt-2">
             <span>₹0</span>
@@ -646,7 +646,7 @@ useEffect(() => {
         </aside>
 
         {/* PRODUCTS GRID */}
-        <div className="flex-1 overflow-y-auto pr-2">
+        <div className="flex-1 pr-2">
           <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
 
             {loading ? (
