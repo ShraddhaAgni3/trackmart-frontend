@@ -70,8 +70,16 @@ Vendor Details
 <div>
 <p className="text-sm text-textMuted">Status</p>
 
-<span className="inline-block mt-1 px-3 py-1 text-xs rounded-full bg-gray-100">
-{vendor.kyc_status}
+<span
+  className={`inline-block mt-1 px-3 py-1 text-xs rounded-full font-semibold ${
+    vendor.kyc_status === "approved"
+      ? "bg-green-100 text-green-700"
+      : vendor.kyc_status === "rejected"
+      ? "bg-red-100 text-red-700"
+      : "bg-yellow-100 text-yellow-700"
+  }`}
+>
+  {vendor.kyc_status}
 </span>
 
 </div>
