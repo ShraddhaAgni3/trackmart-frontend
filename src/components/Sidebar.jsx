@@ -4,7 +4,6 @@ import { useState } from "react";
 export default function Sidebar({ role }) {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [touchStart, setTouchStart] = useState(null);
 
   const baseLink =
     "block px-4 py-3 rounded-xl transition font-medium hover:bg-gray-100";
@@ -12,34 +11,13 @@ export default function Sidebar({ role }) {
   const activeLink =
     "bg-gray-100 text-primary font-semibold";
 
-  /* ================= SWIPE LOGIC ================= */
-
-  const handleTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!touchStart) return;
-
-    const touchEnd = e.touches[0].clientX;
-    const diff = touchEnd - touchStart;
-
-    // 👉 LEFT EDGE swipe → open
-    if (touchStart < 50 && diff > 60) {
-      setIsOpen(true);
-    }
-
-    // 👉 swipe left → close
-    if (diff < -60) {
-      setIsOpen(false);
-    }
-  };
-
   return (
-    <div
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-    >
+    <>
+      {/* 🔥 LEFT EDGE CLICK AREA */}
+      <div
+        className="md:hidden fixed top-0 left-0 h-full w-4 z-40"
+        onClick={() => setIsOpen(true)}
+      />
 
       {/* 🔥 OVERLAY */}
       {isOpen && (
@@ -66,10 +44,9 @@ export default function Sidebar({ role }) {
           {role === "admin" && "Admin Panel"}
         </h2>
 
-        {/* ================= CUSTOMER ================= */}
+        {/* CUSTOMER */}
         {role === "customer" && (
           <div className="space-y-2">
-
             <NavLink to="/customer" onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
                 `${baseLink} ${isActive ? activeLink : ""}`}>
@@ -81,14 +58,12 @@ export default function Sidebar({ role }) {
                 `${baseLink} ${isActive ? activeLink : ""}`}>
               Orders
             </NavLink>
-
           </div>
         )}
 
-        {/* ================= ADMIN ================= */}
+        {/* ADMIN */}
         {role === "admin" && (
           <div className="space-y-2">
-
             <NavLink to="/admin" onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
                 `${baseLink} ${isActive ? activeLink : ""}`}>
@@ -130,14 +105,12 @@ export default function Sidebar({ role }) {
                 `${baseLink} ${isActive ? activeLink : ""}`}>
               Support
             </NavLink>
-
           </div>
         )}
 
-        {/* ================= VENDOR ================= */}
+        {/* VENDOR */}
         {role === "vendor" && (
           <div className="space-y-2">
-
             <NavLink to="/vendor" onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
                 `${baseLink} ${isActive ? activeLink : ""}`}>
@@ -161,11 +134,10 @@ export default function Sidebar({ role }) {
                 `${baseLink} ${isActive ? activeLink : ""}`}>
               Orders
             </NavLink>
-
           </div>
         )}
 
       </div>
-    </div>
+    </>
   );
 }
