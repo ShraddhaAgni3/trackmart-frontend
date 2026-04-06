@@ -106,16 +106,17 @@ className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-5 shadow
 {/* RIGHT SIDE BUTTONS */}
 <div className="grid grid-cols-2 sm:flex gap-3 w-full md:w-auto">
 
+
 <button
 onClick={()=>navigate(`/admin/products/${p.id}`)}
-className="w-full sm:w-auto h-10 flex items-center justify-center bg-primary text-white px-4 rounded-lg"
+className="w-full sm:w-[160px] h-10 flex items-center justify-center text-center whitespace-nowrap overflow-hidden text-ellipsis bg-primary text-white rounded-lg"
 >
 View Details
 </button>
 
 <button
 onClick={()=>deleteProduct(p.id)}
-className="w-full sm:w-auto h-10 flex items-center justify-center border border-dangerText text-dangerText px-4 rounded-lg hover:bg-dangerText hover:text-white"
+className="w-full sm:w-[160px] h-10 flex items-center justify-center text-center whitespace-nowrap overflow-hidden text-ellipsis border border-dangerText text-dangerText rounded-lg hover:bg-dangerText hover:text-white"
 >
 Delete
 </button>
