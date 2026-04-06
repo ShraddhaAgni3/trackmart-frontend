@@ -482,11 +482,11 @@ useEffect(() => {
         placeholder="Search products..."
         value={searchText}
         onChange={(e)=>setSearchText(e.target.value)}
-        className="px-3 py-2 outline-none w-full md:w-48"
+        className="px-3 py-2 outline-none flex-1 min-w-0"
       />
       <button
         onClick={handleSearch}
-        className="bg-primary text-white px-4 shrink-0"
+        className="bg-primary text-white px-4 shrink-0 whitespace-nowrap"
       >
         Search
       </button>
