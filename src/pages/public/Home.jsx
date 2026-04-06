@@ -408,10 +408,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
 </section>
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center">
+<section className="flex gap-6 items-center">
 
   {/* LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0">
+  <div className="hidden md:grid grid-cols-2 gap-2 w-[300px] shrink-0">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
@@ -437,9 +437,9 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     })}
   </div>
 {/* CENTER FILTERS */}
-<div className="flex flex-col md:flex-row flex-1 items-stretch md:items-center justify-center gap-2">
+<div className="flex flex-1 items-center justify-center">
 
-  <div className="flex flex-wrap md:flex-nowrap gap-2 items-center w-full justify-center">
+  <div className="flex gap-2 items-center">
 
     <div className="flex border border-default rounded-xl overflow-hidden">
       <input
@@ -447,7 +447,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         placeholder="Search products..."
         value={searchText}
         onChange={(e)=>setSearchText(e.target.value)}
-        className="px-2 py-2 outline-none w-full md:w-48"
+        className="px-2 py-2 outline-none w-48"
       />
       <button
         onClick={handleSearch}
@@ -496,7 +496,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 </div>
 
   {/* RIGHT ADS */}
-  <div className="flex flex-row md:flex-col gap-2 w-full md:w-[220px] shrink-0">
+  <div className="hidden md:flex flex-col gap-2 w-[220px] shrink-0">
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
@@ -524,10 +524,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
 </section>
       {/* SIDEBAR + PRODUCTS */}
-      <section id="products-section" className="flex flex-col md:flex-row gap-6 md:gap-10">
+      <section id="products-section" className="flex gap-10 h-[80vh] overflow-hidden">
 
         {/* SIDEBAR */}
-        <aside className="w-full md:w-64 md:sticky md:top-0 h-fit">
+        <aside className="w-64 sticky top-0 h-fit">
 
           <h3 className="font-semibold mb-4">Categories</h3>
 
@@ -610,8 +610,8 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
         </aside>
 
         {/* PRODUCTS GRID */}
-        <div className="flex-1 pr-2">
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
+        <div className="flex-1 overflow-y-auto pr-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
@@ -623,10 +623,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                 return(
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-2xl shadow-md p-3 sm:p-4 md:p-6 flex flex-col justify-between hover:shadow-lg transition"
+                    className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
                   >
                     {product.image_url && (
-                      <div className="relative h-32 sm:h-36 md:h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+                      <div className="relative h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
                         <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
                         {role==="customer" && (
                           <button
