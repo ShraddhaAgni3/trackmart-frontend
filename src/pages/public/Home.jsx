@@ -445,10 +445,10 @@ useEffect(() => {
 </section>
 
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row gap-6 md:gap-10">
+<section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
 
   {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 md:grid-cols-2 gap-2 w-full md:w-[300px] shrink-0">
+  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
