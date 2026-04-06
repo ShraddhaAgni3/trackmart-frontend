@@ -92,6 +92,11 @@ export default function Navbar() {
           {role === "vendor" && (
             <>
               <Link to="/vendor">Dashboard</Link>
+               {/* 🔥 ADD THIS */}
+    <Link
+      to="/profile">
+      Profile
+    </Link>
               <Link to="/vendor/add-product">Add Product</Link>
               <NotificationBell />
               <button onClick={handleLogout} className="btn-primary">Logout</button>
