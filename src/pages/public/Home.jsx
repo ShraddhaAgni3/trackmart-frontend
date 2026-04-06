@@ -647,7 +647,7 @@ useEffect(() => {
 
         {/* PRODUCTS GRID */}
         <div className="flex-1 pr-2">
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-6">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
@@ -659,10 +659,10 @@ useEffect(() => {
                 return(
                   <div
                     key={product.id}
-                   className="bg-white border border-gray-200 rounded-2xl shadow-md p-3 sm:p-4 md:p-6 flex flex-col justify-between h-full"
+                   className="bg-white border border-gray-200 rounded-2xl shadow-md p-2 sm:p-3 md:p-6 flex flex-col h-full"
                   >
                     {product.image_url && (
-                      <div className="relative h-28 sm:h-32 md:h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+                      <div className="relative h-24 sm:h-28 md:h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
                         <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
                         {role==="customer" && (
                           <button
@@ -675,10 +675,10 @@ useEffect(() => {
                       </div>
                     )}
 
-                    <h3 className="font-primary text-lg font-semibold text-strong">{product.title}</h3>
-                    <p className="text-muted text-sm mt-2 line-clamp-2">{product.description}</p>
+                    <h3 className="font-primary text-sm sm:text-base md:text-lg font-semibold text-strong line-clamp-1">{product.title}</h3>
+                    <p className="text-muted text-xs sm:text-sm mt-1 line-clamp-2">{product.description}</p>
 
-                    <div className="mt-4 flex justify-between items-center">
+                    <div className="mt-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
                       <span className="text-primary font-bold text-lg">₹{product.price}</span>
                       {product.health_rating && (
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
