@@ -639,7 +639,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                       </div>
                     )}
 
-                    <h3 className="font-primary text-lg font-semibold text-strong">{product.title}</h3>
+                    <h3 className="font-primary text-base md:text-lg font-semibold text-strong">{product.title}</h3>
                     <p className="text-muted text-sm mt-2 line-clamp-2">{product.description}</p>
 
                     <div className="mt-4 flex justify-between items-center">
@@ -658,7 +658,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                         {quantity===0 ? (
                           <button
                             onClick={()=>increaseQty(product)}
-                            className="bg-primary text-white w-full py-2 rounded-xl font-semibold hover:bg-primaryHover transition"
+                          className="bg-primary text-white w-full py-2 text-sm md:text-base  text-sm md:text-baserounded-xl font-semibold hover:bg-primaryHover transition"
                           >
                             Add to Cart
                           </button>
@@ -686,7 +686,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
           </div>
         
-<div className="flex justify-center items-center gap-3 mt-10">
+<div className="flex flex-wrap justify-center items-center gap-2 md:gap-3 mt-8 md:mt-10">
 
   {/* PREV */}
   <button
