@@ -56,7 +56,12 @@ export default function Cart() {
 
   return (
     <div className="space-y-8 md:space-y-10">
-
+<button
+    onClick={() => navigate(-1)}
+    className="w-10 h-10 flex items-center justify-center rounded-full border border-borderDefault hover:bg-bgSurfaceAlt transition"
+  >
+    ←
+  </button>
       {/* Header */}
       <h1 className="text-2xl md:text-3xl font-bold text-textStrong">
         Your Cart
