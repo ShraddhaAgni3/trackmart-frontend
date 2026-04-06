@@ -115,18 +115,14 @@ const handleAboutClick = () => {
 
             {/* ❤️ Wishlist */}
 
-            <button
-              onClick={() => navigate("/wishlist")}
-              className="relative"
-            >
-              <span className="text-2xl">❤️</span>
-
-              {wishlistCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
+          <Link to="/customer/wishlist" className="relative">
+  ❤️
+  {wishlistCount > 0 && (
+    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+      {wishlistCount}
+    </span>
+  )}
+</Link>
 
 
             <Link
