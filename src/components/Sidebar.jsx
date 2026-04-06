@@ -4,6 +4,7 @@ import { useState } from "react";
 export default function Sidebar({ role }) {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
 
   const baseLink =
     "block px-4 py-3 rounded-xl transition font-medium hover:bg-gray-100";
@@ -11,15 +12,34 @@ export default function Sidebar({ role }) {
   const activeLink =
     "bg-gray-100 text-primary font-semibold";
 
+  /* ================= SWIPE LOGIC ================= */
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!touchStart) return;
+
+    const touchEnd = e.touches[0].clientX;
+    const diff = touchEnd - touchStart;
+
+    // 👉 LEFT EDGE swipe → open
+    if (touchStart < 50 && diff > 60) {
+      setIsOpen(true);
+    }
+
+    // 👉 swipe left → close
+    if (diff < -60) {
+      setIsOpen(false);
+    }
+  };
+
   return (
-    <>
-      {/* 🔥 MOBILE OPEN BUTTON */}
-      <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow"
-        onClick={() => setIsOpen(true)}
-      >
-        ☰
-      </button>
+    <div
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+    >
 
       {/* 🔥 OVERLAY */}
       {isOpen && (
@@ -146,6 +166,6 @@ export default function Sidebar({ role }) {
         )}
 
       </div>
-    </>
+    </div>
   );
 }
