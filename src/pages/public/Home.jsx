@@ -448,7 +448,7 @@ useEffect(() => {
 <section className="flex flex-col md:flex-row gap-6 md:gap-10">
 
   {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-[calc((100vw-100%)/2+24px)]">
+  <div className="grid grid-cols-2 md:grid-cols-2 gap-2 w-full md:w-[300px] shrink-0">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
@@ -534,7 +534,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 RIGHT ADS */}
-  <div className="flex flex-row md:flex-col gap-2 w-full md:max-w-[200px] shrink-0 md:-mr-[calc((100vw-100%)/2+24px)]">
+  <div className="flex flex-row md:flex-col gap-2 w-full md:max-w-[200px] shrink-0">
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
