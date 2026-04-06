@@ -6,13 +6,13 @@ import { getWishlist } from "../services/wishlistService";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
+
   const { role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [wishlistCount, setWishlistCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  /* FETCH WISHLIST */
   useEffect(() => {
     const fetchWishlist = async () => {
       if (role !== "customer") return;
@@ -43,9 +43,9 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-surface border-b px-4 md:px-8 py-3 overflow-x-hidden">
+    <nav className="bg-surface border-b border-default px-4 md:px-8 py-3 relative z-50">
 
-      <div className="flex items-center justify-between w-full">
+      <div className="flex justify-between items-center">
 
         {/* LOGO */}
         <Link to="/" className="text-2xl font-bold">
@@ -62,6 +62,7 @@ export default function Navbar() {
               <button onClick={handleAboutClick}>About</button>
               <Link to="/login" className="btn-primary">Login</Link>
               <Link to="/register" className="btn-outline">Register</Link>
+              <Link to="/apply-vendor">Become Seller</Link>
             </>
           )}
 
@@ -71,15 +72,15 @@ export default function Navbar() {
               <button onClick={handleAboutClick}>About</button>
               <Link to="/profile">Profile</Link>
 
-              {/* ✅ FIXED WISHLIST */}
-              <Link to="/wishlist" className="relative">
+              {/* LOGIC SAME */}
+              <button onClick={() => navigate("/wishlist")} className="relative">
                 ❤️
                 {wishlistCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 rounded-full">
                     {wishlistCount}
                   </span>
                 )}
-              </Link>
+              </button>
 
               <Link to="/customer/cart">Cart</Link>
               <Link to="/customer/orders">Orders</Link>
@@ -113,7 +114,6 @@ export default function Navbar() {
               </button>
             </>
           )}
-
         </div>
 
         {/* MOBILE BUTTON */}
@@ -125,114 +125,91 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* ================= MOBILE MENU ================= */}
       {isOpen && (
-        <div className="md:hidden mt-3 w-full">
+        <>
+          {/* 🔥 OVERLAY */}
+          <div
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            onClick={() => setIsOpen(false)}
+          ></div>
 
-          <div className="w-full bg-white rounded-xl shadow-lg p-4 flex flex-col gap-4 border">
+          {/* 🔥 MENU */}
+          <div className="absolute top-full left-0 w-full z-50 px-4 mt-2">
 
-            {/* TOP */}
-            <div className="flex flex-col gap-3 text-sm">
-              <Link to="/" onClick={() => setIsOpen(false)}>Shop</Link>
-              <button onClick={handleAboutClick}>About</button>
-            </div>
+            <div
+              className="bg-white rounded-xl shadow-lg p-4 flex flex-col gap-4 border"
+              onClick={(e) => e.stopPropagation()}
+            >
 
-            {/* CUSTOMER */}
-            {role === "customer" && (
-              <>
-                <div className="border-t pt-3">
+              {!role && (
+                <>
+                  <Link to="/" onClick={()=>setIsOpen(false)}>Shop</Link>
+                  <button onClick={handleAboutClick}>About</button>
+                  <Link to="/login">Login</Link>
+                  <Link to="/register">Register</Link>
+                  <Link to="/apply-vendor">Become Seller</Link>
+                </>
+              )}
 
-                  <p className="text-xs text-gray-400 mb-2">Account</p>
+              {role === "customer" && (
+                <>
+                  <Link to="/" onClick={()=>setIsOpen(false)}>Shop</Link>
+                  <button onClick={handleAboutClick}>About</button>
 
-                  <div className="flex flex-col gap-3 text-sm">
+                  <Link to="/profile" onClick={()=>setIsOpen(false)}>
+                    Profile
+                  </Link>
 
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsOpen(false)}
-                      className="flex justify-between"
-                    >
-                      Profile <span>›</span>
-                    </Link>
+                  {/* LOGIC SAME */}
+                  <button
+                    onClick={() => {
+                      navigate("/wishlist");
+                      setIsOpen(false);
+                    }}
+                  >
+                    Wishlist ({wishlistCount})
+                  </button>
 
-                    {/* ✅ FIXED WISHLIST */}
-                    <Link
-                      to="/wishlist"
-                      onClick={() => setIsOpen(false)}
-                      className="flex justify-between"
-                    >
-                      Wishlist <span>{wishlistCount}</span>
-                    </Link>
+                  <Link to="/customer/cart">Cart</Link>
+                  <Link to="/customer/orders">Orders</Link>
 
-                    <Link
-                      to="/customer/cart"
-                      onClick={() => setIsOpen(false)}
-                      className="flex justify-between"
-                    >
-                      Cart <span>›</span>
-                    </Link>
-
-                    <Link
-                      to="/customer/orders"
-                      onClick={() => setIsOpen(false)}
-                      className="flex justify-between"
-                    >
-                      Orders <span>›</span>
-                    </Link>
-
-                  </div>
-                </div>
-
-                <div className="border-t pt-3">
                   <NotificationBell />
-                </div>
 
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  className="border-t pt-3 text-red-500"
-                >
-                  Logout
-                </button>
-              </>
-            )}
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
 
-            {/* GUEST */}
-            {!role && (
-              <div className="border-t pt-3 flex flex-col gap-3">
-                <Link to="/login" className="btn-primary text-center">Login</Link>
-                <Link to="/register" className="btn-outline text-center">Register</Link>
-              </div>
-            )}
-
-            {/* VENDOR */}
-            {role === "vendor" && (
-              <>
-                <div className="border-t pt-3">
+              {role === "vendor" && (
+                <>
                   <Link to="/vendor">Dashboard</Link>
                   <Link to="/profile">Profile</Link>
                   <Link to="/vendor/add-product">Add Product</Link>
-                </div>
 
-                <button onClick={handleLogout} className="text-red-500 border-t pt-3">
-                  Logout
-                </button>
-              </>
-            )}
+                  <NotificationBell />
 
-            {/* ADMIN */}
-            {role === "admin" && (
-              <>
-                <Link to="/admin">Admin Panel</Link>
-                <button onClick={handleLogout} className="text-red-500 border-t pt-3">
-                  Logout
-                </button>
-              </>
-            )}
+                  <button onClick={handleLogout}>Logout</button>
+                </>
+              )}
 
+              {role === "admin" && (
+                <>
+                  <Link to="/admin">Admin Panel</Link>
+                  <NotificationBell />
+                  <button onClick={handleLogout}>Logout</button>
+                </>
+              )}
+
+            </div>
           </div>
-        </div>
+        </>
       )}
     </nav>
   );
