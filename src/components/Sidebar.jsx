@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 export default function Sidebar({ role }) {
@@ -14,13 +13,11 @@ export default function Sidebar({ role }) {
 
   return (
     <>
-      {/* 🔥 MOBILE BUTTON */}
-      <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow"
+      {/* 🔥 EDGE TRIGGER (mobile only) */}
+      <div
+        className="md:hidden fixed top-0 left-0 h-full w-3 z-40"
         onClick={() => setIsOpen(true)}
-      >
-        <Menu />
-      </button>
+      />
 
       {/* 🔥 OVERLAY */}
       {isOpen && (
@@ -40,27 +37,20 @@ export default function Sidebar({ role }) {
         `}
       >
 
-        {/* CLOSE BUTTON (mobile) */}
-        <div className="md:hidden flex justify-end mb-4">
-          <button onClick={() => setIsOpen(false)}>
-            <X />
-          </button>
-        </div>
-
         {/* TITLE */}
         <h2 className="text-xl font-bold mb-6">
+          {role === "customer" && "My Account"}
           {role === "vendor" && "Vendor Panel"}
           {role === "admin" && "Admin Panel"}
-          {role === "customer" && "My Account"}
         </h2>
 
-        {/* ================= CUSTOMER ================= */}
+        {/* CUSTOMER */}
         {role === "customer" && (
           <div className="space-y-2">
 
             <NavLink
               to="/customer"
-              onClick={() => setIsOpen(false)}
+              onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
                 `${baseLink} ${isActive ? activeLink : ""}`
               }
@@ -70,62 +60,12 @@ export default function Sidebar({ role }) {
 
             <NavLink
               to="/customer/orders"
-              onClick={() => setIsOpen(false)}
+              onClick={()=>setIsOpen(false)}
               className={({ isActive }) =>
                 `${baseLink} ${isActive ? activeLink : ""}`
               }
             >
               Orders
-            </NavLink>
-
-          </div>
-        )}
-
-        {/* ================= VENDOR ================= */}
-        {role === "vendor" && (
-          <div className="space-y-2">
-
-            <NavLink to="/vendor" onClick={()=>setIsOpen(false)}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`}>
-              Dashboard
-            </NavLink>
-
-            <NavLink to="/vendor/add-product" onClick={()=>setIsOpen(false)}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`}>
-              Add Product
-            </NavLink>
-
-            <NavLink to="/vendor/products" onClick={()=>setIsOpen(false)}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`}>
-              My Products
-            </NavLink>
-
-            <NavLink to="/vendor/orders" onClick={()=>setIsOpen(false)}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`}>
-              Orders
-            </NavLink>
-
-          </div>
-        )}
-
-        {/* ================= ADMIN ================= */}
-        {role === "admin" && (
-          <div className="space-y-2">
-
-            <NavLink to="/admin" onClick={()=>setIsOpen(false)}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`}>
-              Dashboard
-            </NavLink>
-
-            <NavLink to="/admin/vendors" onClick={()=>setIsOpen(false)}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`}>
-              Vendors
             </NavLink>
 
           </div>
