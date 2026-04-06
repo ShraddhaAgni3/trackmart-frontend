@@ -19,7 +19,7 @@ export default function Home() {
   
   const [wishlistIds,setWishlistIds] = useState([]);
 const [page, setPage] = useState(1);
-const limit = 8;// 9 products per page
+const limit = window.innerWidth < 768 ? 6 : 8;// 9 products per page
 const [totalPages, setTotalPages] = useState(1);
   const [category,setCategory] = useState("");
   const [care,setCare] = useState("");
@@ -203,7 +203,14 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
   }, [searchQuery, category, care, concern, price, sort, page,limit]);
 
   /* ================= FETCH CATEGORIES ================= */
+useEffect(() => {
+  const handleResize = () => {
+    setLimit(window.innerWidth < 768 ? 6 : 8);
+  };
 
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
   useEffect(()=>{
     const fetchCategories = async()=>{
       try{
@@ -640,7 +647,7 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
 
         {/* PRODUCTS GRID */}
         <div className="flex-1 overflow-y-auto pr-2">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
 
             {loading ? (
               <div className="col-span-full text-center py-20 text-gray-500 text-lg">Loading products...</div>
@@ -652,10 +659,10 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
                 return(
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition"
+                   className="bg-white border border-gray-200 rounded-2xl shadow-md p-3 sm:p-4 md:p-6 flex flex-col justify-between h-full"
                   >
                     {product.image_url && (
-                      <div className="relative h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
+                      <div className="relative h-28 sm:h-32 md:h-56 bg-gray-50 flex items-center justify-center rounded-xl mb-4">
                         <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
                         {role==="customer" && (
                           <button
