@@ -286,74 +286,103 @@ setTotalPages(res.data.totalPages); // temporary  // backend se total pages });
     <div className="space-y-16">
 
       {/* HERO */}
-      <section className="relative w-full rounded-2xl overflow-hidden h-[480px]">
-        <div className="absolute inset-0 flex">
+     {/* HERO */}
+<section className="relative w-full rounded-2xl overflow-hidden h-auto md:h-[480px]">
 
-          {/* LEFT — 30% text box */}
-          <div className="w-[30%] bg-surface-alt flex flex-col justify-center px-8 gap-5 border-r border-default">
+  <div className="flex flex-col md:flex-row h-full">
 
-            <div>
-              <span className="text-sm text-muted uppercase tracking-widest font-medium">
-                {heroData[heroIndex].tag}
-              </span>
-              <h1 className="text-4xl font-bold text-strong leading-tight mt-2">
-                {heroData[heroIndex].title}{" "}
-                <span className="text-primary">{heroData[heroIndex].highlight}</span>
-              </h1>
-            </div>
+    {/* LEFT — TEXT */}
+    <div className="w-full md:w-[30%] bg-surface-alt flex flex-col justify-center px-4 md:px-8 py-6 md:py-0 gap-4 md:gap-5 border-b md:border-b-0 md:border-r border-default">
 
-            <p className="text-base text-muted leading-relaxed">
-              {heroData[heroIndex].desc}
-            </p>
+      <div>
+        <span className="text-xs md:text-sm text-muted uppercase tracking-widest font-medium">
+          {heroData[heroIndex].tag}
+        </span>
 
-            <button
-              onClick={() => handleHeroCta(heroData[heroIndex].link)}
-              className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full font-semibold w-fit hover:bg-primaryHover transition text-base"
-            >
-              {heroData[heroIndex].cta}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
+        <h1 className="text-2xl md:text-4xl font-bold text-strong leading-tight mt-2">
+          {heroData[heroIndex].title}{" "}
+          <span className="text-primary">
+            {heroData[heroIndex].highlight}
+          </span>
+        </h1>
+      </div>
 
-            {/* DOTS */}
-            <div className="flex gap-2">
-              {heroData.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setHeroIndex(i)}
-                  className={`h-[3px] rounded transition-all duration-300 ${
-                    i === heroIndex ? "w-10 bg-primary" : "w-5 bg-default"
-                  }`}
-                />
-              ))}
-            </div>
+      <p className="text-sm md:text-base text-muted leading-relaxed">
+        {heroData[heroIndex].desc}
+      </p>
 
-          </div>
+      <button
+        onClick={() => handleHeroCta(heroData[heroIndex].link)}
+        className="flex items-center gap-2 bg-primary text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold w-fit hover:bg-primaryHover transition text-sm md:text-base"
+      >
+        {heroData[heroIndex].cta}
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
 
-          {/* RIGHT — 70% pure image */}
-          <div className="w-[70%] relative">
-            <img
-              key={heroIndex}
-              src={heroData[heroIndex].image}
-              className="w-full h-full object-cover"
-            />
+      {/* DOTS */}
+      <div className="flex gap-2">
+        {heroData.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setHeroIndex(i)}
+            className={`h-[3px] rounded transition-all duration-300 ${
+              i === heroIndex
+                ? "w-10 bg-primary"
+                : "w-5 bg-default"
+            }`}
+          />
+        ))}
+      </div>
 
-            {/* ARROWS */}
-            <div className="absolute bottom-6 right-6 flex gap-2">
-              <button
-                onClick={() => setHeroIndex((heroIndex - 1 + heroData.length) % heroData.length)}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-md text-white text-base font-bold border border-white/30 hover:bg-white hover:text-black transition duration-300"
-              >←</button>
-              <button
-                onClick={() => setHeroIndex((heroIndex + 1) % heroData.length)}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-md text-white text-base font-bold border border-white/30 hover:bg-white hover:text-black transition duration-300"
-              >→</button>
-            </div>
-          </div>
-</div>
-      
-      </section>
+    </div>
+
+    {/* RIGHT — IMAGE */}
+    <div className="w-full md:w-[70%] relative h-[250px] md:h-full">
+
+      <img
+        key={heroIndex}
+        src={heroData[heroIndex].image}
+        className="w-full h-full object-cover"
+      />
+
+      {/* ARROWS */}
+      <div className="absolute bottom-3 right-3 md:bottom-6 md:right-6 flex gap-2">
+        <button
+          onClick={() =>
+            setHeroIndex(
+              (heroIndex - 1 + heroData.length) %
+                heroData.length
+            )
+          }
+          className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-md text-white text-sm md:text-base font-bold border border-white/30 hover:bg-white hover:text-black transition duration-300"
+        >
+          ←
+        </button>
+
+        <button
+          onClick={() =>
+            setHeroIndex((heroIndex + 1) % heroData.length)
+          }
+          className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-md text-white text-sm md:text-base font-bold border border-white/30 hover:bg-white hover:text-black transition duration-300"
+        >
+          →
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
       {/* WHY CHOOSE TRACKMART */}
 <section id="about-section" className="bg-[#f5f1eb] py-20 px-6">
 
