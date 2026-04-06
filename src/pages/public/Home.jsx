@@ -694,12 +694,12 @@ useEffect(() => {
                         {quantity===0 ? (
                           <button
                             onClick={()=>increaseQty(product)}
-                            className="bg-primary text-white w-full py-2 rounded-xl font-semibold hover:bg-primaryHover transition"
+                            className="bg-primary text-white w-full py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold"
                           >
                             Add to Cart
                           </button>
                         ) : (
-                          <div className="flex items-center justify-center gap-6 border border-gray-300 rounded-xl py-2">
+                          <div className="flex items-center justify-center gap-3 border border-gray-300 rounded-xl py-1.5">
                             <button onClick={()=>decreaseQty(product)} className="text-xl font-bold px-4">-</button>
                             <span className="font-semibold text-lg">{quantity}</span>
                             <button onClick={()=>increaseQty(product)} className="text-xl font-bold px-4">+</button>
@@ -710,8 +710,7 @@ useEffect(() => {
 
                     <button
                       onClick={()=>navigate(`/product/${product.id}`)}
-                      className="mt-3 border border-primary text-primary w-full py-2 rounded-xl font-semibold hover:bg-primary hover:text-white transition"
-                    >
+                      className="mt-2 border border-primary text-primary w-full py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold"  >
                       View Details
                     </button>
 
