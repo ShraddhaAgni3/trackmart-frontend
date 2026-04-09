@@ -94,17 +94,17 @@ const handleDeliverClick = async () => {
 
     const item = items.find(i => i.item_status === "confirmed");
 
-if (!item) {
-  alert("No confirmed item found");
-  return;
-}
+    if (!item) {
+      alert("No confirmed item found");
+      return;
+    }
 
-await api.patch("/vendor/deliver-item", {
-  item_id: item.id,
-  otp
-});
+    await api.patch("/vendor/deliver-item", {
+      item_id: item.id,
+      otp
+    });
 
-    alert("Items delivered successfully");
+    alert("Item delivered successfully");
 
     setOtp("");
     setAskOtp(false);
