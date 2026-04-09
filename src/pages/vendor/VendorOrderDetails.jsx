@@ -41,7 +41,6 @@ fetchOrder();
 
 
 /* ================= CONFIRM ORDER ================= */
-
 const confirmOrder = async () => {
   try {
 
@@ -57,23 +56,27 @@ const confirmOrder = async () => {
       return;
     }
 
-    // 🔥 get only pending items of THIS vendor
     const pendingItems = items.filter(i => i.item_status === "pending");
 
-    for (let item of pendingItems) {
-      await api.patch("/vendor/confirm-item", {
-        item_id: item.id,
-        delivery_date: date
-      });
+    const item = pendingItems[0];
+
+    if (!item) {
+      alert("No pending item found");
+      return;
     }
 
-  alert("Items confirmed & OTP sent to customer email");
+    await api.patch("/vendor/confirm-item", {
+      item_id: item.id,
+      delivery_date: date
+    });
+
+    alert("Item confirmed & OTP sent");
 
     fetchOrder();
 
   } catch (err) {
     console.log(err);
-    alert("Failed to confirm");
+    alert(err.response?.data?.message || "Failed to confirm");
   }
 };
 
