@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import Footer from "../../components/Footer";
+import TrackingModal from "../../components/TrackingModal";
 export default function VendorOrderDetails(){
 
 const { id } = useParams();
@@ -12,7 +13,7 @@ const [date,setDate] = useState("");
 const [showFullAddress,setShowFullAddress] = useState(false);
 const [otp, setOtp] = useState("");
 const [askOtp, setAskOtp] = useState(false);
-
+const [trackingItemId, setTrackingItemId] = useState(null);
 /* ================= FETCH ORDER ================= */
 
 const fetchOrder = async()=>{
@@ -249,12 +250,11 @@ Click to view full address
 <h2 className="font-semibold">Products</h2>
 
 {items.map(item=>(
-
-<div
-key={item.id}
-className="border p-4 rounded-lg flex justify-between"
->
-
+  <div
+    key={item.id}
+    onClick={() => setTrackingItemId(item.id)}
+    className="border p-4 rounded-lg flex justify-between cursor-pointer hover:bg-gray-50"
+  >
 <div>
 
 <p className="font-medium">
@@ -344,7 +344,12 @@ className="border p-4 rounded-lg flex justify-between"
 )}
 
 </div>
-
+{trackingItemId && (
+  <TrackingModal
+    itemId={trackingItemId}
+    onClose={() => setTrackingItemId(null)}
+  />
+)}
 {/* PENDING / DEFAULT */}
 
 
