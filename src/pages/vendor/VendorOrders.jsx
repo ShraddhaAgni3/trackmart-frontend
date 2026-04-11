@@ -82,7 +82,13 @@ No orders received yet
 
 <div
   key={order.order_id}
-  onClick={() => setTrackingItemId(order.item_id)}
+onClick={() => {
+  if (!order.item_id) {
+    console.log("❌ item_id missing", order);
+    return;
+  }
+  setTrackingItemId(order.item_id);
+}}
   className="border p-6 rounded-2xl shadow-sm cursor-pointer hover:bg-gray-50"
 >
 
