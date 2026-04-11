@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import Map from "../components/Map"; // ✅ NEW
 
 export default function TrackingModal({ itemId, onClose }) {
 
   const [item, setItem] = useState(null);
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "YOUR_GOOGLE_MAP_API_KEY"
-  });
 
   useEffect(() => {
     if (!itemId) return;
@@ -24,7 +20,7 @@ export default function TrackingModal({ itemId, onClose }) {
 
     fetchTracking();
 
-    const interval = setInterval(fetchTracking, 5000); // 🔥 live update
+    const interval = setInterval(fetchTracking, 5000);
 
     return () => clearInterval(interval);
 
@@ -52,7 +48,7 @@ export default function TrackingModal({ itemId, onClose }) {
     >
 
       <div
-        className="bg-white w-[90%] max-w-md p-6 rounded-xl"
+        className="bg-white w-[90%] max-w-md p-6 rounded-xl relative"
         onClick={(e) => e.stopPropagation()}
       >
 
@@ -83,23 +79,12 @@ export default function TrackingModal({ itemId, onClose }) {
               ))}
             </div>
 
-            {/* 🗺️ MAP */}
-            {isLoaded && item.latitude && item.longitude && (
-              <GoogleMap
-                mapContainerStyle={{ width: "100%", height: "250px" }}
-                center={{
-                  lat: Number(item.latitude),
-                  lng: Number(item.longitude)
-                }}
-                zoom={15}
-              >
-                <Marker
-                  position={{
-                    lat: Number(item.latitude),
-                    lng: Number(item.longitude)
-                  }}
-                />
-              </GoogleMap>
+            {/* 🗺️ FREE MAP */}
+            {item.latitude && item.longitude && (
+              <Map
+                lat={Number(item.latitude)}
+                lng={Number(item.longitude)}
+              />
             )}
 
             {/* 📊 INFO */}
