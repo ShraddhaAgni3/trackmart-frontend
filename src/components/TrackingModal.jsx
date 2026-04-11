@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 export default function TrackingModal({ itemId, onClose }) {
 
   const [item, setItem] = useState(null);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "YOUR_GOOGLE_MAP_API_KEY"
+  });
 
   useEffect(() => {
     if (!itemId) return;
@@ -18,25 +23,27 @@ export default function TrackingModal({ itemId, onClose }) {
     };
 
     fetchTracking();
+
+    const interval = setInterval(fetchTracking, 5000); // 🔥 live update
+
+    return () => clearInterval(interval);
+
   }, [itemId]);
 
   if (!itemId) return null;
 
-  // 🔥 timeline steps
+  const status = (item?.status || "").toLowerCase();
+
   const steps = ["PLACED", "CONFIRMED", "ASSIGNED", "SHIPPED", "DELIVERED"];
 
-  // ✅ FIXED STATUS
-  const status = (item?.status || "").trim().toLowerCase();
-
-  // 🔥 correct step logic
-  const getCurrentStep = () => {
+  const getStep = () => {
     if (status === "delivered") return 4;
     if (status === "shipped") return 3;
-    if (status === "confirmed") return 2; // assigned auto
+    if (status === "confirmed") return 2;
     return 1;
   };
 
-  const currentStep = getCurrentStep();
+  const currentStep = getStep();
 
   return (
     <div
@@ -44,63 +51,62 @@ export default function TrackingModal({ itemId, onClose }) {
       onClick={onClose}
     >
 
-      {/* MODAL BOX */}
       <div
-        className="bg-white w-[90%] max-w-md p-6 rounded-xl shadow-xl relative"
+        className="bg-white w-[90%] max-w-md p-6 rounded-xl"
         onClick={(e) => e.stopPropagation()}
       >
 
-        {/* ❌ CLOSE BUTTON */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-3 text-lg"
-        >
+        <button onClick={onClose} className="absolute top-2 right-3">
           ✖
         </button>
 
-        <h2 className="text-xl font-bold mb-4">
-          Order Tracking
-        </h2>
+        <h2 className="text-xl font-bold mb-4">Order Tracking</h2>
 
         {!item ? (
           <p>Loading...</p>
         ) : (
           <>
-            {/* 📦 PRODUCT INFO */}
-            <div className="mb-4">
-              <p className="font-semibold">{item.title}</p>
-              <p className="text-sm text-gray-500">
-                Vendor: {item.vendor_name}
-              </p>
+            <p className="font-semibold">{item.title}</p>
+            <p className="text-sm text-gray-500 mb-4">
+              Vendor: {item.vendor_name}
+            </p>
+
+            {/* 🚚 STEPS */}
+            <div className="space-y-2 mb-4">
+              {steps.map((step, i) => (
+                <div key={step} className="flex gap-2 items-center">
+                  <div className={`w-3 h-3 rounded-full ${
+                    i <= currentStep ? "bg-green-500" : "bg-gray-300"
+                  }`} />
+                  <span>{step}</span>
+                </div>
+              ))}
             </div>
 
-            {/* 🚚 TIMELINE */}
-            <div className="space-y-3">
-              {steps.map((step, index) => {
+            {/* 🗺️ MAP */}
+            {isLoaded && item.latitude && item.longitude && (
+              <GoogleMap
+                mapContainerStyle={{ width: "100%", height: "250px" }}
+                center={{
+                  lat: Number(item.latitude),
+                  lng: Number(item.longitude)
+                }}
+                zoom={15}
+              >
+                <Marker
+                  position={{
+                    lat: Number(item.latitude),
+                    lng: Number(item.longitude)
+                  }}
+                />
+              </GoogleMap>
+            )}
 
-                const done = index <= currentStep;
-
-                return (
-                  <div key={step} className="flex items-center gap-3">
-
-                    <div className={`w-3 h-3 rounded-full ${
-                      done ? "bg-green-500" : "bg-gray-300"
-                    }`} />
-
-                    <p className={done ? "font-medium" : "text-gray-400"}>
-                      {step}
-                    </p>
-
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* 📊 DETAILS */}
-            <div className="mt-5 text-sm border-t pt-3 space-y-1">
-              <p><b>Status:</b> {item.status}</p>
+            {/* 📊 INFO */}
+            <div className="mt-3 text-sm">
+              <p>Status: {item.status}</p>
               <p>
-                <b>Delivery Date:</b>{" "}
+                Delivery:{" "}
                 {item.delivery_date
                   ? new Date(item.delivery_date).toLocaleDateString()
                   : "Not set"}
