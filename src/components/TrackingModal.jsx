@@ -25,11 +25,14 @@ export default function TrackingModal({ itemId, onClose }) {
   // 🔥 timeline steps
   const steps = ["PLACED", "CONFIRMED", "ASSIGNED", "SHIPPED", "DELIVERED"];
 
-  // 🔥 step logic
+  // ✅ FIXED STATUS
+  const status = (item?.status || "").trim().toLowerCase();
+
+  // 🔥 correct step logic
   const getCurrentStep = () => {
-    if (item?.item_status === "delivered") return 4;
-    if (item?.item_status === "shipped") return 3;
-    if (item?.item_status === "confirmed") return 2; // assigned auto
+    if (status === "delivered") return 4;
+    if (status === "shipped") return 3;
+    if (status === "confirmed") return 2; // assigned auto
     return 1;
   };
 
@@ -95,8 +98,13 @@ export default function TrackingModal({ itemId, onClose }) {
 
             {/* 📊 DETAILS */}
             <div className="mt-5 text-sm border-t pt-3 space-y-1">
-              <p><b>Status:</b> {item.item_status}</p>
-              <p><b>Delivery Date:</b> {item.delivery_date || "Not set"}</p>
+              <p><b>Status:</b> {item.status}</p>
+              <p>
+                <b>Delivery Date:</b>{" "}
+                {item.delivery_date
+                  ? new Date(item.delivery_date).toLocaleDateString()
+                  : "Not set"}
+              </p>
             </div>
 
           </>
