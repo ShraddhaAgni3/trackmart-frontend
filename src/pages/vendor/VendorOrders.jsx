@@ -17,7 +17,7 @@ const fetchOrders = async()=>{
 
 try{
 
-const res = await api.get("/vendor/s");
+const res = await api.get("/vendor/orders");
 
 setOrders(res.data);
 
