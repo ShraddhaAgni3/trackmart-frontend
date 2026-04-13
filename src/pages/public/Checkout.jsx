@@ -377,7 +377,7 @@ onClick={(e)=>{
  });
 
  setEditingId(addr.id);
-
+setShowMap(true);
  formRef.current?.scrollIntoView({behavior:"smooth"});
 }}
 className="text-sm px-4 py-1 border rounded-lg hover:bg-gray-100"
@@ -453,7 +453,7 @@ className="border p-2 w-full rounded-lg"/>
 <button
   onClick={() => {
 
-    // ✅ basic validation
+    // ✅ validation
     if (
       !form.full_name ||
       !form.phone ||
@@ -470,13 +470,11 @@ className="border p-2 w-full rounded-lg"/>
 
     // 🔥 IMPORTANT: lat/lng check
     if (!form.latitude || !form.longitude) {
-      alert("Please select location on map");
-
-      setShowMap(true);   // map open kar do
+      setShowMap(true);   // 🔥 MAP OPEN
       return;
     }
 
-    // ✅ FINAL SAVE
+    // ✅ FINAL SAVE / UPDATE
     handleAdd();
 
   }}
