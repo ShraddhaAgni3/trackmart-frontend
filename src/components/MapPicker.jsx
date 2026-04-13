@@ -13,9 +13,9 @@ L.Icon.Default.mergeOptions({
 
 export default function MapPicker({ setForm, setLocationConfirmed, lat, lng }) {
 
-const [position, setPosition] = useState(
-  lat && lng ? [lat, lng] : [26.8467, 80.9462]
-); // default Lucknow
+  const [position, setPosition] = useState(
+    lat && lng ? [Number(lat), Number(lng)] : [26.8467, 80.9462]
+  );
 
   function LocationMarker() {
 
