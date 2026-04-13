@@ -11,9 +11,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png"
 });
 
-export default function MapPicker({ setForm }) {
+export default function MapPicker({ setForm, setLocationConfirmed, lat, lng }) {
 
-  const [position, setPosition] = useState([26.8467, 80.9462]); // default Lucknow
+const [position, setPosition] = useState(
+  lat && lng ? [lat, lng] : [26.8467, 80.9462]
+); // default Lucknow
 
   function LocationMarker() {
 
