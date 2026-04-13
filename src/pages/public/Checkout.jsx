@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import MapPicker from "../../components/MapPicker";
 import {
   getAddresses,
   addAddress,
@@ -18,7 +19,7 @@ const navigate = useNavigate();
 const [addresses,setAddresses] = useState([]);
 const [selected,setSelected] = useState(null);
 const [editingId,setEditingId] = useState(null);
-
+const [showMap, setShowMap] = useState(false);
 const [paymentMethod,setPaymentMethod] = useState("COD");
 const [placing,setPlacing] = useState(false);
 const [showOverview,setShowOverview] = useState(false);
@@ -428,7 +429,12 @@ onChange={e=>setForm({...form,pincode:e.target.value})}
 className="border p-2 w-full rounded-lg"/>
 
 <div className="flex gap-4">
-
+<button
+  onClick={() => setShowMap(!showMap)}
+  className="border px-4 py-2 rounded-lg mt-2"
+>
+  📍 Pick from Map
+</button>
 <button
 onClick={handleAdd}
 className="bg-primary text-white px-6 py-2 rounded-xl"
@@ -444,7 +450,11 @@ Use Live Location
 </button>
 
 </div>
-
+{showMap && (
+  <div className="mt-4">
+    <MapPicker setForm={setForm} />
+  </div>
+)}
 </div>
 
 {/* PAYMENT */}
