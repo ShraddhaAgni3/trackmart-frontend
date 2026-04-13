@@ -499,11 +499,12 @@ className="border p-2 w-full rounded-lg"/>
       📍 Click on map to confirm location
     </p>
 
-    <MapPicker 
+  <MapPicker 
   setForm={setForm}
   setLocationConfirmed={setLocationConfirmed}
-  lat={form.latitude}      // 🔥 ADD THIS
-  lng={form.longitude}     // 🔥 ADD THIS
+  setShowMap={setShowMap}   // 🔥 MUST
+  lat={form.latitude}
+  lng={form.longitude}
 />
 
      
