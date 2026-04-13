@@ -309,7 +309,7 @@ return(
 {/* BACK ARROW */}
 <button
  onClick={()=>navigate("/cart")}
-  className="absolute top-4 left-4 md:top-16 md:left-6 p-2 md:p-3 rounded-full hover:bg-gray-100 transition z-50"
+  className="absolute top-16 left-6 p-10 rounded-full hover:bg-gray-100 transition z-50"
 >
  <ArrowLeft className="w-6 h-6 text-gray-700"/>
 </button>
