@@ -377,7 +377,8 @@ onClick={(e)=>{
  });
 
  setEditingId(addr.id);
-setShowMap(true);
+ setShowMap(true);              // map open
+ setLocationConfirmed(false);
  formRef.current?.scrollIntoView({behavior:"smooth"});
 }}
 className="text-sm px-4 py-1 border rounded-lg hover:bg-gray-100"
