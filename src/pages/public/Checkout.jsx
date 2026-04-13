@@ -468,13 +468,15 @@ className="border p-2 w-full rounded-lg"/>
       return;
     }
 
-    // 🔥 IMPORTANT: lat/lng check
-    if (!form.latitude || !form.longitude) {
-      setShowMap(true);   // 🔥 MAP OPEN
+    // 🔥 ALWAYS REQUIRE MAP CLICK (IMPORTANT)
+    if (!locationConfirmed) {
+      alert("Please select location on map first");
+
+      setShowMap(true);   // map open
       return;
     }
 
-    // ✅ FINAL SAVE / UPDATE
+    // ✅ FINAL UPDATE
     handleAdd();
 
   }}
