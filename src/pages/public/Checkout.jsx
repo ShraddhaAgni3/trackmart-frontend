@@ -278,16 +278,16 @@ navigator.geolocation.getCurrentPosition(
       const addr = data.address || {};
 
       setForm(prev => ({
-        ...prev,
-        house_no: addr.house_number || prev.house_no,
-        street: addr.road || prev.street,
-        locality: addr.suburb || addr.village || prev.locality,
-        city: addr.city || addr.town || prev.city,
-        state: addr.state || prev.state,
-        pincode: addr.postcode || prev.pincode,
-        latitude: lat,
-        longitude: lon
-      }));
+  ...prev,
+  house_no: addr.house_number || prev.house_no,
+  street: addr.road || prev.street,
+  locality: addr.suburb || addr.village || prev.locality,
+  city: addr.city || addr.town || prev.city,
+  state: addr.state || prev.state,
+  pincode: addr.postcode || prev.pincode,
+  latitude: lat,
+  longitude: lon
+}));
 
       setLocationConfirmed(true);
       setShowMap(true);
@@ -453,6 +453,7 @@ className="border p-2 w-full rounded-lg"/>
 <button
   onClick={() => {
 
+    // ✅ basic validation
     if (
       !form.full_name ||
       !form.phone ||
@@ -467,14 +468,22 @@ className="border p-2 w-full rounded-lg"/>
       return;
     }
 
-    setShowMap(true);          // 🔥 MAP OPEN
-    setLocationConfirmed(false);
+    // 🔥 IMPORTANT: lat/lng check
+    if (!form.latitude || !form.longitude) {
+      alert("Please select location on map");
+
+      setShowMap(true);   // map open kar do
+      return;
+    }
+
+    // ✅ FINAL SAVE
+    handleAdd();
 
   }}
   className="bg-primary text-white px-6 py-2 rounded-xl"
 >
   {editingId ? "Update Address" : "Save Address"}
-  </button> 
+</button> 
 <button
   onClick={getLiveLocation}
   className="border px-6 py-2 rounded-xl"
@@ -497,18 +506,7 @@ className="border p-2 w-full rounded-lg"/>
   lng={form.longitude}     // 🔥 ADD THIS
 />
 
-    {/* 🔥 CONFIRM BUTTON */}
-    <button
-      onClick={handleAdd}
-      disabled={!locationConfirmed}
-      className={`mt-4 w-full py-2 rounded-xl text-white ${
-        locationConfirmed
-          ? "bg-primary"
-          : "bg-gray-400 cursor-not-allowed"
-      }`}
-    >
-      Confirm & Save Address
-    </button>
+     
 
   </div>
 )}
