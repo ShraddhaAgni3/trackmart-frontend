@@ -301,6 +301,7 @@ navigator.geolocation.getCurrentPosition(
     alert("Please enable location permission");
   }
 );
+  };  
 return(
 
 <div className="space-y-10">
