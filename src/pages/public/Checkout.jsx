@@ -459,6 +459,7 @@ className="border p-2 w-full rounded-lg"/>
   className="bg-primary text-white px-6 py-2 rounded-xl"
 >
   {editingId ? "Update Address" : "Save Address"}
+  </button> 
 <button
   onClick={getLiveLocation}
   className="border px-6 py-2 rounded-xl"
