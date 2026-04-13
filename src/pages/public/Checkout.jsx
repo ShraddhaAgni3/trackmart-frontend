@@ -15,7 +15,7 @@ export default function Checkout(){
 const paymentRef = useRef(null);
 const formRef = useRef(null);
 const navigate = useNavigate();
-
+const [locationConfirmed, setLocationConfirmed] = useState(false);
 const [addresses,setAddresses] = useState([]);
 const [selected,setSelected] = useState(null);
 const [editingId,setEditingId] = useState(null);
@@ -436,23 +436,64 @@ className="border p-2 w-full rounded-lg"/>
   📍 Pick from Map
 </button>
 <button
-onClick={handleAdd}
-className="bg-primary text-white px-6 py-2 rounded-xl"
->
-{editingId ? "Update Address" : "Save Address"}
-</button>
+  onClick={() => {
 
-<button
-onClick={getLiveLocation}
-className="border px-6 py-2 rounded-xl"
+    if (
+      !form.full_name ||
+      !form.phone ||
+      !form.house_no ||
+      !form.street ||
+      !form.locality ||
+      !form.city ||
+      !form.state ||
+      !form.pincode
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    setShowMap(true);          // 🔥 MAP OPEN
+    setLocationConfirmed(false);
+
+  }}
+  className="bg-primary text-white px-6 py-2 rounded-xl"
 >
-Use Live Location
+  {editingId ? "Update Address" : "Save Address"}
+<button
+  onClick={getLiveLocation}
+  className="border px-6 py-2 rounded-xl"
+>
+  Use Live Location
 </button>
 
 </div>
 {showMap && (
-  <div className="mt-4">
-    <MapPicker setForm={setForm} />
+  <div className="mt-4 border p-4 rounded-xl">
+
+    <p className="text-sm text-gray-500 mb-2">
+      📍 Click on map to confirm location
+    </p>
+
+    <MapPicker 
+  setForm={setForm}
+  setLocationConfirmed={setLocationConfirmed}
+  lat={form.latitude}      // 🔥 ADD THIS
+  lng={form.longitude}     // 🔥 ADD THIS
+/>
+
+    {/* 🔥 CONFIRM BUTTON */}
+    <button
+      onClick={handleAdd}
+      disabled={!locationConfirmed}
+      className={`mt-4 w-full py-2 rounded-xl text-white ${
+        locationConfirmed
+          ? "bg-primary"
+          : "bg-gray-400 cursor-not-allowed"
+      }`}
+    >
+      Confirm & Save Address
+    </button>
+
   </div>
 )}
 </div>
