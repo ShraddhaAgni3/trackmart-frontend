@@ -264,32 +264,43 @@ const getLiveLocation = ()=>{
   alert("Geolocation not supported");
   return;
  }
+navigator.geolocation.getCurrentPosition(
+  async (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
- navigator.geolocation.getCurrentPosition(async(position)=>{
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+      );
 
-  const res = await fetch(
-   `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
-  );
+      const data = await res.json();
+      const addr = data.address || {};
 
-  const data = await res.json();
-  const addr = data.address;
+      setForm(prev => ({
+        ...prev,
+        house_no: addr.house_number || prev.house_no,
+        street: addr.road || prev.street,
+        locality: addr.suburb || addr.village || prev.locality,
+        city: addr.city || addr.town || prev.city,
+        state: addr.state || prev.state,
+        pincode: addr.postcode || prev.pincode,
+        latitude: lat,
+        longitude: lon
+      }));
 
-  setForm(prev => ({
-  ...prev,
-  house_no: addr.house_number || prev.house_no,
-  street: addr.road || prev.street,
-  locality: addr.suburb || addr.village || prev.locality,
-  city: addr.city || addr.town || prev.city,
-  state: addr.state || prev.state,
-  pincode: addr.postcode || prev.pincode,
-  latitude: lat,
-  longitude: lng
-}));
- });
-};
+      setLocationConfirmed(true);
+      setShowMap(true);
 
+    } catch (err) {
+      console.log(err);
+      alert("Failed to fetch address");
+    }
+  },
+  (error) => {
+    alert("Please enable location permission");
+  }
+);
 return(
 
 <div className="space-y-10">
