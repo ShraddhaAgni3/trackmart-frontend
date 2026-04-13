@@ -18,7 +18,11 @@ export default function MapPicker({ setForm, setLocationConfirmed, lat, lng }) {
   );
 
   function LocationMarker() {
-
+useEffect(() => {
+  if (lat && lng) {
+    setPosition([Number(lat), Number(lng)]);
+  }
+}, [lat, lng]);
     useMapEvents({
       click(e) {
         const { lat, lng } = e.latlng;
