@@ -276,17 +276,17 @@ const getLiveLocation = ()=>{
   const data = await res.json();
   const addr = data.address;
 
-  setForm(prev=>({
-   ...prev,
-   house_no:addr.house_number || "",
-   street:addr.road || "",
-   locality:addr.suburb || "",
-   city:addr.city || "",
-   state:addr.state || "",
-   pincode:addr.postcode || "",
-   latitude:lat,
-   longitude:lon
-  }));
+  setForm(prev => ({
+  ...prev,
+  house_no: addr.house_number || prev.house_no,
+  street: addr.road || prev.street,
+  locality: addr.suburb || addr.village || prev.locality,
+  city: addr.city || addr.town || prev.city,
+  state: addr.state || prev.state,
+  pincode: addr.postcode || prev.pincode,
+  latitude: lat,
+  longitude: lng
+}));
  });
 };
 
@@ -430,7 +430,10 @@ className="border p-2 w-full rounded-lg"/>
 
 <div className="flex gap-4">
 <button
-  onClick={() => setShowMap(!showMap)}
+  onClick={() => {
+    setShowMap(true);          // 🔥 ALWAYS OPEN
+    setLocationConfirmed(false);
+  }}
   className="border px-4 py-2 rounded-lg mt-2"
 >
   📍 Pick from Map
