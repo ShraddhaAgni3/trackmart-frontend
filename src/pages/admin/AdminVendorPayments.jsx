@@ -52,7 +52,6 @@ key={v.vendor_id}
 onClick={()=>navigate(`/admin/vendors/${v.vendor_id}`)}
 className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor-pointer hover:bg-bgSurfaceAlt flex flex-col md:flex-row md:justify-between md:items-center gap-4"
 >
-
 {/* LEFT SIDE */}
 <div className="space-y-1">
 
@@ -60,16 +59,14 @@ className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor
 {v.business_name}
 </h2>
 
-<p className={`font-semibold text-base md:text-lg ${
-  v.total_earning < 0 ? "text-red-600" : "text-green-600"
-}`}>
-₹{Number(v.total_earning || 0)}
+<p className="text-green-600 font-semibold text-base md:text-lg">
+₹{Math.max(0, Number(v.total_earning || 0))}
 </p>
 
-{/* 🔥 YAHAN ADD KARO */}
-{v.total_earning < 0 && (
+{/* 🔥 ADD THIS */}
+{v.cod_due > 0 && (
   <p className="text-red-500 text-sm">
-    Vendor owes money
+    Vendor owes ₹{v.cod_due}
   </p>
 )}
 
