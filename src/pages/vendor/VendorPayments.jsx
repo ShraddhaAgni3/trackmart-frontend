@@ -45,31 +45,28 @@ My Earnings
 
 {/* SUMMARY */}
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
 <div className="bg-bgSurface border border-borderDefault rounded-xl p-6">
-
-<p className="text-textMuted">
-Received
-</p>
-
+<p className="text-textMuted">Received</p>
 <p className="text-2xl font-bold text-green-600">
 ₹{data.received}
 </p>
-
 </div>
 
-
 <div className="bg-bgSurface border border-borderDefault rounded-xl p-6">
-
-<p className="text-textMuted">
-Pending
-</p>
-
+<p className="text-textMuted">Pending</p>
 <p className="text-2xl font-bold text-yellow-600">
 ₹{data.pending}
 </p>
+</div>
 
+{/* 🔥 ADD THIS HERE */}
+<div className="bg-bgSurface border border-borderDefault rounded-xl p-6">
+<p className="text-textMuted">Dues</p>
+<p className="text-2xl font-bold text-red-600">
+₹{data.dues || 0}
+</p>
 </div>
 
 </div>
@@ -161,7 +158,12 @@ p.payout_status==="paid"
 : "Pending"}
 
 </p>
-
+  {/* 🔥 ADD THIS HERE */}
+{p.payout_status==="paid" && p.payout_reference && (
+  <p className="text-xs text-textMuted">
+    Ref: {p.payout_reference}
+  </p>
+)}
 </div>
 
 </div>
