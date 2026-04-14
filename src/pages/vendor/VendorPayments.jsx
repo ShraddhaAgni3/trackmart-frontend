@@ -42,7 +42,12 @@ return(
 <h1 className="text-3xl font-bold">
 My Earnings
 </h1>
-
+{/* 🔥 ADD THIS */}
+{data.dues > 0 && (
+  <p className="text-red-500 font-medium">
+    ⚠ You have pending dues. Clear them to receive payouts.
+  </p>
+)}
 
 {/* SUMMARY */}
 
