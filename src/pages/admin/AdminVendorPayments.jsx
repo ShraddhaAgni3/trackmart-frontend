@@ -22,15 +22,13 @@ fetchData();
 
 },[]);
 
-const clearPayment = async(id)=>{
-
+const clearPayment = async(id, reference)=>{
 try{
-await api.post(`/admin/vendor-payout/${id}`);
+await api.post(`/admin/vendor-payout/${id}`, { reference });
 setVendors(prev=>prev.filter(v=>v.vendor_id!==id));
 }catch(err){
 console.log(err);
 }
-
 };
 
 return(
@@ -62,9 +60,18 @@ className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor
 {v.business_name}
 </h2>
 
-<p className="text-green-600 font-semibold text-base md:text-lg">
+<p className={`font-semibold text-base md:text-lg ${
+  v.total_earning < 0 ? "text-red-600" : "text-green-600"
+}`}>
 ₹{Number(v.total_earning || 0)}
 </p>
+
+{/* 🔥 YAHAN ADD KARO */}
+{v.total_earning < 0 && (
+  <p className="text-red-500 text-sm">
+    Vendor owes money
+  </p>
+)}
 
 </div>
 
@@ -74,9 +81,14 @@ className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor
 <button
 onClick={(e)=>{
 e.stopPropagation();
-clearPayment(v.vendor_id);
+
+const ref = prompt("Enter payment reference (UTR / Txn ID)");
+
+if(!ref) return;
+
+clearPayment(v.vendor_id, ref);
 }}
-className="w-full md:w-[200px] h-10 flex items-center justify-center bg-primary text-white rounded-lg hover:bg-primaryHover"
+className="w-full md:w-[200px] h-10 flex items-center justify-center bg-primary text-white rounded-lg"
 >
 Clear Weekly Payment
 </button>
