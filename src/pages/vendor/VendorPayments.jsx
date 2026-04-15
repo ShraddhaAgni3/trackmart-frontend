@@ -45,7 +45,7 @@ fetchPayments();
     const order = orderRes.order;
 
     const options = {
-     key: import.meta.env.VITE_RAZORPAY_KEY,  // ⚠️ replace
+    key: import.meta.env.VITE_RAZORPAY_KEY_ID,  // ⚠️ replace
       amount: order.amount,
       currency: "INR",
       order_id: order.id,
