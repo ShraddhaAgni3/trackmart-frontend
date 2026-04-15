@@ -32,6 +32,7 @@ fetchPayments();
 
 
 },[]);
+  const netPending = (data.pending || 0) - (data.dues || 0);
   const handlePayDues = async () => {
   try {
 
@@ -44,7 +45,7 @@ fetchPayments();
     const order = orderRes.order;
 
     const options = {
-      key: "YOUR_RAZORPAY_KEY",  // ⚠️ replace
+     key: import.meta.env.VITE_RAZORPAY_KEY,  // ⚠️ replace
       amount: order.amount,
       currency: "INR",
       order_id: order.id,
@@ -55,11 +56,12 @@ fetchPayments();
 
         // 🔥 verify payment
         await api.post("/payment/verify", {
-          razorpay_order_id: response.razorpay_order_id,
-          razorpay_payment_id: response.razorpay_payment_id,
-          razorpay_signature: response.razorpay_signature,
-          type: "vendor_due"
-        });
+  razorpay_order_id: response.razorpay_order_id,
+  razorpay_payment_id: response.razorpay_payment_id,
+  razorpay_signature: response.razorpay_signature,
+  type: "vendor_due",
+  amount: Math.abs(netPending)   // 🔥 IMPORTANT
+});
 
         alert("Dues cleared successfully");
 
@@ -75,7 +77,7 @@ fetchPayments();
     console.log(err);
   }
 };
-const netPending = (data.pending || 0) - (data.dues || 0);
+
 return(
 
 <div className="space-y-10">
