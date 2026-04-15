@@ -32,7 +32,7 @@ fetchPayments();
 
 
 },[]);
-
+const netPending = (data.pending || 0) - (data.dues || 0);
 return(
 
 <div className="space-y-10">
@@ -43,7 +43,7 @@ return(
 My Earnings
 </h1>
 {/* 🔥 ADD THIS */}
-{data.dues > 0 && (
+{netPending < 0 && (
   <p className="text-red-500 font-medium">
     ⚠ You have pending dues. Clear them to receive payouts.
   </p>
@@ -63,7 +63,7 @@ My Earnings
 <div className="bg-bgSurface border border-borderDefault rounded-xl p-6">
 <p className="text-textMuted">Pending</p>
 <p className="text-2xl font-bold text-yellow-600">
-₹{data.pending}
+₹{Math.max(0, netPending)}
 </p>
 </div>
 
@@ -71,7 +71,7 @@ My Earnings
 <div className="bg-bgSurface border border-borderDefault rounded-xl p-6">
 <p className="text-textMuted">Dues</p>
 <p className="text-2xl font-bold text-red-600">
-₹{data.dues || 0}
+₹{netPending < 0 ? Math.abs(netPending) : 0}
 </p>
 </div>
 
