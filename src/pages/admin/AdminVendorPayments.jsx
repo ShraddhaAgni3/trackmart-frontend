@@ -59,14 +59,15 @@ className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor
 {v.business_name}
 </h2>
 
+const net = Number(v.total_earning || 0) - Number(v.cod_due || 0);
+
 <p className="text-green-600 font-semibold text-base md:text-lg">
-₹{Math.max(0, Number(v.total_earning || 0))}
+₹{Math.max(0, net)}
 </p>
 
-{/* 🔥 ADD THIS */}
-{v.cod_due > 0 && (
+{net <= 0 && (
   <p className="text-red-500 text-sm">
-    Vendor owes ₹{v.cod_due}
+    Vendor owes ₹{Math.abs(net)}
   </p>
 )}
 
