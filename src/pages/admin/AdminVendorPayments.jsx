@@ -44,58 +44,61 @@ Vendor Weekly Payments
 No pending payouts
 </p>
 )}
+{vendors.map(v => {
 
-{vendors.map(v=>(
+  const net = Number(v.total_earning || 0) - Number(v.cod_due || 0);
 
-<div
-key={v.vendor_id}
-onClick={()=>navigate(`/admin/vendors/${v.vendor_id}`)}
-className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor-pointer hover:bg-bgSurfaceAlt flex flex-col md:flex-row md:justify-between md:items-center gap-4"
->
-{/* LEFT SIDE */}
-<div className="space-y-1">
+  return (
 
-<h2 className="font-semibold text-base md:text-lg">
-{v.business_name}
-</h2>
+    <div
+      key={v.vendor_id}
+      onClick={()=>navigate(`/admin/vendors/${v.vendor_id}`)}
+      className="bg-bgSurface border border-borderDefault rounded-xl p-4 md:p-6 cursor-pointer hover:bg-bgSurfaceAlt flex flex-col md:flex-row md:justify-between md:items-center gap-4"
+    >
 
-const net = Number(v.total_earning || 0) - Number(v.cod_due || 0);
+      {/* LEFT SIDE */}
+      <div className="space-y-1">
 
-<p className="text-green-600 font-semibold text-base md:text-lg">
-₹{Math.max(0, net)}
-</p>
+        <h2 className="font-semibold text-base md:text-lg">
+          {v.business_name}
+        </h2>
 
-{net <= 0 && (
-  <p className="text-red-500 text-sm">
-    Vendor owes ₹{Math.abs(net)}
-  </p>
-)}
+        <p className="text-green-600 font-semibold text-base md:text-lg">
+          ₹{Math.max(0, net)}
+        </p>
 
-</div>
+        {net <= 0 && (
+          <p className="text-red-500 text-sm">
+            Vendor owes ₹{Math.abs(net)}
+          </p>
+        )}
 
-{/* RIGHT SIDE BUTTON */}
-<div className="w-full md:w-auto">
+      </div>
 
-<button
-onClick={(e)=>{
-e.stopPropagation();
+      {/* RIGHT SIDE BUTTON */}
+      <div className="w-full md:w-auto">
 
-const ref = prompt("Enter payment reference (UTR / Txn ID)");
+        <button
+          onClick={(e)=>{
+            e.stopPropagation();
 
-if(!ref) return;
+            const ref = prompt("Enter payment reference (UTR / Txn ID)");
+            if(!ref) return;
 
-clearPayment(v.vendor_id, ref);
-}}
-className="w-full md:w-[200px] h-10 flex items-center justify-center bg-primary text-white rounded-lg"
->
-Clear Weekly Payment
-</button>
+            clearPayment(v.vendor_id, ref);
+          }}
+          className="w-full md:w-[200px] h-10 flex items-center justify-center bg-primary text-white rounded-lg"
+        >
+          Clear Weekly Payment
+        </button>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
-))}
+  );
+
+})}
 
 </div>
 
