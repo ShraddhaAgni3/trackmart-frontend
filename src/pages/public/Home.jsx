@@ -450,7 +450,7 @@ useEffect(() => {
 </section>
 
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
+<section className="flex flex-col gap-6 md:px-0">
 
   {/* 🔥 LEFT ADS */}
   <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
@@ -487,65 +487,57 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
+  <div className="flex flex-wrap md:flex-nowrap items-center gap-3 w-full">
 
-    {/* SEARCH */}
-    <div className="flex w-full border border-default rounded-xl overflow-hidden">
-      <input
-  type="text"
-  placeholder="Search products..."
-  value={searchText}
-  onChange={(e)=>setSearchText(e.target.value)}
-  className="px-4 py-2 w-full min-w-0 outline-none flex-1 overflow-visible"
-/>
-      <button
-        onClick={handleSearch}
-        className="bg-primary text-white px-4 shrink-0 whitespace-nowrap"
-      >
-        Search
-      </button>
-    </div>
-
-    {/* FILTERS */}
-    <div className="flex flex-wrap md:flex-nowrap gap-2 w-full md:w-auto">
-
-      <select
-        value={care}
-        onChange={(e)=>setCare(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
-      >
-        <option value="">Care</option>
-        <option value="Skin Care">Skin Care</option>
-        <option value="Hair Care">Hair Care</option>
-        <option value="Digestive Care">Digestive Care</option>
-        <option value="Immunity Care">Immunity Care</option>
-      </select>
-
-      <select
-        value={concern}
-        onChange={(e)=>setConcern(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
-      >
-        <option value="">Concern</option>
-        <option value="Immunity">Immunity</option>
-        <option value="Digestion">Digestion</option>
-        <option value="Skin Health">Skin Health</option>
-        <option value="Weight Loss">Weight Loss</option>
-      </select>
-
-      <select
-        value={sort}
-        onChange={(e)=>setSort(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
-      >
-        <option value="featured">Featured</option>
-        <option value="price_low">Price Low → High</option>
-        <option value="price_high">Price High → Low</option>
-      </select>
-
-    </div>
-
+  {/* SEARCH */}
+  <div className="flex flex-1 border border-default rounded-xl overflow-hidden">
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={searchText}
+      onChange={(e)=>setSearchText(e.target.value)}
+      className="px-4 py-2 w-full outline-none"
+    />
+    <button
+      onClick={handleSearch}
+      className="bg-primary text-white px-6"
+    >
+      Search
+    </button>
   </div>
+
+  {/* FILTERS */}
+  <select
+    value={care}
+    onChange={(e)=>setCare(e.target.value)}
+    className="border border-default rounded-xl px-3 py-2"
+  >
+    <option value="">Care</option>
+    <option value="Skin Care">Skin Care</option>
+    <option value="Hair Care">Hair Care</option>
+  </select>
+
+  <select
+    value={concern}
+    onChange={(e)=>setConcern(e.target.value)}
+    className="border border-default rounded-xl px-3 py-2"
+  >
+    <option value="">Concern</option>
+    <option value="Immunity">Immunity</option>
+    <option value="Digestion">Digestion</option>
+  </select>
+
+  <select
+    value={sort}
+    onChange={(e)=>setSort(e.target.value)}
+    className="border border-default rounded-xl px-3 py-2"
+  >
+    <option value="featured">Featured</option>
+    <option value="price_low">Price Low → High</option>
+    <option value="price_high">Price High → Low</option>
+  </select>
+
+</div>
 
   {/* 🔥 RIGHT ADS */}
  <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
