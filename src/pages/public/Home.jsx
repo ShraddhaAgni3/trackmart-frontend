@@ -63,9 +63,16 @@ const adsData = [
 const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
 useEffect(() => {
   const interval = setInterval(() => {
-    setAdIndexes(prev =>
-      prev.map((val, i) => (val + 1 + i) % adsData.length)
-    );
+    setAdIndexes(() => {
+      let newIndexes = [];
+      let start = Math.floor(Math.random() * adsData.length);
+
+      for (let i = 0; i < 4; i++) {
+        newIndexes.push((start + i) % adsData.length);
+      }
+
+      return newIndexes;
+    });
   }, 2500);
 
   return () => clearInterval(interval);
