@@ -487,20 +487,20 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-wrap md:flex-nowrap items-center gap-3 w-full">
+<div className="flex flex-row items-center gap-3 flex-1 min-w-0">
 
   {/* SEARCH */}
-  <div className="flex flex-1 border border-default rounded-xl overflow-hidden">
+  <div className="flex w-[280px] md:w-[380px] border border-default rounded-xl overflow-hidden">
     <input
       type="text"
       placeholder="Search products..."
       value={searchText}
       onChange={(e)=>setSearchText(e.target.value)}
-      className="px-4 py-2 w-full outline-none"
+      className="px-3 py-2 w-full outline-none"
     />
     <button
       onClick={handleSearch}
-      className="bg-primary text-white px-6"
+      className="bg-primary text-white px-4 shrink-0"
     >
       Search
     </button>
@@ -515,6 +515,8 @@ useEffect(() => {
     <option value="">Care</option>
     <option value="Skin Care">Skin Care</option>
     <option value="Hair Care">Hair Care</option>
+    <option value="Digestive Care">Digestive Care</option>
+    <option value="Immunity Care">Immunity Care</option>
   </select>
 
   <select
@@ -525,6 +527,8 @@ useEffect(() => {
     <option value="">Concern</option>
     <option value="Immunity">Immunity</option>
     <option value="Digestion">Digestion</option>
+    <option value="Skin Health">Skin Health</option>
+    <option value="Weight Loss">Weight Loss</option>
   </select>
 
   <select
