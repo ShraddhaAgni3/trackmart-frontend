@@ -47,7 +47,7 @@ const location = useLocation();
 
         {/* LOGO */}
         <Link to="/" className="text-xl md:text-2xl font-bold">
-          <span className="text-primary">Intake</span>
+          <span className="text-primary">Track</span>
           <span className="text-strong">Mart</span>
         </Link>
 
@@ -60,7 +60,7 @@ const location = useLocation();
   to="/"
   className={`${
     location.pathname === "/"
-      ? "text-primary font-semibold border-b-2 border-primary"
+      ? ""text-primary font-semibold""
       : ""
   }`}
 >
@@ -72,7 +72,7 @@ const location = useLocation();
   to="/apply-vendor"
   className={`${
     location.pathname === "/apply-vendor"
-      ? "text-primary font-semibold border-b-2 border-primary"
+      ? ""text-primary font-semibold""
       : ""
   }`}
 >
