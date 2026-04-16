@@ -490,7 +490,7 @@ useEffect(() => {
 <div className="flex flex-row items-center gap-3 flex-1 min-w-0">
 
   {/* SEARCH */}
-  <div className="flex w-[280px] md:w-[380px] border border-default rounded-xl overflow-hidden">
+  <div className="flex w-[350px] md:w-[480px] border border-default rounded-xl overflow-hidden">
     <input
       type="text"
       placeholder="Search products..."
