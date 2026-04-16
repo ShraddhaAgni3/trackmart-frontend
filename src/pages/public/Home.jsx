@@ -37,27 +37,32 @@ const adsData = [
   {
     title: "20% OFF",
     desc: "On Beverages",
-    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e"
+    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e",
+    bg: "from-orange-200 to-orange-100"
   },
   {
     title: "Buy 1 Get 1",
     desc: "Free snacks",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+    bg: "from-green-200 to-green-100"
   },
   {
     title: "Flat ₹100 OFF",
     desc: "Above ₹499",
-    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04"
+    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04",
+    bg: "from-purple-200 to-purple-100"
   },
   {
     title: "Flash Deal",
     desc: "Ends tonight",
-    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e"
+    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e",
+    bg: "from-yellow-200 to-yellow-100"
   },
   {
     title: "Organic Sale",
     desc: "Healthy picks",
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999"
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999",
+    bg: "from-green-100 to-white"
   }
 ];
 const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
