@@ -542,7 +542,6 @@ useEffect(() => {
   </select>
 
 </div>
-
   {/* 🔥 RIGHT ADS */}
  <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
     {adIndexes.slice(2,4).map((index, i) => {
