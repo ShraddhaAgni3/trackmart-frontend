@@ -37,27 +37,27 @@ const adsData = [
   {
     title: "20% OFF",
     desc: "On Beverages",
-    image: "https://source.unsplash.com/100x100/?juice"
+    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e"
   },
   {
     title: "Buy 1 Get 1",
     desc: "Free snacks",
-    image: "https://source.unsplash.com/100x100/?snacks"
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
   },
   {
     title: "Flat ₹100 OFF",
     desc: "Above ₹499",
-    image: "https://source.unsplash.com/100x100/?groceries"
+    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04"
   },
   {
     title: "Flash Deal",
     desc: "Ends tonight",
-    image: "https://source.unsplash.com/100x100/?fruits"
+    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e"
   },
   {
     title: "Organic Sale",
     desc: "Healthy picks",
-    image: "https://source.unsplash.com/100x100/?vegetables"
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999"
   }
 ];
 const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
