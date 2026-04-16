@@ -14,7 +14,7 @@ export default function Home() {
   const [loading,setLoading] = useState(false);
   const [products,setProducts] = useState([]);
   const [categories,setCategories] = useState([]);
-
+const isFirstLoad = useRef(true);
   const [cartItems,setCartItems] = useState([]);
   
   const [wishlistIds,setWishlistIds] = useState([]);
@@ -131,6 +131,11 @@ const dealsData = [
 ];
 const [dealIndex, setDealIndex] = useState(0);
 useEffect(() => {
+  if (isFirstLoad.current) {
+    isFirstLoad.current = false;
+    return;
+  }
+
   const section = document.getElementById("products-section");
   if (section) {
     section.scrollIntoView({ behavior: "smooth" });
