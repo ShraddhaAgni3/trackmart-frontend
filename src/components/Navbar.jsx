@@ -60,7 +60,7 @@ const location = useLocation();
   to="/"
   className={`${
     location.pathname === "/"
-      ? ""text-primary font-semibold""
+      ? "text-primary font-semibold"
       : ""
   }`}
 >
@@ -72,7 +72,7 @@ const location = useLocation();
   to="/apply-vendor"
   className={`${
     location.pathname === "/apply-vendor"
-      ? ""text-primary font-semibold""
+      ? "text-primary font-semibold"
       : ""
   }`}
 >
