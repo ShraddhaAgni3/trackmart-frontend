@@ -461,7 +461,8 @@ useEffect(() => {
   <img
     src={ad.image}
     onError={(e) => {
-      e.target.src = "https://via.placeholder.com/50";
+       e.target.onerror = null; // loop stop  
+      e.target.src = "/fallback.png"; 
     }}
     className="w-10 h-10 rounded-lg object-cover"
   />
