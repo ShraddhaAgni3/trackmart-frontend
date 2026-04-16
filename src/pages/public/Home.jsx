@@ -64,14 +64,12 @@ const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
 useEffect(() => {
   const interval = setInterval(() => {
     setAdIndexes(() => {
-      let newIndexes = [];
-      let start = Math.floor(Math.random() * adsData.length);
+      // shuffle indices
+      let indexes = [...Array(adsData.length).keys()]
+        .sort(() => 0.5 - Math.random());
 
-      for (let i = 0; i < 4; i++) {
-        newIndexes.push((start + i) % adsData.length);
-      }
-
-      return newIndexes;
+      // pick first 4 unique ads
+      return indexes.slice(0, 4);
     });
   }, 2500);
 
