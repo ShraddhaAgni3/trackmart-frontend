@@ -457,7 +457,8 @@ useEffect(() => {
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
-       <div
+      <div
+  key={i}
   className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
 >
   <img
