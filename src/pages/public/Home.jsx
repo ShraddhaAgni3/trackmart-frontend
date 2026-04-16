@@ -488,7 +488,7 @@ useEffect(() => {
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
 <div className="flex flex-row items-center gap-3 flex-1 min-w-0">
-<div>
+
   {/* SEARCH */}
   <div className="flex w-[280px] md:w-[380px] border border-default rounded-xl overflow-hidden">
     <input
@@ -542,7 +542,7 @@ useEffect(() => {
   </select>
 
 </div>
-</div>
+
   {/* 🔥 RIGHT ADS */}
  <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
     {adIndexes.slice(2,4).map((index, i) => {
