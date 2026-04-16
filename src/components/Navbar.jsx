@@ -9,7 +9,7 @@ export default function Navbar() {
 const location = useLocation();
   const { role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-const location = useLocation(); 
+
   const [wishlistCount, setWishlistCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
