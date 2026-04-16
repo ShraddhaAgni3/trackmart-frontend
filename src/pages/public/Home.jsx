@@ -462,7 +462,7 @@ useEffect(() => {
     src={ad.image}
     onError={(e) => {
        e.target.onerror = null; // loop stop  
-      e.target.src = "/fallback.png"; 
+      e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg"; 
     }}
     className="w-10 h-10 rounded-lg object-cover"
   />
