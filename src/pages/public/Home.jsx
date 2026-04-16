@@ -457,22 +457,29 @@ useEffect(() => {
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
-        <div
-          key={i}
-          className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
-        >
-          <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
-          <div className="ml-3 flex-1 flex flex-col justify-center">
-            <p className="text-xs font-semibold">{ad.title}</p>
-            <p className="text-[10px] text-gray-700">{ad.desc}</p>
-          </div>
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
-          >
-            Shop
-          </button>
-        </div>
+       <div
+  className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+>
+  <img
+    src={ad.image}
+    onError={(e) => {
+      e.target.src = "https://via.placeholder.com/50";
+    }}
+    className="w-10 h-10 rounded-lg object-cover"
+  />
+
+  <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+    <p className="text-xs font-semibold truncate">{ad.title}</p>
+    <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+  </div>
+
+  <button
+    onClick={() => navigate("/products")}
+    className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+  >
+    Shop
+  </button>
+</div>
       );
     })}
   </div>
