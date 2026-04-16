@@ -37,37 +37,27 @@ const adsData = [
   {
     title: "20% OFF",
     desc: "On Beverages",
-    code: "DRINK20",
-    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200",
-    bg: "from-orange-200 to-orange-100"
+    image: "https://source.unsplash.com/100x100/?juice"
   },
   {
     title: "Buy 1 Get 1",
     desc: "Free snacks",
-    code: "BOGO",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200",
-    bg: "from-green-200 to-green-100"
+    image: "https://source.unsplash.com/100x100/?snacks"
   },
   {
     title: "Flat ₹100 OFF",
     desc: "Above ₹499",
-    code: "SAVE100",
-    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04?w=200",
-    bg: "from-purple-200 to-purple-100"
+    image: "https://source.unsplash.com/100x100/?groceries"
   },
   {
     title: "Flash Deal",
     desc: "Ends tonight",
-    code: "FLASH",
-    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=200",
-    bg: "from-yellow-200 to-yellow-100"
+    image: "https://source.unsplash.com/100x100/?fruits"
   },
   {
     title: "Organic Sale",
     desc: "Healthy picks",
-    code: "HEALTH10",
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200",
-    bg: "from-green-100 to-white"
+    image: "https://source.unsplash.com/100x100/?vegetables"
   }
 ];
 const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
