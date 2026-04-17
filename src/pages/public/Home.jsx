@@ -475,7 +475,7 @@ useEffect(() => {
   <div className="flex flex-row items-center gap-2 flex-1 min-w-0">
 
     {/* SEARCH */}
-    <div className="flex flex-1 border border-default rounded-xl overflow-hidden">
+    <div className="flex flex-[2] md:flex-[3] border border-default rounded-xl overflow-hidden min-w-[280px] md:min-w-[420px]">
       <input
         type="text"
         placeholder="Search products..."
