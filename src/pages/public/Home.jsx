@@ -450,7 +450,7 @@ useEffect(() => {
 </section>
 
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
+<section className="flex flex-col md:flex-row items-start gap-6 md:gap-10 md:px-0">
 
   {/* 🔥 LEFT ADS */}
   <div className="grid grid-cols-2 gap-2 w-full md:w-[260px] shrink-0 md:-ml-4">
@@ -484,10 +484,10 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-[600px]">
+  <div className="flex flex-col md:flex-row items-center gap-3 flex-1 min-w-[400px]">
 
     {/* SEARCH */}
-    <div className="flex w-[350px] md:w-[480px] border border-default rounded-xl overflow-hidden">
+    <div className="flex w-[320px] md:w-[420px] border border-default rounded-xl overflow-hidden shrink-0">
       <input
   type="text"
   placeholder="Search products..."
