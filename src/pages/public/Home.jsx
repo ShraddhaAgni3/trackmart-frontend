@@ -1,4 +1,4 @@
-import { useEffect,useRef, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getProducts } from "../../services/productService";
 import { getCategories } from "../../services/categoryService";
@@ -14,7 +14,7 @@ export default function Home() {
   const [loading,setLoading] = useState(false);
   const [products,setProducts] = useState([]);
   const [categories,setCategories] = useState([]);
-const isFirstLoad = useRef(true);
+
   const [cartItems,setCartItems] = useState([]);
   
   const [wishlistIds,setWishlistIds] = useState([]);
@@ -37,45 +37,45 @@ const adsData = [
   {
     title: "20% OFF",
     desc: "On Beverages",
-    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e",
+    code: "DRINK20",
+    image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200",
     bg: "from-orange-200 to-orange-100"
   },
   {
     title: "Buy 1 Get 1",
     desc: "Free snacks",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+    code: "BOGO",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200",
     bg: "from-green-200 to-green-100"
   },
   {
     title: "Flat ₹100 OFF",
     desc: "Above ₹499",
-    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04",
+    code: "SAVE100",
+    image: "https://images.unsplash.com/photo-1514361892635-cebbd25e6c04?w=200",
     bg: "from-purple-200 to-purple-100"
   },
   {
     title: "Flash Deal",
     desc: "Ends tonight",
-    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e",
+    code: "FLASH",
+    image: "https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=200",
     bg: "from-yellow-200 to-yellow-100"
   },
   {
     title: "Organic Sale",
     desc: "Healthy picks",
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999",
+    code: "HEALTH10",
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200",
     bg: "from-green-100 to-white"
   }
 ];
 const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
 useEffect(() => {
   const interval = setInterval(() => {
-    setAdIndexes(() => {
-      // shuffle indices
-      let indexes = [...Array(adsData.length).keys()]
-        .sort(() => 0.5 - Math.random());
-
-      // pick first 4 unique ads
-      return indexes.slice(0, 4);
-    });
+    setAdIndexes(prev =>
+      prev.map((val, i) => (val + 1 + i) % adsData.length)
+    );
   }, 2500);
 
   return () => clearInterval(interval);
@@ -131,11 +131,6 @@ const dealsData = [
 ];
 const [dealIndex, setDealIndex] = useState(0);
 useEffect(() => {
-  if (isFirstLoad.current) {
-    isFirstLoad.current = false;
-    return;
-  }
-
   const section = document.getElementById("products-section");
   if (section) {
     section.scrollIntoView({ behavior: "smooth" });
@@ -448,33 +443,27 @@ useEffect(() => {
   </div>
 
 </section>
-{/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row items-start gap-4 md:gap-6">
 
-  {/* LEFT ADS — desktop only, 2x2 grid */}
-  <div className="hidden md:grid grid-cols-2 gap-2 w-[280px] shrink-0">
+{/* SEARCH + FILTER BAR */}
+<section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
+
+  {/* 🔥 LEFT ADS */}
+  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
         <div
           key={i}
-          className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
-          <img
-            src={ad.image}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
-            }}
-            className="w-10 h-10 rounded-lg object-cover shrink-0"
-          />
-          <div className="ml-2 flex-1 flex flex-col justify-center min-w-0">
-            <p className="text-xs font-semibold truncate">{ad.title}</p>
-            <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+          <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
+          <div className="ml-3 flex-1 flex flex-col justify-center">
+            <p className="text-xs font-semibold">{ad.title}</p>
+            <p className="text-[10px] text-gray-700">{ad.desc}</p>
           </div>
           <button
             onClick={() => navigate("/products")}
-            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0 ml-1"
+            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
           >
             Shop
           </button>
@@ -483,121 +472,82 @@ useEffect(() => {
     })}
   </div>
 
-  {/* CENTER — search + filters */}
-  <div className="flex flex-col gap-3 flex-1 w-full min-w-0">
+ {/* 🔥 CENTER SEARCH + FILTERS */}
+<div className="flex flex-row items-center gap-2 flex-1 min-w-0">
 
-    {/* Mobile ads — 2x2 grid */}
-    <div className="grid grid-cols-2 gap-2 md:hidden">
-      {adIndexes.map((index, i) => {
-        const ad = adsData[index];
-        return (
-          <div
-            key={i}
-            className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
-          >
-            <img
-              src={ad.image}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
-              }}
-              className="w-10 h-10 rounded-lg object-cover shrink-0"
-            />
-            <div className="ml-2 flex-1 flex flex-col justify-center min-w-0">
-              <p className="text-xs font-semibold truncate">{ad.title}</p>
-              <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
-            </div>
-            <button
-              onClick={() => navigate("/products")}
-              className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0 ml-1"
-            >
-              Shop
-            </button>
-          </div>
-        );
-      })}
-    </div>
+  {/* SEARCH */}
+  <div className="flex flex-1 border border-default rounded-xl overflow-hidden">
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={searchText}
+      onChange={(e)=>setSearchText(e.target.value)}
+      className="px-3 py-2 w-full outline-none"
+    />
+    <button
+      onClick={handleSearch}
+      className="bg-primary text-white px-4 shrink-0"
+    >
+      Search
+    </button>
+  </div>
 
-    {/* Search bar */}
-    <div className="flex w-full border border-default rounded-xl overflow-hidden">
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-        className="px-3 py-2 w-full outline-none"
-      />
-      <button
-        onClick={handleSearch}
-        className="bg-primary text-white px-4 shrink-0"
-      >
-        Search
-      </button>
-    </div>
+  {/* FILTERS */}
+  <select
+    value={care}
+    onChange={(e)=>setCare(e.target.value)}
+    className="border border-default rounded-xl px-2 py-2 text-sm shrink-0"
+  >
+    <option value="">Care</option>
+    <option value="Skin Care">Skin Care</option>
+    <option value="Hair Care">Hair Care</option>
+    <option value="Digestive Care">Digestive Care</option>
+    <option value="Immunity Care">Immunity Care</option>
+  </select>
 
-    {/* Filters — inline on desktop */}
-    <div className="flex flex-col md:flex-row gap-2">
-      <select
-        value={care}
-        onChange={(e) => setCare(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
-      >
-        <option value="">Care</option>
-        <option value="Skin Care">Skin Care</option>
-        <option value="Hair Care">Hair Care</option>
-        <option value="Digestive Care">Digestive Care</option>
-        <option value="Immunity Care">Immunity Care</option>
-      </select>
+  <select
+    value={concern}
+    onChange={(e)=>setConcern(e.target.value)}
+    className="border border-default rounded-xl px-2 py-2 text-sm shrink-0"
+  >
+    <option value="">Concern</option>
+    <option value="Immunity">Immunity</option>
+    <option value="Digestion">Digestion</option>
+    <option value="Skin Health">Skin Health</option>
+    <option value="Weight Loss">Weight Loss</option>
+  </select>
 
-      <select
-        value={concern}
-        onChange={(e) => setConcern(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
-      >
-        <option value="">Concern</option>
-        <option value="Immunity">Immunity</option>
-        <option value="Digestion">Digestion</option>
-        <option value="Skin Health">Skin Health</option>
-        <option value="Weight Loss">Weight Loss</option>
-      </select>
+  <select
+    value={sort}
+    onChange={(e)=>setSort(e.target.value)}
+    className="border border-default rounded-xl px-2 py-2 text-sm shrink-0"
+  >
+    <option value="featured">Featured</option>
+    <option value="price_low">Price Low → High</option>
+    <option value="price_high">Price High → Low</option>
+  </select>
 
-      <select
-        value={sort}
-        onChange={(e) => setSort(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
-      >
-        <option value="featured">Featured</option>
-        <option value="price_low">Price Low → High</option>
-        <option value="price_high">Price High → Low</option>
-      </select>
-    </div>
+</div>
 
   </div>
 
-  {/* RIGHT ADS — desktop only, vertical stack */}
-  <div className="hidden md:flex flex-col gap-2 w-[200px] shrink-0">
-    {adIndexes.slice(2, 4).map((index, i) => {
+  {/* 🔥 RIGHT ADS */}
+ <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
+    {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
         <div
           key={i}
-          className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
-          <img
-            src={ad.image}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
-            }}
-            className="w-10 h-10 rounded-lg object-cover shrink-0"
-          />
-          <div className="ml-2 flex-1 flex flex-col justify-center min-w-0">
-            <p className="text-xs font-semibold truncate">{ad.title}</p>
-            <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+          <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
+          <div className="ml-3 flex-1 flex flex-col justify-center">
+            <p className="text-xs font-semibold">{ad.title}</p>
+            <p className="text-[10px] text-gray-700">{ad.desc}</p>
           </div>
           <button
             onClick={() => navigate("/products")}
-            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0 ml-1"
+            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
           >
             Shop
           </button>
