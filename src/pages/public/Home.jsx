@@ -459,7 +459,7 @@ useEffect(() => {
       return (
         <div
           key={i}
-          className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
           <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
           <div className="ml-3 flex-1 flex flex-col justify-center">
@@ -545,7 +545,7 @@ useEffect(() => {
       return (
         <div
           key={i}
-          className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
           <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
           <div className="ml-3 flex-1 flex flex-col justify-center">
