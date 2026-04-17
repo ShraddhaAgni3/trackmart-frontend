@@ -468,10 +468,10 @@ useEffect(() => {
   }}
   className="w-12 h-12 rounded-lg object-cover shrink-0"
 />
-          <div className="ml-3 flex-1 flex flex-col justify-center">
-            <p className="text-xs font-semibold">{ad.title}</p>
-            <p className="text-[10px] text-gray-700">{ad.desc}</p>
-          </div>
+          <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+  <p className="text-xs font-semibold truncate">{ad.title}</p>
+  <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+</div>
           <button
             onClick={() => navigate("/products")}
             className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
@@ -561,10 +561,10 @@ useEffect(() => {
   }}
   className="w-12 h-12 rounded-lg object-cover shrink-0"
 />
-          <div className="ml-3 flex-1 flex flex-col justify-center">
-            <p className="text-xs font-semibold">{ad.title}</p>
-            <p className="text-[10px] text-gray-700">{ad.desc}</p>
-          </div>
+         <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+  <p className="text-xs font-semibold truncate">{ad.title}</p>
+  <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+</div>
           <button
             onClick={() => navigate("/products")}
             className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
