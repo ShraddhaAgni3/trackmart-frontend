@@ -472,8 +472,11 @@ useEffect(() => {
     })}
   </div>
 
- {/* 🔥 CENTER SEARCH + FILTERS */}
-<div className="flex flex-row items-center gap-2 flex-1 min-w-0">
+  {/* 🔥 CENTER SEARCH + FILTERS */}
+  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
+
+    {/* SEARCH */}
+   <div className="flex flex-row items-center gap-2 flex-1 min-w-0">
 
   {/* SEARCH */}
   <div className="flex flex-1 border border-default rounded-xl overflow-hidden">
@@ -492,42 +495,44 @@ useEffect(() => {
     </button>
   </div>
 
-  {/* FILTERS */}
-  <select
-    value={care}
-    onChange={(e)=>setCare(e.target.value)}
-    className="border border-default rounded-xl px-2 py-2 text-sm shrink-0"
-  >
-    <option value="">Care</option>
-    <option value="Skin Care">Skin Care</option>
-    <option value="Hair Care">Hair Care</option>
-    <option value="Digestive Care">Digestive Care</option>
-    <option value="Immunity Care">Immunity Care</option>
-  </select>
+    {/* FILTERS */}
+    <div className="flex flex-wrap md:flex-nowrap gap-2 w-full md:w-auto">
 
-  <select
-    value={concern}
-    onChange={(e)=>setConcern(e.target.value)}
-    className="border border-default rounded-xl px-2 py-2 text-sm shrink-0"
-  >
-    <option value="">Concern</option>
-    <option value="Immunity">Immunity</option>
-    <option value="Digestion">Digestion</option>
-    <option value="Skin Health">Skin Health</option>
-    <option value="Weight Loss">Weight Loss</option>
-  </select>
+      <select
+        value={care}
+        onChange={(e)=>setCare(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
+        <option value="">Care</option>
+        <option value="Skin Care">Skin Care</option>
+        <option value="Hair Care">Hair Care</option>
+        <option value="Digestive Care">Digestive Care</option>
+        <option value="Immunity Care">Immunity Care</option>
+      </select>
 
-  <select
-    value={sort}
-    onChange={(e)=>setSort(e.target.value)}
-    className="border border-default rounded-xl px-2 py-2 text-sm shrink-0"
-  >
-    <option value="featured">Featured</option>
-    <option value="price_low">Price Low → High</option>
-    <option value="price_high">Price High → Low</option>
-  </select>
+      <select
+        value={concern}
+        onChange={(e)=>setConcern(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
+        <option value="">Concern</option>
+        <option value="Immunity">Immunity</option>
+        <option value="Digestion">Digestion</option>
+        <option value="Skin Health">Skin Health</option>
+        <option value="Weight Loss">Weight Loss</option>
+      </select>
 
-</div>
+      <select
+        value={sort}
+        onChange={(e)=>setSort(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
+        <option value="featured">Featured</option>
+        <option value="price_low">Price Low → High</option>
+        <option value="price_high">Price High → Low</option>
+      </select>
+
+    </div>
 
   </div>
 
