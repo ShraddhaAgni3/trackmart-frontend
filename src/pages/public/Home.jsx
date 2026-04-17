@@ -487,14 +487,14 @@ useEffect(() => {
   <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
 
     {/* SEARCH */}
-    <div className="flex w-full md:w-auto border border-default rounded-xl overflow-hidden min-w-[200px]">
+    <div className="flex w-[320px] md:w-[420px] border border-default rounded-xl overflow-hidden">
       <input
-        type="text"
-        placeholder="Search products..."
-        value={searchText}
-        onChange={(e)=>setSearchText(e.target.value)}
-        className="px-3 py-2 outline-none flex-1 min-w-0"
-      />
+  type="text"
+  placeholder="Search products..."
+  value={searchText}
+  onChange={(e)=>setSearchText(e.target.value)}
+  className="px-3 py-2 flex-1 min-w-[180px] outline-none"
+/>
       <button
         onClick={handleSearch}
         className="bg-primary text-white px-4 shrink-0 whitespace-nowrap"
