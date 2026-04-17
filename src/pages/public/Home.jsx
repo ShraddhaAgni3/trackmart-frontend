@@ -450,10 +450,10 @@ useEffect(() => {
 </section>
 
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row items-start gap-6 md:gap-10 md:px-0">
+<section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
 
   {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[260px] shrink-0 md:-ml-4">
+  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
@@ -484,17 +484,17 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-col md:flex-row items-center gap-3 flex-1 min-w-[400px]">
+  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
 
     {/* SEARCH */}
-    <div className="flex w-[320px] md:w-[420px] border border-default rounded-xl overflow-hidden shrink-0">
+    <div className="flex w-full md:w-auto border border-default rounded-xl overflow-hidden min-w-[200px]">
       <input
-  type="text"
-  placeholder="Search products..."
-  value={searchText}
-  onChange={(e)=>setSearchText(e.target.value)}
-  className="px-3 py-2 flex-1 min-w-[180px] outline-none"
-/>
+        type="text"
+        placeholder="Search products..."
+        value={searchText}
+        onChange={(e)=>setSearchText(e.target.value)}
+        className="px-3 py-2 outline-none flex-1 min-w-0"
+      />
       <button
         onClick={handleSearch}
         className="bg-primary text-white px-4 shrink-0 whitespace-nowrap"
@@ -545,7 +545,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 RIGHT ADS */}
- <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0 self-start mt-2 md:mt-0"> 
+ <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
