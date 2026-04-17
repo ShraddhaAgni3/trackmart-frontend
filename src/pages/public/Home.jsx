@@ -545,7 +545,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 RIGHT ADS */}
- <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
+ <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0 self-start mt-2 md:mt-0"> 
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
