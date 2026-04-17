@@ -450,111 +450,144 @@ useEffect(() => {
 </section>
 
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row items-start gap-6 md:gap-10 md:px-0">
+<section className="flex flex-col md:flex-row items-start gap-4 md:gap-6 md:px-0">
 
-  {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
+  {/* LEFT ADS — desktop only */}
+  <div className="hidden md:grid grid-cols-2 gap-2 w-[280px] shrink-0">
     {adIndexes.map((index, i) => {
-      const ad = adsData[index];
-      return (
-      <div
-  key={i}
-  className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
->
-  <img
-    src={ad.image}
-    onError={(e) => {
-       e.target.onerror = null; // loop stop  
-      e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg"; 
-    }}
-    className="w-10 h-10 rounded-lg object-cover"
-  />
-
-  <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
-    <p className="text-xs font-semibold truncate">{ad.title}</p>
-    <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
-  </div>
-
-  <button
-    onClick={() => navigate("/products")}
-    className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
-  >
-    Shop
-  </button>
-</div>
-      );
-    })}
-  </div>
-
-  {/* 🔥 CENTER SEARCH + FILTERS */}
-<div className="flex flex-row items-center gap-3 flex-1 min-w-0">
-
-  {/* SEARCH */}
-  <div className="flex w-[350px] md:w-[480px] border border-default rounded-xl overflow-hidden">
-    <input
-      type="text"
-      placeholder="Search products..."
-      value={searchText}
-      onChange={(e)=>setSearchText(e.target.value)}
-      className="px-3 py-2 w-full outline-none"
-    />
-    <button
-      onClick={handleSearch}
-      className="bg-primary text-white px-4 shrink-0"
-    >
-      Search
-    </button>
-  </div>
-
-  {/* FILTERS */}
-  <select
-    value={care}
-    onChange={(e)=>setCare(e.target.value)}
-    className="border border-default rounded-xl px-3 py-2"
-  >
-    <option value="">Care</option>
-    <option value="Skin Care">Skin Care</option>
-    <option value="Hair Care">Hair Care</option>
-    <option value="Digestive Care">Digestive Care</option>
-    <option value="Immunity Care">Immunity Care</option>
-  </select>
-
-  <select
-    value={concern}
-    onChange={(e)=>setConcern(e.target.value)}
-    className="border border-default rounded-xl px-3 py-2"
-  >
-    <option value="">Concern</option>
-    <option value="Immunity">Immunity</option>
-    <option value="Digestion">Digestion</option>
-    <option value="Skin Health">Skin Health</option>
-    <option value="Weight Loss">Weight Loss</option>
-  </select>
-
-  <select
-    value={sort}
-    onChange={(e)=>setSort(e.target.value)}
-    className="border border-default rounded-xl px-3 py-2"
-  >
-    <option value="featured">Featured</option>
-    <option value="price_low">Price Low → High</option>
-    <option value="price_high">Price High → Low</option>
-  </select>
-
-</div>
-  {/* 🔥 RIGHT ADS */}
- <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
-    {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
         <div
           key={i}
-          className={`relative h-[60px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+        >
+          <img
+            src={ad.image}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
+            }}
+            className="w-10 h-10 rounded-lg object-cover"
+          />
+          <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+            <p className="text-xs font-semibold truncate">{ad.title}</p>
+            <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+          </div>
+          <button
+            onClick={() => navigate("/products")}
+            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+          >
+            Shop
+          </button>
+        </div>
+      );
+    })}
+  </div>
+
+  {/* CENTER — Search + Filters */}
+  <div className="flex flex-col gap-3 flex-1 w-full">
+
+    {/* Mobile ads — 2x2 grid, top */}
+    <div className="grid grid-cols-2 gap-2 md:hidden">
+      {adIndexes.map((index, i) => {
+        const ad = adsData[index];
+        return (
+          <div
+            key={i}
+            className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          >
+            <img
+              src={ad.image}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
+              }}
+              className="w-10 h-10 rounded-lg object-cover"
+            />
+            <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+              <p className="text-xs font-semibold truncate">{ad.title}</p>
+              <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+            </div>
+            <button
+              onClick={() => navigate("/products")}
+              className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+            >
+              Shop
+            </button>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* Search bar */}
+    <div className="flex w-full border border-default rounded-xl overflow-hidden">
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        className="px-3 py-2 w-full outline-none"
+      />
+      <button
+        onClick={handleSearch}
+        className="bg-primary text-white px-4 shrink-0"
+      >
+        Search
+      </button>
+    </div>
+
+    {/* Filters — row on desktop, stacked on mobile */}
+    <div className="flex flex-col md:flex-row gap-2">
+      <select
+        value={care}
+        onChange={(e) => setCare(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
+        <option value="">Care</option>
+        <option value="Skin Care">Skin Care</option>
+        <option value="Hair Care">Hair Care</option>
+        <option value="Digestive Care">Digestive Care</option>
+        <option value="Immunity Care">Immunity Care</option>
+      </select>
+
+      <select
+        value={concern}
+        onChange={(e) => setConcern(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
+        <option value="">Concern</option>
+        <option value="Immunity">Immunity</option>
+        <option value="Digestion">Digestion</option>
+        <option value="Skin Health">Skin Health</option>
+        <option value="Weight Loss">Weight Loss</option>
+      </select>
+
+      <select
+        value={sort}
+        onChange={(e) => setSort(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
+        <option value="featured">Featured</option>
+        <option value="price_low">Price Low → High</option>
+        <option value="price_high">Price High → Low</option>
+      </select>
+    </div>
+
+  </div>
+
+  {/* RIGHT ADS — desktop only */}
+  <div className="hidden md:flex flex-col gap-2 w-[180px] shrink-0">
+    {adIndexes.slice(2, 4).map((index, i) => {
+      const ad = adsData[index];
+      return (
+        <div
+          key={i}
+          className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
           <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
-          <div className="ml-3 flex-1 flex flex-col justify-center">
-            <p className="text-xs font-semibold">{ad.title}</p>
-            <p className="text-[10px] text-gray-700">{ad.desc}</p>
+          <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+            <p className="text-xs font-semibold truncate">{ad.title}</p>
+            <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
           </div>
           <button
             onClick={() => navigate("/products")}
