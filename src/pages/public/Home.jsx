@@ -453,7 +453,7 @@ useEffect(() => {
 <section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
 
   {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
+  <div className="grid grid-cols-2 gap-2 w-full md:w-[260px] shrink-0 md:-ml-4">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
       return (
@@ -484,10 +484,10 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
+  <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-[600px]">
 
     {/* SEARCH */}
-    <div className="flex w-[320px] md:w-[420px] border border-default rounded-xl overflow-hidden">
+    <div className="flex w-[350px] md:w-[480px] border border-default rounded-xl overflow-hidden">
       <input
   type="text"
   placeholder="Search products..."
