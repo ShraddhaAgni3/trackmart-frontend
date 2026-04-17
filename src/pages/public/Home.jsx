@@ -448,11 +448,10 @@ useEffect(() => {
   </div>
 
 </section>
-
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row items-start gap-4 md:gap-6 md:px-0">
+<section className="flex flex-col md:flex-row items-start gap-4 md:gap-6">
 
-  {/* LEFT ADS — desktop only */}
+  {/* LEFT ADS — desktop only, 2x2 grid */}
   <div className="hidden md:grid grid-cols-2 gap-2 w-[280px] shrink-0">
     {adIndexes.map((index, i) => {
       const ad = adsData[index];
@@ -467,15 +466,15 @@ useEffect(() => {
               e.target.onerror = null;
               e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
             }}
-            className="w-10 h-10 rounded-lg object-cover"
+            className="w-10 h-10 rounded-lg object-cover shrink-0"
           />
-          <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+          <div className="ml-2 flex-1 flex flex-col justify-center min-w-0">
             <p className="text-xs font-semibold truncate">{ad.title}</p>
             <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
           </div>
           <button
             onClick={() => navigate("/products")}
-            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0 ml-1"
           >
             Shop
           </button>
@@ -484,10 +483,10 @@ useEffect(() => {
     })}
   </div>
 
-  {/* CENTER — Search + Filters */}
-  <div className="flex flex-col gap-3 flex-1 w-full">
+  {/* CENTER — search + filters */}
+  <div className="flex flex-col gap-3 flex-1 w-full min-w-0">
 
-    {/* Mobile ads — 2x2 grid, top */}
+    {/* Mobile ads — 2x2 grid */}
     <div className="grid grid-cols-2 gap-2 md:hidden">
       {adIndexes.map((index, i) => {
         const ad = adsData[index];
@@ -502,15 +501,15 @@ useEffect(() => {
                 e.target.onerror = null;
                 e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
               }}
-              className="w-10 h-10 rounded-lg object-cover"
+              className="w-10 h-10 rounded-lg object-cover shrink-0"
             />
-            <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+            <div className="ml-2 flex-1 flex flex-col justify-center min-w-0">
               <p className="text-xs font-semibold truncate">{ad.title}</p>
               <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
             </div>
             <button
               onClick={() => navigate("/products")}
-              className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+              className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0 ml-1"
             >
               Shop
             </button>
@@ -536,7 +535,7 @@ useEffect(() => {
       </button>
     </div>
 
-    {/* Filters — row on desktop, stacked on mobile */}
+    {/* Filters — inline on desktop */}
     <div className="flex flex-col md:flex-row gap-2">
       <select
         value={care}
@@ -575,8 +574,8 @@ useEffect(() => {
 
   </div>
 
-  {/* RIGHT ADS — desktop only */}
-  <div className="hidden md:flex flex-col gap-2 w-[180px] shrink-0">
+  {/* RIGHT ADS — desktop only, vertical stack */}
+  <div className="hidden md:flex flex-col gap-2 w-[200px] shrink-0">
     {adIndexes.slice(2, 4).map((index, i) => {
       const ad = adsData[index];
       return (
@@ -584,14 +583,21 @@ useEffect(() => {
           key={i}
           className={`relative h-[70px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
-          <img src={ad.image} className="w-10 h-10 rounded-lg object-cover" />
-          <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
+          <img
+            src={ad.image}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
+            }}
+            className="w-10 h-10 rounded-lg object-cover shrink-0"
+          />
+          <div className="ml-2 flex-1 flex flex-col justify-center min-w-0">
             <p className="text-xs font-semibold truncate">{ad.title}</p>
             <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
           </div>
           <button
             onClick={() => navigate("/products")}
-            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0"
+            className="bg-white text-black text-[9px] px-2 py-[2px] rounded shrink-0 ml-1"
           >
             Shop
           </button>
