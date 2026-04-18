@@ -531,10 +531,10 @@ useEffect(() => {
       </select>
 
       <select
-        value={sort}
-        onChange={(e)=>setSort(e.target.value)}
-        className=""border border-default rounded-xl px-3 py-2 w-full md:w-auto md:max-w-[120px]"
-      >
+  value={sort}
+  onChange={(e)=>setSort(e.target.value)}
+  className="border border-default rounded-xl px-3 py-2 w-full md:w-auto md:max-w-[120px]"
+>
         <option value="featured">Featured</option>
         <option value="price_low">Price Low → High</option>
         <option value="price_high">Price High → Low</option>
