@@ -450,7 +450,7 @@ useEffect(() => {
 </section>
 
 {/* SEARCH + FILTER BAR */}
-<section className="flex flex-col md:flex-row gap-6 md:gap-4 md:px-0 overflow-hidden">
+<section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
 
   {/* 🔥 LEFT ADS */}
   <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
@@ -484,7 +484,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-col md:flex-row flex-1 min-w-0 overflow-hidden items-stretch md:items-center gap-3">
+  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
 
     {/* SEARCH */}
     <div className="flex w-full md:w-auto border border-default rounded-xl overflow-hidden min-w-[230px]">
@@ -504,7 +504,7 @@ useEffect(() => {
     </div>
 
     {/* FILTERS */}
-    <div className="flex flex-wrap md:flex-nowrap gap-2 w-full md:w-auto md:max-w-[340px]">
+    <div className="flex flex-wrap md:flex-nowrap gap-2 w-full md:w-auto">
 
       <select
         value={care}
@@ -531,10 +531,10 @@ useEffect(() => {
       </select>
 
       <select
-  value={sort}
-  onChange={(e)=>setSort(e.target.value)}
-  className="border border-default rounded-xl px-3 py-2 w-full md:w-auto md:max-w-[110px]"
->
+        value={sort}
+        onChange={(e)=>setSort(e.target.value)}
+        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto"
+      >
         <option value="featured">Featured</option>
         <option value="price_low">Price Low → High</option>
         <option value="price_high">Price High → Low</option>
@@ -545,7 +545,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 RIGHT ADS */}
- <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] md:min-w-[180px] shrink-0"> 
+ <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
     {adIndexes.slice(2,4).map((index, i) => {
       const ad = adsData[index];
       return (
