@@ -504,7 +504,7 @@ useEffect(() => {
     </div>
 
     {/* FILTERS */}
-    <div className="flex flex-wrap md:flex-nowrap gap-2 w-full md:w-auto">
+    <div className="flex flex-wrap md:flex-nowrap gap-2 w-full md:w-auto md:max-w-[340px]">
 
       <select
         value={care}
@@ -531,10 +531,10 @@ useEffect(() => {
       </select>
 
       <select
-        value={sort}
-        onChange={(e)=>setSort(e.target.value)}
-        className="border border-default rounded-xl px-3 py-2 w-full md:w-auto md:max-w-[130px]"
-      >
+  value={sort}
+  onChange={(e)=>setSort(e.target.value)}
+  className="border border-default rounded-xl px-3 py-2 w-full md:w-auto md:max-w-[110px]"
+>
         <option value="featured">Featured</option>
         <option value="price_low">Price Low → High</option>
         <option value="price_high">Price High → Low</option>
