@@ -484,7 +484,7 @@ useEffect(() => {
   </div>
 
   {/* 🔥 CENTER SEARCH + FILTERS */}
-  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3">
+  <div className="flex flex-col md:flex-row flex-1 min-w-0 items-stretch md:items-center gap-3 md:-ml-6">
 
     {/* SEARCH */}
     <div className="flex w-full md:w-auto border border-default rounded-xl overflow-hidden min-w-[230px]">
