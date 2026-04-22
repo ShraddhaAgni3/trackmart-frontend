@@ -459,18 +459,18 @@ useEffect(() => {
       return (
         <div
           key={i}
-          className={`relative h-[50px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[50px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
         ><img
   src={ad.image}
   onError={(e)=>{
     e.target.onerror = null;
     e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
   }}
-  className="w-12 h-12 rounded-lg object-cover shrink-0"
+  className="w-8 h-8 rounded-lg object-cover shrink-0"
 />
           <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
-  <p className="text-xs font-semibold truncate">{ad.title}</p>
-  <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+  <p className="text-[11px] font-semibold truncate">{ad.title}</p>
+  <p className="text-[9px] text-gray-700 truncate">{ad.desc}</p>
 </div>
           <button
             onClick={() => navigate("/products")}
@@ -551,7 +551,7 @@ useEffect(() => {
       return (
         <div
           key={i}
-          className={`relative h-[50px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[50px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-2 py-1`}
         >
          <img
   src={ad.image}
@@ -559,11 +559,11 @@ useEffect(() => {
     e.target.onerror = null;
     e.target.src = "https://res.cloudinary.com/dsn1q7hyk/image/upload/q_auto/f_auto/v1774419499/Clinton-Foodmart_ktkl3m.jpg";
   }}
-  className="w-12 h-12 rounded-lg object-cover shrink-0"
+  className="w-8 h-8 rounded-lg object-cover shrink-0"
 />
          <div className="ml-3 flex-1 flex flex-col justify-center overflow-hidden">
-  <p className="text-xs font-semibold truncate">{ad.title}</p>
-  <p className="text-[10px] text-gray-700 truncate">{ad.desc}</p>
+  <p className="text-[11px] font-semibold truncate">{ad.title}</p>
+  <p className="text-[9px] text-gray-700 truncate">{ad.desc}</p>
 </div>
           <button
             onClick={() => navigate("/products")}
