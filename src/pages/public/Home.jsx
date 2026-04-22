@@ -65,7 +65,7 @@ const adsData = [
     bg: "from-green-100 to-white"
   }
 ];
-const [adIndexes, setAdIndexes] = useState([0, 1, 2, 3]);
+const [adIndexes, setAdIndexes] = useState([0, 1, 2]);
 useEffect(() => {
   const interval = setInterval(() => {
     setAdIndexes(() => {
@@ -74,7 +74,7 @@ useEffect(() => {
         .sort(() => 0.5 - Math.random());
 
       // pick first 4 unique ads
-      return indexes.slice(0, 4);
+      return indexes.slice(0, 3);
     });
   }, 2500);
 
@@ -453,8 +453,8 @@ useEffect(() => {
 <section className="flex flex-col md:flex-row gap-6 md:gap-10 md:px-0">
 
   {/* 🔥 LEFT ADS */}
-  <div className="grid grid-cols-2 gap-2 w-full md:w-[300px] shrink-0 md:-ml-4">
-    {adIndexes.map((index, i) => {
+  <div className="flex gap-2 w-full md:w-[300px]">
+    {adIndexes.slice(0, 2).map((index, i) => {
       const ad = adsData[index];
       return (
         <div
@@ -545,8 +545,8 @@ useEffect(() => {
   </div>
 
   {/* 🔥 RIGHT ADS */}
- <div className="flex flex-row md:flex-col gap-2 w-full md:w-[180px] shrink-0"> 
-    {adIndexes.slice(2,4).map((index, i) => {
+ <div className="flex justify-center w-full md:w-[160px] shrink-0"> 
+    {adIndexes.slice(2,3).map((index, i) => {
       const ad = adsData[index];
       return (
         <div
