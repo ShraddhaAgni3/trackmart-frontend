@@ -459,7 +459,7 @@ useEffect(() => {
       return (
         <div
           key={i}
-          className={`relative h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[50px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         ><img
   src={ad.image}
   onError={(e)=>{
@@ -551,7 +551,7 @@ useEffect(() => {
       return (
         <div
           key={i}
-          className={`relative h-[80px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
+          className={`relative h-[50px] rounded-xl overflow-hidden shadow-md bg-gradient-to-r ${ad.bg} flex items-center px-3 py-2`}
         >
          <img
   src={ad.image}
