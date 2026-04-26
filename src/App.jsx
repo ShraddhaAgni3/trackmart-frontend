@@ -18,7 +18,6 @@ import VendorProducts from "./pages/vendor/VendorProducts";
 import Wishlist from "./pages/public/Wishlist";
 /* Vendor Pages */
 import VendorDashboard from "./pages/vendor/VendorDashboard";
-import EditProduct from "./pages/vendor/EditProduct";
 import AddProduct from "./pages/vendor/AddProduct";
 import VendorPayments from "./pages/vendor/VendorPayments";
 /* Admin Pages */
@@ -80,21 +79,22 @@ function App() {
           <Route path="/customer/checkout" element={<Checkout />} />
         </Route>
         {/* ================= VENDOR ================= */}
-        <Route path="vendor" element={<ProtectedRoute ...><VendorLayout /></ProtectedRoute>}>
-
+        <Route
+  path="vendor"
+  element={
+    <ProtectedRoute allowedRoles={["vendor"]}>
+      <VendorLayout />
+    </ProtectedRoute>
+  }
+>
   <Route index element={<VendorDashboard />} />
-
-  <Route path="products" element={<VendorProducts />} />
-
   <Route path="add-product" element={<AddProduct />} />
 
-  <Route path="edit-product/:id" element={<EditProduct />} />
-
+  {/* NEW */}
   <Route path="payments" element={<VendorPayments />} />
   <Route path="orders" element={<VendorOrders />} />
   <Route path="earnings" element={<VendorEarnings />} />
   <Route path="orders/:id" element={<VendorOrderDetails />} />
-
 </Route>
 <Route
  path="/vendor/products"
