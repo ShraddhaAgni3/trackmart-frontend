@@ -18,6 +18,7 @@ import VendorProducts from "./pages/vendor/VendorProducts";
 import Wishlist from "./pages/public/Wishlist";
 /* Vendor Pages */
 import VendorDashboard from "./pages/vendor/VendorDashboard";
+import EditProduct from "./pages/vendor/EditProduct";
 import AddProduct from "./pages/vendor/AddProduct";
 import VendorPayments from "./pages/vendor/VendorPayments";
 /* Admin Pages */
@@ -88,6 +89,7 @@ function App() {
   }
 >
   <Route index element={<VendorDashboard />} />
+          <Route path="/edit-product/:id" element={<EditProduct />} />
   <Route path="add-product" element={<AddProduct />} />
 
   {/* NEW */}
