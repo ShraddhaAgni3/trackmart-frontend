@@ -17,14 +17,13 @@ export const getProducts = (filters = {}, token = null) => {
 
 /* CREATE PRODUCT */
 
-export const createProduct = (formData, token) => {
-
-  return api.post("/products", formData, {
+export const createProduct = (data, token) => {
+  return api.post("/products", data, {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
     }
   });
-
 };
 
 
