@@ -63,30 +63,8 @@ const [loading, setLoading] = useState(false);
       [field]: values.join(",")
     });
   };
- const uploadImage = async (file) => {
-  const fd = new FormData();
-  fd.append("image", file);
-
-  const res = await fetch("/api/products/upload-image", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-    body: fd
-  });
-
-  // 🔥 check response first
-  if (!res.ok) {
-    const text = await res.text();
-    console.log("Upload error:", text);
-    throw new Error("Upload failed");
-  }
-
-  const data = await res.json();
-  return data.url;
-};
 const handleSubmit = async () => {
-  if (loading) return;
+  if (loading) return; // prevent multiple clicks
 
   try {
     if (!form.title || !form.price || !form.stock || !form.size) {
@@ -94,29 +72,19 @@ const handleSubmit = async () => {
       return;
     }
 
-    setLoading(true);
+    setLoading(true); // start loading
 
-    let productImageUrl = "";
-    let ingredientsImageUrl = "";
+    const formData = new FormData();
 
-    // 🔥 upload images first
-    if (form.product_image) {
-      productImageUrl = await uploadImage(form.product_image);
-    }
+    Object.keys(form).forEach(key => {
+      if (form[key] !== null && form[key] !== "") {
+        formData.append(key, form[key]);
+      }
+    });
 
-    if (form.ingredients_image) {
-      ingredientsImageUrl = await uploadImage(form.ingredients_image);
-    }
+    formData.append("vendor_claimed_health", calculateHealth());
 
-    // 🔥 send JSON (no files)
-    const payload = {
-      ...form,
-      product_image: productImageUrl,
-      ingredients_image: ingredientsImageUrl,
-      vendor_claimed_health: calculateHealth()
-    };
-
-    await createProduct(payload, token);
+    await createProduct(formData, token);
 
     alert("Product added successfully");
 
@@ -143,9 +111,9 @@ const handleSubmit = async () => {
 
   } catch (err) {
     console.log(err);
-    alert("Error adding product");
+    alert(err.response?.data?.message || "Error adding product");
   } finally {
-    setLoading(false);
+    setLoading(false); // stop loading
   }
 };
 
