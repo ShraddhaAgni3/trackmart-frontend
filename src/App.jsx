@@ -17,6 +17,7 @@ import ApplyVendor from "./pages/public/ApplyVendor";
 import VendorProducts from "./pages/vendor/VendorProducts";
 import Wishlist from "./pages/public/Wishlist";
 /* Vendor Pages */
+import EditProduct from "./pages/vendor/EditProduct";
 import VendorDashboard from "./pages/vendor/VendorDashboard";
 import AddProduct from "./pages/vendor/AddProduct";
 import VendorPayments from "./pages/vendor/VendorPayments";
@@ -88,18 +89,16 @@ function App() {
   }
 >
   <Route index element={<VendorDashboard />} />
+            <Route path="products" element={<VendorProducts />} />
   <Route path="add-product" element={<AddProduct />} />
-
+  <Route path="edit-product/:id" element={<AddProduct />} />
   {/* NEW */}
   <Route path="payments" element={<VendorPayments />} />
   <Route path="orders" element={<VendorOrders />} />
   <Route path="earnings" element={<VendorEarnings />} />
   <Route path="orders/:id" element={<VendorOrderDetails />} />
 </Route>
-<Route
- path="/vendor/products"
- element={<VendorProducts/>}
-/>
+
         {/* ================= ADMIN ================= */}
         <Route
   path="admin"
