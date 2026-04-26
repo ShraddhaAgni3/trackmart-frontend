@@ -63,8 +63,23 @@ const [loading, setLoading] = useState(false);
       [field]: values.join(",")
     });
   };
+  const uploadImage = async (file) => {
+  const fd = new FormData();
+  fd.append("image", file);
+
+  const res = await fetch("/api/products/upload-image", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: fd
+  });
+
+  const data = await res.json();
+  return data.url;
+};
 const handleSubmit = async () => {
-  if (loading) return; // prevent multiple clicks
+  if (loading) return;
 
   try {
     if (!form.title || !form.price || !form.stock || !form.size) {
@@ -72,19 +87,29 @@ const handleSubmit = async () => {
       return;
     }
 
-    setLoading(true); // start loading
+    setLoading(true);
 
-    const formData = new FormData();
+    let productImageUrl = "";
+    let ingredientsImageUrl = "";
 
-    Object.keys(form).forEach(key => {
-      if (form[key] !== null && form[key] !== "") {
-        formData.append(key, form[key]);
-      }
-    });
+    // 🔥 upload images first
+    if (form.product_image) {
+      productImageUrl = await uploadImage(form.product_image);
+    }
 
-    formData.append("vendor_claimed_health", calculateHealth());
+    if (form.ingredients_image) {
+      ingredientsImageUrl = await uploadImage(form.ingredients_image);
+    }
 
-    await createProduct(formData, token);
+    // 🔥 send JSON (no files)
+    const payload = {
+      ...form,
+      product_image: productImageUrl,
+      ingredients_image: ingredientsImageUrl,
+      vendor_claimed_health: calculateHealth()
+    };
+
+    await createProduct(payload, token);
 
     alert("Product added successfully");
 
@@ -111,9 +136,9 @@ const handleSubmit = async () => {
 
   } catch (err) {
     console.log(err);
-    alert(err.response?.data?.message || "Error adding product");
+    alert("Error adding product");
   } finally {
-    setLoading(false); // stop loading
+    setLoading(false);
   }
 };
 
