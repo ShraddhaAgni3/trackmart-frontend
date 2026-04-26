@@ -63,7 +63,7 @@ const [loading, setLoading] = useState(false);
       [field]: values.join(",")
     });
   };
-  const uploadImage = async (file) => {
+ const uploadImage = async (file) => {
   const fd = new FormData();
   fd.append("image", file);
 
@@ -74,6 +74,13 @@ const [loading, setLoading] = useState(false);
     },
     body: fd
   });
+
+  // 🔥 check response first
+  if (!res.ok) {
+    const text = await res.text();
+    console.log("Upload error:", text);
+    throw new Error("Upload failed");
+  }
 
   const data = await res.json();
   return data.url;
