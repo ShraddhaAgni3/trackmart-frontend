@@ -1,13 +1,15 @@
 import { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { getCategories } from "../../services/categoryService";
 import { createProduct } from "../../services/productService";
 import Footer from "../../components/Footer";
-
+import api from "../../services/api";
 export default function AddProduct() {
 const [loading, setLoading] = useState(false);
   const { token } = useContext(AuthContext);
-
+const { id } = useParams();
+const isEdit = !!id;
   const [categories, setCategories] = useState([]);
 
   const [form, setForm] = useState({
@@ -29,7 +31,26 @@ const [loading, setLoading] = useState(false);
     product_image: null,
     ingredients_image: null
   });
+useEffect(() => {
+  if (!id) return;
 
+  const fetchProduct = async () => {
+    try {
+      const res = await api.get(`/products/${id}`);
+
+      setForm({
+        ...res.data,
+        product_image: null,
+        ingredients_image: null
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchProduct();
+}, [id]);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -73,18 +94,18 @@ const handleSubmit = async () => {
     }
 
     setLoading(true); // start loading
+const payload = {
+  ...form,
+  vendor_claimed_health: calculateHealth()
+};
 
-    const formData = new FormData();
-
-    Object.keys(form).forEach(key => {
-      if (form[key] !== null && form[key] !== "") {
-        formData.append(key, form[key]);
-      }
-    });
-
-    formData.append("vendor_claimed_health", calculateHealth());
-
-    await createProduct(formData, token);
+if (isEdit) {
+  await api.put(`/products/${id}`, payload);
+  alert("Product updated successfully");
+} else {
+  await createProduct(payload, token);
+  alert("Product added successfully");
+}
 
     alert("Product added successfully");
 
@@ -307,7 +328,11 @@ const handleSubmit = async () => {
   className={`bg-green-600 text-white w-full sm:w-auto px-6 md:px-10 py-3 rounded-xl 
   ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
 >
-  {loading ? "Adding..." : "Add Product"}
+  {loading
+  ? "Saving..."
+  : isEdit
+    ? "Update Product"
+    : "Add Product"}
 </button>
       </div>
 
