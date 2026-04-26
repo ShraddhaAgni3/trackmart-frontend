@@ -117,19 +117,29 @@ export default function VendorProducts() {
 
                 {/* DELETE BUTTON */}
 
-                <div className="mt-auto pt-4 flex justify-end">
+                <div className="mt-auto pt-4 flex justify-between">
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteProduct(p.id);
-                    }}
-                    className="text-dangerText text-sm font-medium hover:underline"
-                  >
-                    Delete
-                  </button>
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      navigate(`/edit-product/${p.id}`);
+    }}
+    className="text-blue-600 text-sm font-medium hover:underline"
+  >
+    Edit
+  </button>
 
-                </div>
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      deleteProduct(p.id);
+    }}
+    className="text-dangerText text-sm font-medium hover:underline"
+  >
+    Delete
+  </button>
+
+</div>
 
               </div>
 
