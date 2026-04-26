@@ -80,23 +80,21 @@ function App() {
           <Route path="/customer/checkout" element={<Checkout />} />
         </Route>
         {/* ================= VENDOR ================= */}
-        <Route
-  path="vendor"
-  element={
-    <ProtectedRoute allowedRoles={["vendor"]}>
-      <VendorLayout />
-    </ProtectedRoute>
-  }
->
+        <Route path="vendor" element={<ProtectedRoute ...><VendorLayout /></ProtectedRoute>}>
+
   <Route index element={<VendorDashboard />} />
-          <Route path="/edit-product/:id" element={<EditProduct />} />
+
+  <Route path="products" element={<VendorProducts />} />
+
   <Route path="add-product" element={<AddProduct />} />
 
-  {/* NEW */}
+  <Route path="edit-product/:id" element={<EditProduct />} />
+
   <Route path="payments" element={<VendorPayments />} />
   <Route path="orders" element={<VendorOrders />} />
   <Route path="earnings" element={<VendorEarnings />} />
   <Route path="orders/:id" element={<VendorOrderDetails />} />
+
 </Route>
 <Route
  path="/vendor/products"
