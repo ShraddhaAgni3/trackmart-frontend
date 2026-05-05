@@ -153,7 +153,7 @@ export default function AddProduct() {
         alert("Product added successfully");
       }
 
-      alert("Product added successfully");
+      
 
       setForm({
         title: "",
@@ -214,13 +214,18 @@ export default function AddProduct() {
         Add New Product
       </h1>
 
-      {/* 🔥 BULK UPLOAD (added without disturbing UI) */}
-      <input
-        type="file"
-        accept=".xlsx,.xls"
-        onChange={handleBulkUpload}
-        className="hidden"
-      />
+     <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+  <p className="text-sm font-semibold mb-2">
+    Bulk Upload via Excel
+  </p>
+
+  <input
+    type="file"
+    accept=".xlsx,.xls"
+    onChange={handleBulkUpload}
+    className="w-full border rounded-xl px-3 py-2"
+  />
+</div>
 
       {/* PRODUCT INFO */}
       <div className="bg-white border rounded-2xl shadow p-4 sm:p-6 md:p-8 space-y-6">
