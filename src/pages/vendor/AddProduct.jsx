@@ -5,11 +5,14 @@ import { getCategories } from "../../services/categoryService";
 import { createProduct } from "../../services/productService";
 import Footer from "../../components/Footer";
 import api from "../../services/api";
+
 export default function AddProduct() {
-const [loading, setLoading] = useState(false);
+
+  const [loading, setLoading] = useState(false);
   const { token } = useContext(AuthContext);
-const { id } = useParams();
-const isEdit = !!id;
+  const { id } = useParams();
+  const isEdit = !!id;
+
   const [categories, setCategories] = useState([]);
 
   const [form, setForm] = useState({
@@ -31,26 +34,32 @@ const isEdit = !!id;
     product_image: null,
     ingredients_image: null
   });
-useEffect(() => {
-  if (!id) return;
 
-  const fetchProduct = async () => {
-    try {
-      const res = await api.get(`/products/${id}`);
+  /* ================= FETCH PRODUCT ================= */
 
-      setForm({
-        ...res.data,
-        product_image: null,
-        ingredients_image: null
-      });
+  useEffect(() => {
+    if (!id) return;
 
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const fetchProduct = async () => {
+      try {
+        const res = await api.get(`/products/${id}`);
 
-  fetchProduct();
-}, [id]);
+        setForm({
+          ...res.data,
+          product_image: null,
+          ingredients_image: null
+        });
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  /* ================= FETCH CATEGORIES ================= */
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -63,12 +72,31 @@ useEffect(() => {
     fetchCategories();
   }, []);
 
+  /* ================= IMAGE UPLOAD FUNCTION (NEW) ================= */
+
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await api.post("/products/upload-image", formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return res.data.url;
+  };
+
+  /* ================= HEALTH ================= */
+
   const calculateHealth = () => {
     if (Number(form.sugar) > 20 || Number(form.fat) > 20) {
       return "Unhealthy";
     }
     return "Healthy";
   };
+
+  /* ================= MULTI SELECT ================= */
 
   const handleMultiSelect = (field, value, checked) => {
     let values = form[field] ? form[field].split(",") : [];
@@ -84,59 +112,99 @@ useEffect(() => {
       [field]: values.join(",")
     });
   };
-const handleSubmit = async () => {
-  if (loading) return; // prevent multiple clicks
 
-  try {
-    if (!form.title || !form.price || !form.stock || !form.size) {
-      alert("Please fill required fields");
-      return;
+  /* ================= SUBMIT ================= */
+
+  const handleSubmit = async () => {
+    if (loading) return;
+
+    try {
+      if (!form.title || !form.price || !form.stock || !form.size) {
+        alert("Please fill required fields");
+        return;
+      }
+
+      setLoading(true);
+
+      let productImageUrl = form.product_image;
+      let ingredientsImageUrl = form.ingredients_image;
+
+      // 🔥 upload only if file selected
+      if (form.product_image instanceof File) {
+        productImageUrl = await uploadImage(form.product_image);
+      }
+
+      if (form.ingredients_image instanceof File) {
+        ingredientsImageUrl = await uploadImage(form.ingredients_image);
+      }
+
+      const payload = {
+        ...form,
+        product_image: productImageUrl,
+        ingredients_image: ingredientsImageUrl,
+        vendor_claimed_health: calculateHealth()
+      };
+
+      if (isEdit) {
+        await api.put(`/products/${id}`, payload);
+        alert("Product updated successfully");
+      } else {
+        await createProduct(payload, token);
+        alert("Product added successfully");
+      }
+
+      alert("Product added successfully");
+
+      setForm({
+        title: "",
+        description: "",
+        category_id: "",
+        care_type: "",
+        concern_type: "",
+        ingredients: "",
+        price: "",
+        stock: "",
+        size: "",
+        calories: "",
+        sugar: "",
+        fat: "",
+        protein: "",
+        how_to_use: "",
+        making_process: "",
+        product_image: null,
+        ingredients_image: null
+      });
+
+    } catch (err) {
+      console.log(err);
+      alert(err.response?.data?.message || "Error adding product");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    setLoading(true); // start loading
-const payload = {
-  ...form,
-  vendor_claimed_health: calculateHealth()
-};
+  /* ================= BULK UPLOAD (NEW, NO UI CHANGE) ================= */
 
-if (isEdit) {
-  await api.put(`/products/${id}`, payload);
-  alert("Product updated successfully");
-} else {
-  await createProduct(payload, token);
-  alert("Product added successfully");
-}
+  const handleBulkUpload = async (e) => {
+    try {
+      const file = e.target.files[0];
+      if (!file) return;
 
-    alert("Product added successfully");
+      const formData = new FormData();
+      formData.append("file", file);
 
-    // reset form
-    setForm({
-      title: "",
-      description: "",
-      category_id: "",
-      care_type: "",
-      concern_type: "",
-      ingredients: "",
-      price: "",
-      stock: "",
-      size: "",
-      calories: "",
-      sugar: "",
-      fat: "",
-      protein: "",
-      how_to_use: "",
-      making_process: "",
-      product_image: null,
-      ingredients_image: null
-    });
+      await api.post("/products/bulk-upload", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-  } catch (err) {
-    console.log(err);
-    alert(err.response?.data?.message || "Error adding product");
-  } finally {
-    setLoading(false); // stop loading
-  }
-};
+      alert("Bulk upload successful");
+
+    } catch (err) {
+      alert("Bulk upload failed");
+    }
+  };
 
   return (
 
@@ -145,6 +213,14 @@ if (isEdit) {
       <h1 className="text-2xl md:text-3xl font-bold">
         Add New Product
       </h1>
+
+      {/* 🔥 BULK UPLOAD (added without disturbing UI) */}
+      <input
+        type="file"
+        accept=".xlsx,.xls"
+        onChange={handleBulkUpload}
+        className="hidden"
+      />
 
       {/* PRODUCT INFO */}
       <div className="bg-white border rounded-2xl shadow p-4 sm:p-6 md:p-8 space-y-6">
@@ -322,22 +398,21 @@ if (isEdit) {
       </div>
 
       <div className="flex justify-end">
-       <button
-  onClick={handleSubmit}
-  disabled={loading}
-  className={`bg-green-600 text-white w-full sm:w-auto px-6 md:px-10 py-3 rounded-xl 
-  ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
->
-  {loading
-  ? "Saving..."
-  : isEdit
-    ? "Update Product"
-    : "Add Product"}
-</button>
+        <button
+          onClick={handleSubmit}
+          disabled={loading}
+          className={`bg-green-600 text-white w-full sm:w-auto px-6 md:px-10 py-3 rounded-xl 
+          ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+        >
+          {loading
+            ? "Saving..."
+            : isEdit
+              ? "Update Product"
+              : "Add Product"}
+        </button>
       </div>
 
       <Footer />
-
     </div>
   );
 }
